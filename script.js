@@ -7,14 +7,15 @@ const translations = {
     heroTitle: 'Build peace with the olive tree spirit.',
     heroLead:
       '$ZTN (Zeitoun) is a community token model that turns attention into support for people in Palestine through transparent reporting and global participation.',
-    viewRoadmap: 'View Roadmap',
-    viewTokenomics: 'View Tokenomics',
     metric1Title: 'Weekly Transparency',
     metric1Body: 'Donation logs published with date, amount, and destination.',
     metric2Title: 'Global Community',
     metric2Body: 'English first, with French, Arabic, and Japanese support.',
     metric3Title: 'Olive Mission',
     metric3Body: 'Peace, dignity, and long-term solidarity beyond speculation.',
+    chartTitle: 'BTC Chart (Temporary)',
+    chartNote: 'Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.',
+    chartFootnote: 'Simulated feed. Replace data source later.',
     storyTitle: 'Project Story',
     storyBody1:
       '“Zeitoun” means olive tree in Arabic. For many people, olive branches represent peace and resilience.',
@@ -24,8 +25,6 @@ const translations = {
     model1: 'Public donation records on a regular schedule.',
     model2: 'Proof updates via official channels and website logs.',
     model3: 'Community-driven prioritization for aid categories.',
-    chartTitle: 'Live BTC Chart (Temporary)',
-    chartNote: 'Placeholder for future $ZTN chart integration. Showing Bitcoin real-time chart for now.',
     roadmapTitle: 'Roadmap',
     phase1Title: 'Phase 1 — Foundation',
     phase1Body: 'Finalize branding, multilingual site, and transparency framework.',
@@ -53,14 +52,15 @@ const translations = {
     heroTitle: 'Construire la paix avec l’esprit de l’olivier.',
     heroLead:
       '$ZTN (Zeitoun) transforme l’attention en soutien concret pour les Palestiniens via la transparence et la participation mondiale.',
-    viewRoadmap: 'Voir la feuille de route',
-    viewTokenomics: 'Voir la tokenomics',
     metric1Title: 'Transparence hebdomadaire',
     metric1Body: 'Journal public des dons avec date, montant et destination.',
     metric2Title: 'Communauté mondiale',
     metric2Body: 'Anglais principal + français, arabe et japonais.',
     metric3Title: 'Mission olive',
     metric3Body: 'Paix, dignité et solidarité durable au-delà de la spéculation.',
+    chartTitle: 'Graphique BTC (temporaire)',
+    chartNote: 'En attendant le graphique $ZTN, des données BTC simulées sont affichées.',
+    chartFootnote: 'Flux simulé. Remplacez la source plus tard.',
     storyTitle: 'Histoire du projet',
     storyBody1: '« Zeitoun » signifie olivier en arabe, symbole de paix et de résilience.',
     storyBody2:
@@ -69,8 +69,6 @@ const translations = {
     model1: 'Rapports publics de dons publiés régulièrement.',
     model2: 'Preuves et mises à jour via canaux officiels et journaux du site.',
     model3: 'Priorisation communautaire des catégories d’aide.',
-    chartTitle: 'Graphique BTC en direct (temporaire)',
-    chartNote: 'En attendant le graphique $ZTN, ce module affiche le prix Bitcoin en temps réel.',
     roadmapTitle: 'Feuille de route',
     phase1Title: 'Phase 1 — Fondation',
     phase1Body: 'Finaliser l’identité, le site multilingue et le cadre de transparence.',
@@ -98,14 +96,15 @@ const translations = {
     heroTitle: 'ابنِ السلام بروح شجرة الزيتون.',
     heroLead:
       '$ZTN (زيتون) يحوّل اهتمام المجتمع إلى دعم حقيقي للشعب الفلسطيني عبر الشفافية والمشاركة العالمية.',
-    viewRoadmap: 'عرض خارطة الطريق',
-    viewTokenomics: 'عرض التوكنوميكس',
     metric1Title: 'شفافية أسبوعية',
     metric1Body: 'سجلات تبرعات علنية تشمل التاريخ والمبلغ والجهة المستفيدة.',
     metric2Title: 'مجتمع عالمي',
     metric2Body: 'الإنجليزية لغة أساسية مع دعم الفرنسية والعربية واليابانية.',
     metric3Title: 'رسالة الزيتون',
     metric3Body: 'سلام وكرامة وتضامن طويل الأمد بعيداً عن المضاربة.',
+    chartTitle: 'مخطط BTC (مؤقت)',
+    chartNote: 'إلى حين إضافة مخطط $ZTN، يتم عرض بيانات BTC تجريبية.',
+    chartFootnote: 'تغذية محاكاة. استبدل مصدر البيانات لاحقاً.',
     storyTitle: 'قصة المشروع',
     storyBody1: 'كلمة «زيتون» ترمز لشجرة الزيتون، وهي رمز للسلام والصمود.',
     storyBody2: 'يوظف FREE PALESTINE ($ZTN) هذا المعنى ضمن مجتمع تبرعات قائم على الشفافية.',
@@ -113,8 +112,6 @@ const translations = {
     model1: 'سجلات تبرعات علنية وفق جدول منتظم.',
     model2: 'إثباتات وتحديثات عبر القنوات الرسمية وسجل الموقع.',
     model3: 'تحديد أولويات المساعدة بقرار مجتمعي.',
-    chartTitle: 'مخطط BTC مباشر (مؤقت)',
-    chartNote: 'تمهيداً لعرض مخطط $ZTN مستقبلاً، نعرض حالياً سعر بيتكوين المباشر.',
     roadmapTitle: 'خارطة الطريق',
     phase1Title: 'المرحلة 1 — التأسيس',
     phase1Body: 'استكمال الهوية، الموقع متعدد اللغات، وإطار الشفافية.',
@@ -142,14 +139,15 @@ const translations = {
     heroTitle: 'オリーブの精神で、平和をつくる。',
     heroLead:
       '$ZTN（Zeitoun）は、透明なレポートとグローバル参加を通じて、コミュニティの注目をパレスチナ支援へつなぐモデルです。',
-    viewRoadmap: 'ロードマップを見る',
-    viewTokenomics: 'トークノミクスを見る',
     metric1Title: '毎週の透明性',
     metric1Body: '寄付日・金額・送付先を公開ログで共有。',
     metric2Title: 'グローバルコミュニティ',
     metric2Body: '英語メイン＋仏語・アラビア語・日本語対応。',
     metric3Title: 'オリーブの使命',
     metric3Body: '投機だけで終わらない、平和と尊厳への連帯。',
+    chartTitle: 'BTCチャート（暫定）',
+    chartNote: '将来の$ZTNチャート実装まで、BTCのダミーデータを表示しています。',
+    chartFootnote: 'シミュレーション表示。後でデータソースを差し替えてください。',
     storyTitle: 'プロジェクトストーリー',
     storyBody1: '「zeitoun」はアラビア語でオリーブの木。平和とレジリエンスの象徴です。',
     storyBody2:
@@ -158,8 +156,6 @@ const translations = {
     model1: '定期的に公開される寄付レコード。',
     model2: '公式チャネルとサイトログで証跡を共有。',
     model3: '支援カテゴリの優先順位はコミュニティ主導。',
-    chartTitle: 'BTCリアルタイムチャート（暫定）',
-    chartNote: '将来の$ZTNチャート実装までの暫定として、BTCチャートを表示しています。',
     roadmapTitle: 'ロードマップ',
     phase1Title: 'Phase 1 — 基盤整備',
     phase1Body: 'ブランド、多言語サイト、透明性フレームを整備。',
@@ -181,21 +177,38 @@ const translations = {
   }
 };
 
-const languageSelect = document.querySelector('#language-select');
-const copyCAButton = document.querySelector('#copy-ca');
-const copyStatus = document.querySelector('#copy-status');
-
 const getActiveLang = () => document.documentElement.lang || 'en';
 
-const showCopyStatus = (key) => {
-  const lang = getActiveLang();
-  const content = translations[lang] || translations.en;
-  copyStatus.textContent = content[key] || '';
-  window.setTimeout(() => {
-    if (copyStatus.textContent === (content[key] || '')) {
-      copyStatus.textContent = '';
-    }
-  }, 2200);
+const chartState = {
+  points: Array.from({ length: 32 }, (_, idx) => 86000 + Math.sin(idx * 0.35) * 800 + idx * 12)
+};
+
+const renderChart = (series, chartLine, chartPrice) => {
+  if (!series.length || !chartLine || !chartPrice) return;
+
+  const min = Math.min(...series);
+  const max = Math.max(...series);
+  const range = max - min || 1;
+
+  const points = series
+    .map((value, index) => {
+      const x = (index / (series.length - 1)) * 100;
+      const normalized = (value - min) / range;
+      const y = 38 - normalized * 34;
+      return `${x.toFixed(2)},${y.toFixed(2)}`;
+    })
+    .join(' ');
+
+  chartLine.setAttribute('points', points);
+  chartPrice.textContent = `$${series[series.length - 1].toFixed(2)}`;
+};
+
+const updateChartData = (chartLine, chartPrice) => {
+  const last = chartState.points[chartState.points.length - 1];
+  const drift = (Math.random() - 0.5) * 650;
+  chartState.points.push(Math.max(1000, last + drift));
+  chartState.points = chartState.points.slice(-32);
+  renderChart(chartState.points, chartLine, chartPrice);
 };
 
 const applyLanguage = (lang) => {
@@ -212,44 +225,83 @@ const applyLanguage = (lang) => {
   localStorage.setItem('ztn-language', lang);
 };
 
-const initChart = () => {
-  if (!window.TradingView || !document.querySelector('#tradingview_btc_chart')) return;
+const initApp = () => {
+  const languageSelect = document.querySelector('#language-select');
+  const languageToggle = document.querySelector('#language-toggle');
+  const languageMenu = document.querySelector('#language-menu');
+  const copyCAButton = document.querySelector('#copy-ca');
+  const copyStatus = document.querySelector('#copy-status');
+  const chartLine = document.querySelector('#btc-line');
+  const chartPrice = document.querySelector('#chart-price');
 
-  // eslint-disable-next-line no-new
-  new window.TradingView.widget({
-    autosize: true,
-    symbol: 'BINANCE:BTCUSDT',
-    interval: '30',
-    timezone: 'Etc/UTC',
-    theme: 'dark',
-    style: '1',
-    locale: 'en',
-    enable_publishing: false,
-    hide_legend: false,
-    allow_symbol_change: false,
-    container_id: 'tradingview_btc_chart'
+  const showCopyStatus = (key) => {
+    if (!copyStatus) return;
+    const lang = getActiveLang();
+    const content = translations[lang] || translations.en;
+    copyStatus.textContent = content[key] || '';
+    window.setTimeout(() => {
+      if (copyStatus.textContent === (content[key] || '')) {
+        copyStatus.textContent = '';
+      }
+    }, 2200);
+  };
+
+  const closeLanguageMenu = () => {
+    if (!languageMenu || !languageToggle) return;
+    languageMenu.hidden = true;
+    languageToggle.setAttribute('aria-expanded', 'false');
+  };
+
+  const toggleLanguageMenu = (event) => {
+    if (!languageMenu || !languageToggle) return;
+    if (event) event.stopPropagation();
+    const willOpen = languageMenu.hidden;
+    languageMenu.hidden = !willOpen;
+    languageToggle.setAttribute('aria-expanded', String(willOpen));
+  };
+
+  const storedLang = localStorage.getItem('ztn-language');
+  const browserLang = navigator.language?.slice(0, 2);
+  const defaultLang = translations[storedLang] ? storedLang : translations[browserLang] ? browserLang : 'en';
+
+  if (languageSelect) {
+    languageSelect.value = defaultLang;
+  }
+  applyLanguage(defaultLang);
+
+  renderChart(chartState.points, chartLine, chartPrice);
+  if (chartLine && chartPrice) {
+    window.setInterval(() => updateChartData(chartLine, chartPrice), 1800);
+  }
+
+  languageSelect?.addEventListener('change', (e) => {
+    applyLanguage(e.target.value);
+    closeLanguageMenu();
+  });
+
+  languageToggle?.addEventListener('click', toggleLanguageMenu);
+  languageMenu?.addEventListener('click', (event) => event.stopPropagation());
+
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.floating-language')) {
+      closeLanguageMenu();
+    }
+  });
+
+  copyCAButton?.addEventListener('click', async () => {
+    const caValue = copyCAButton.dataset.ca || 'TBA';
+
+    try {
+      await navigator.clipboard.writeText(caValue);
+      showCopyStatus('copied');
+    } catch (error) {
+      showCopyStatus('copyFailed');
+    }
   });
 };
 
-const storedLang = localStorage.getItem('ztn-language');
-const browserLang = navigator.language?.slice(0, 2);
-const defaultLang = translations[storedLang] ? storedLang : translations[browserLang] ? browserLang : 'en';
-
-languageSelect.value = defaultLang;
-applyLanguage(defaultLang);
-initChart();
-
-languageSelect.addEventListener('change', (e) => {
-  applyLanguage(e.target.value);
-});
-
-copyCAButton.addEventListener('click', async () => {
-  const caValue = copyCAButton.dataset.ca || 'TBA';
-
-  try {
-    await navigator.clipboard.writeText(caValue);
-    showCopyStatus('copied');
-  } catch (error) {
-    showCopyStatus('copyFailed');
-  }
-});
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp, { once: true });
+} else {
+  initApp();
+}
