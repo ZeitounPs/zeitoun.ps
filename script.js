@@ -3,15 +3,8 @@ const translations = {
     copyCA: 'Copy CA Address',
     copied: 'CA copied to clipboard.',
     copyFailed: 'Could not copy automatically. Please copy manually.',
-    chip: 'FREE PALESTINE / $ZTN',
     heroTitle: '$ZTN (FREE PALESTINE) is one form of solidarity for humanity.',
-    heroLead: '',
-    metric1Title: 'Weekly Transparency',
-    metric1Body: 'Donation logs published with date, amount, and destination.',
-    metric2Title: 'Global Community',
-    metric2Body: 'English first, with French, Arabic, and Japanese support.',
-    metric3Title: 'Olive Mission',
-    metric3Body: 'Peace, dignity, and long-term solidarity beyond speculation.',
+
     chartTitle: 'BTC Chart (Temporary)',
     chartNote: 'Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.',
     chartFootnote: 'Simulated feed. Replace data source later.',
@@ -47,15 +40,8 @@ const translations = {
     copyCA: "Copier l'adresse CA",
     copied: 'Adresse CA copiée.',
     copyFailed: 'Copie automatique impossible. Merci de copier manuellement.',
-    chip: 'FREE PALESTINE / $ZTN',
     heroTitle: '$ZTN (FREE PALESTINE) est une forme de solidarité humaine.',
-    heroLead: '',
-    metric1Title: 'Transparence hebdomadaire',
-    metric1Body: 'Journal public des dons avec date, montant et destination.',
-    metric2Title: 'Communauté mondiale',
-    metric2Body: 'Anglais principal + français, arabe et japonais.',
-    metric3Title: 'Mission olive',
-    metric3Body: 'Paix, dignité et solidarité durable au-delà de la spéculation.',
+
     chartTitle: 'Graphique BTC (temporaire)',
     chartNote: 'En attendant le graphique $ZTN, des données BTC simulées sont affichées.',
     chartFootnote: 'Flux simulé. Remplacez la source plus tard.',
@@ -90,15 +76,8 @@ const translations = {
     copyCA: 'نسخ عنوان العقد',
     copied: 'تم نسخ عنوان العقد.',
     copyFailed: 'تعذر النسخ تلقائياً. يرجى النسخ يدوياً.',
-    chip: 'FREE PALESTINE / $ZTN',
     heroTitle: '$ZTN (FREE PALESTINE) هو أحد أشكال التضامن الإنساني.',
-    heroLead: '',
-    metric1Title: 'شفافية أسبوعية',
-    metric1Body: 'سجلات تبرعات علنية تشمل التاريخ والمبلغ والجهة المستفيدة.',
-    metric2Title: 'مجتمع عالمي',
-    metric2Body: 'الإنجليزية لغة أساسية مع دعم الفرنسية والعربية واليابانية.',
-    metric3Title: 'رسالة الزيتون',
-    metric3Body: 'سلام وكرامة وتضامن طويل الأمد بعيداً عن المضاربة.',
+
     chartTitle: 'مخطط BTC (مؤقت)',
     chartNote: 'إلى حين إضافة مخطط $ZTN، يتم عرض بيانات BTC تجريبية.',
     chartFootnote: 'تغذية محاكاة. استبدل مصدر البيانات لاحقاً.',
@@ -132,15 +111,8 @@ const translations = {
     copyCA: 'CAアドレスをコピー',
     copied: 'CAアドレスをコピーしました。',
     copyFailed: '自動コピーに失敗しました。手動でコピーしてください。',
-    chip: 'FREE PALESTINE / $ZTN',
     heroTitle: '$ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。',
-    heroLead: '',
-    metric1Title: '毎週の透明性',
-    metric1Body: '寄付日・金額・送付先を公開ログで共有。',
-    metric2Title: 'グローバルコミュニティ',
-    metric2Body: '英語メイン＋仏語・アラビア語・日本語対応。',
-    metric3Title: 'オリーブの使命',
-    metric3Body: '投機だけで終わらない、平和と尊厳への連帯。',
+
     chartTitle: 'BTCチャート（暫定）',
     chartNote: '将来の$ZTNチャート実装まで、BTCのダミーデータを表示しています。',
     chartFootnote: 'シミュレーション表示。後でデータソースを差し替えてください。',
@@ -213,7 +185,7 @@ const resetDailyState = () => {
 };
 
 const syncChart = (chartPrice) => {
-  if (!chartState.chart) return;
+  if (!chartState.chart || chartState.points.length === 0) return;
   chartState.chart.data.datasets[0].data = chartState.points;
   chartState.chart.options.scales.x.min = Date.now() - TWENTY_FOUR_HOURS_MS;
   chartState.chart.options.scales.x.max = Date.now();
@@ -227,8 +199,9 @@ const syncChart = (chartPrice) => {
 
 const setupBtcChart = (canvas, chartPrice) => {
   if (!canvas || typeof Chart === 'undefined') return;
-  if (!chartState.dayKey) resetDailyState();
+  if (!chartState.dayKey || chartState.points.length === 0) resetDailyState();
   const ctx = canvas.getContext('2d');
+  if (!ctx) return;
   chartState.chart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -287,6 +260,10 @@ const setupBtcChart = (canvas, chartPrice) => {
 };
 
 const updateChartData = (chartPrice) => {
+  if (chartState.points.length === 0) {
+    resetDailyState();
+  }
+
   if (getUtcDayKey() !== chartState.dayKey) {
     resetDailyState();
     syncChart(chartPrice);
@@ -323,7 +300,6 @@ const initApp = () => {
   const copyStatus = document.querySelector('#copy-status');
   const chartCanvas = document.querySelector('#btcChart');
   const chartPrice = document.querySelector('#chart-price');
-  const root = document.documentElement;
 
   const showCopyStatus = (key) => {
     if (!copyStatus) return;
@@ -359,10 +335,6 @@ const initApp = () => {
   languageOptions.forEach((button) => {
     button.classList.toggle('is-active', button.dataset.lang === defaultLang);
   });
-
-  root.style.setProperty('--leaf-rot', '-20deg');
-  root.style.setProperty('--leaf-x', '16px');
-  root.style.setProperty('--leaf-y', '-14px');
 
   setupBtcChart(chartCanvas, chartPrice);
   if (chartCanvas && chartPrice) {
@@ -401,30 +373,24 @@ const initApp = () => {
     }
   });
 
-  const leafPool = ['leaf-1', 'leaf-2', 'leaf-3'];
-  leafPool.forEach((leafClass, index) => {
-    const leaf = document.querySelector(`.${leafClass}`);
-    if (!leaf) return;
-    leaf.style.setProperty('--leaf-duration', `${24 + index * 6}s`);
-  });
-
   const createFallingLeaf = () => {
     const leaf = document.createElement('div');
-    const duration = 8 + Math.random() * 6;
-    const size = 16 + Math.random() * 22;
+    const duration = 6.2 + Math.random() * 3.4;
+    const size = 10 + Math.random() * 18;
     leaf.className = 'falling-leaf';
     leaf.setAttribute('aria-hidden', 'true');
     leaf.style.left = `${Math.random() * 100}vw`;
     leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
-    leaf.style.setProperty('--sway-duration', `${(1.8 + Math.random() * 1.8).toFixed(2)}s`);
-    leaf.style.setProperty('--spin-duration', `${(5.5 + Math.random() * 4).toFixed(2)}s`);
+    leaf.style.setProperty('--sway-duration', `${(1.6 + Math.random() * 1.5).toFixed(2)}s`);
+    leaf.style.setProperty('--spin-duration', `${(4.8 + Math.random() * 2.6).toFixed(2)}s`);
     leaf.style.setProperty('--start-x', `${Math.random() * 12 - 6}px`);
-    leaf.style.setProperty('--drift-x', `${Math.random() * 120 - 60}px`);
+    leaf.style.setProperty('--drift-x', `${Math.random() * 110 - 55}px`);
     leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
+    leaf.style.setProperty('--leaf-opacity', `${(0.4 + Math.random() * 0.4).toFixed(2)}`);
     document.body.appendChild(leaf);
     const removeLeaf = () => leaf.remove();
     leaf.addEventListener('animationend', removeLeaf, { once: true });
-    window.setTimeout(removeLeaf, (duration + 2) * 1000);
+    window.setTimeout(removeLeaf, (duration + 1.8) * 1000);
   };
 
   createFallingLeaf();
