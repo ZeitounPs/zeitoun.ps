@@ -1,123 +1,113 @@
- (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
-diff --git a/index.html b/index.html
-new file mode 100644
-index 0000000000000000000000000000000000000000..b7c65be30bee298425d1772ca332665b4c16ee22
---- /dev/null
-+++ b/index.html
-@@ -0,0 +1,113 @@
-+<!doctype html>
-+<html lang="en">
-+  <head>
-+    <meta charset="UTF-8" />
-+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-+    <title>FREE PALESTINE ($ZTN) | Zeitoun</title>
-+    <meta
-+      name="description"
-+      content="FREE PALESTINE ($ZTN) is a donation-focused token inspired by zeitoun, the olive tree, a symbol of peace."
-+    />
-+    <link rel="preconnect" href="https://fonts.googleapis.com" />
-+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-+    <link
-+      href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Inter:wght@400;500;700;800&display=swap"
-+      rel="stylesheet"
-+    />
-+    <link rel="stylesheet" href="styles.css" />
-+  </head>
-+  <body>
-+    <div class="background-glow" aria-hidden="true"></div>
-+
-+    <header class="site-header container">
-+      <a class="logo" href="#home">
-+        <span class="olive-icon">🫒</span>
-+        <div>
-+          <strong>FREE PALESTINE</strong>
-+          <small>$ZTN / Zeitoun</small>
-+        </div>
-+      </a>
-+
-+      <nav class="top-actions" aria-label="Language & links">
-+        <label for="language-select" class="sr-only">Select language</label>
-+        <select id="language-select">
-+          <option value="en">English</option>
-+          <option value="fr">Français</option>
-+          <option value="ar">العربية</option>
-+          <option value="ja">日本語</option>
-+        </select>
-+        <a class="btn ghost" href="#donate" data-i18n="navDonate">Donate</a>
-+      </nav>
-+    </header>
-+
-+    <main id="home">
-+      <section class="hero container">
-+        <p class="kicker" data-i18n="kicker">Donation-Focused Token on BAGS APP</p>
-+        <h1 data-i18n="heroTitle">FREE PALESTINE ($ZTN)</h1>
-+        <p class="lead" data-i18n="heroLead">
-+          Zeitoun means olive tree in Arabic. $ZTN transforms that symbol of peace into transparent, community-led support for people in Palestine.
-+        </p>
-+        <div class="hero-actions">
-+          <a class="btn" href="#about" data-i18n="learnMore">Learn More</a>
-+          <a class="btn ghost" href="#donate" data-i18n="joinMission">Join the Mission</a>
-+        </div>
-+        <div class="hero-note" data-i18n="disclaimer">
-+          This site shares project goals, not investment advice. Please do your own research.
-+        </div>
-+      </section>
-+
-+      <section class="olive-showcase container" aria-label="Olive art">
-+        <div class="branch branch-left"></div>
-+        <div class="branch branch-right"></div>
-+        <p data-i18n="oliveCopy">
-+          We build with the beauty of the olive: resilience, rooted dignity, and peace.
-+        </p>
-+      </section>
-+
-+      <section id="about" class="cards container">
-+        <article class="card">
-+          <h2 data-i18n="aboutTitle">Why $ZTN</h2>
-+          <p data-i18n="aboutText">
-+            FREE PALESTINE ($ZTN) is designed as a donation-linked token. The objective is simple: route attention, community energy, and measurable support toward Palestinian families and relief initiatives.
-+          </p>
-+        </article>
-+        <article class="card">
-+          <h2 data-i18n="tokenNameTitle">Token Identity</h2>
-+          <p data-i18n="tokenNameText">
-+            “ZTN” comes from zeitoun, the olive tree. In many cultures, olive branches represent peace and endurance under hardship.
-+          </p>
-+        </article>
-+        <article class="card">
-+          <h2 data-i18n="multiTitle">Multilingual First</h2>
-+          <p data-i18n="multiText">
-+            Main language is English, with French, Arabic, and Japanese included to welcome a wider global community.
-+          </p>
-+        </article>
-+      </section>
-+
-+      <section class="split container" id="donate">
-+        <div class="panel">
-+          <h2 data-i18n="donationModelTitle">Donation Model</h2>
-+          <ul>
-+            <li data-i18n="donationPoint1">Public donation reports with amount, date, and recipient.</li>
-+            <li data-i18n="donationPoint2">Regular updates through social channels and website logs.</li>
-+            <li data-i18n="donationPoint3">Community voting for high-priority aid categories.</li>
-+          </ul>
-+        </div>
-+        <div class="panel accent">
-+          <h2 data-i18n="ctaTitle">Launch Preparation</h2>
-+          <p data-i18n="ctaText">
-+            Building the official $ZTN website before launch on BAGS APP: clear mission, transparent process, and global participation.
-+          </p>
-+          <a href="#" class="btn" data-i18n="ctaButton">Add Official Links</a>
-+        </div>
-+      </section>
-+    </main>
-+
-+    <footer class="site-footer container">
-+      <p data-i18n="footer">© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.</p>
-+    </footer>
-+
-+    <script src="script.js"></script>
-+  </body>
-+</html>
- 
-EOF
-)
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FREE PALESTINE ($ZTN) | Zeitoun</title>
+    <meta
+      name="description"
+      content="FREE PALESTINE ($ZTN) is a donation-focused token inspired by zeitoun, the olive tree, a symbol of peace."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@500;700&family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background-glow" aria-hidden="true"></div>
+
+    <header class="site-header container">
+      <a class="logo" href="#home">
+        <span class="olive-icon">🫒</span>
+        <div>
+          <strong>FREE PALESTINE</strong>
+          <small>$ZTN / Zeitoun</small>
+        </div>
+      </a>
+
+      <nav class="top-actions" aria-label="Language & links">
+        <label for="language-select" class="sr-only">Select language</label>
+        <select id="language-select">
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="ar">العربية</option>
+          <option value="ja">日本語</option>
+        </select>
+        <a class="btn ghost" href="#donate" data-i18n="navDonate">Donate</a>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero container">
+        <p class="kicker" data-i18n="kicker">Donation-Focused Token on BAGS APP</p>
+        <h1 data-i18n="heroTitle">FREE PALESTINE ($ZTN)</h1>
+        <p class="lead" data-i18n="heroLead">
+          Zeitoun means olive tree in Arabic. $ZTN transforms that symbol of peace into transparent, community-led support for people in Palestine.
+        </p>
+        <div class="hero-actions">
+          <a class="btn" href="#about" data-i18n="learnMore">Learn More</a>
+          <a class="btn ghost" href="#donate" data-i18n="joinMission">Join the Mission</a>
+        </div>
+        <div class="hero-note" data-i18n="disclaimer">
+          This site shares project goals, not investment advice. Please do your own research.
+        </div>
+      </section>
+
+      <section class="olive-showcase container" aria-label="Olive art">
+        <div class="branch branch-left"></div>
+        <div class="branch branch-right"></div>
+        <p data-i18n="oliveCopy">
+          We build with the beauty of the olive: resilience, rooted dignity, and peace.
+        </p>
+      </section>
+
+      <section id="about" class="cards container">
+        <article class="card">
+          <h2 data-i18n="aboutTitle">Why $ZTN</h2>
+          <p data-i18n="aboutText">
+            FREE PALESTINE ($ZTN) is designed as a donation-linked token. The objective is simple: route attention, community energy, and measurable support toward Palestinian families and relief initiatives.
+          </p>
+        </article>
+        <article class="card">
+          <h2 data-i18n="tokenNameTitle">Token Identity</h2>
+          <p data-i18n="tokenNameText">
+            “ZTN” comes from zeitoun, the olive tree. In many cultures, olive branches represent peace and endurance under hardship.
+          </p>
+        </article>
+        <article class="card">
+          <h2 data-i18n="multiTitle">Multilingual First</h2>
+          <p data-i18n="multiText">
+            Main language is English, with French, Arabic, and Japanese included to welcome a wider global community.
+          </p>
+        </article>
+      </section>
+
+      <section class="split container" id="donate">
+        <div class="panel">
+          <h2 data-i18n="donationModelTitle">Donation Model</h2>
+          <ul>
+            <li data-i18n="donationPoint1">Public donation reports with amount, date, and recipient.</li>
+            <li data-i18n="donationPoint2">Regular updates through social channels and website logs.</li>
+            <li data-i18n="donationPoint3">Community voting for high-priority aid categories.</li>
+          </ul>
+        </div>
+        <div class="panel accent">
+          <h2 data-i18n="ctaTitle">Launch Preparation</h2>
+          <p data-i18n="ctaText">
+            Building the official $ZTN website before launch on BAGS APP: clear mission, transparent process, and global participation.
+          </p>
+          <a href="#" class="btn" data-i18n="ctaButton">Add Official Links</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer container">
+      <p data-i18n="footer">© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
