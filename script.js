@@ -3,10 +3,9 @@ const translations = {
     copyCA: 'Copy CA Address',
     copied: 'CA copied to clipboard.',
     copyFailed: 'Could not copy automatically. Please copy manually.',
-    chip: 'Donation-Focused Token • BAGS APP Launch Plan',
-    heroTitle: 'Build peace with the olive tree spirit.',
-    heroLead:
-      '$ZTN (Zeitoun) is a community token model that turns attention into support for people in Palestine through transparent reporting and global participation.',
+    chip: 'FREE PALESTINE / $ZTN',
+    heroTitle: '$ZTN (FREE PALESTINE) is one form of solidarity for humanity.',
+    heroLead: '$ZTN (FREE PALESTINE) is one form of solidarity for humanity.',
     metric1Title: 'Weekly Transparency',
     metric1Body: 'Donation logs published with date, amount, and destination.',
     metric2Title: 'Global Community',
@@ -48,10 +47,9 @@ const translations = {
     copyCA: "Copier l'adresse CA",
     copied: 'Adresse CA copiée.',
     copyFailed: 'Copie automatique impossible. Merci de copier manuellement.',
-    chip: 'Token solidaire • Plan de lancement sur BAGS APP',
-    heroTitle: 'Construire la paix avec l’esprit de l’olivier.',
-    heroLead:
-      '$ZTN (Zeitoun) transforme l’attention en soutien concret pour les Palestiniens via la transparence et la participation mondiale.',
+    chip: 'FREE PALESTINE / $ZTN',
+    heroTitle: '$ZTN (FREE PALESTINE) est une forme de solidarité humaine.',
+    heroLead: '$ZTN (FREE PALESTINE) est une forme de solidarité humaine.',
     metric1Title: 'Transparence hebdomadaire',
     metric1Body: 'Journal public des dons avec date, montant et destination.',
     metric2Title: 'Communauté mondiale',
@@ -92,10 +90,9 @@ const translations = {
     copyCA: 'نسخ عنوان العقد',
     copied: 'تم نسخ عنوان العقد.',
     copyFailed: 'تعذر النسخ تلقائياً. يرجى النسخ يدوياً.',
-    chip: 'رمز تبرعات • خطة إطلاق على BAGS APP',
-    heroTitle: 'ابنِ السلام بروح شجرة الزيتون.',
-    heroLead:
-      '$ZTN (زيتون) يحوّل اهتمام المجتمع إلى دعم حقيقي للشعب الفلسطيني عبر الشفافية والمشاركة العالمية.',
+    chip: 'FREE PALESTINE / $ZTN',
+    heroTitle: '$ZTN (FREE PALESTINE) هو أحد أشكال التضامن الإنساني.',
+    heroLead: '$ZTN (FREE PALESTINE) هو أحد أشكال التضامن الإنساني.',
     metric1Title: 'شفافية أسبوعية',
     metric1Body: 'سجلات تبرعات علنية تشمل التاريخ والمبلغ والجهة المستفيدة.',
     metric2Title: 'مجتمع عالمي',
@@ -135,10 +132,9 @@ const translations = {
     copyCA: 'CAアドレスをコピー',
     copied: 'CAアドレスをコピーしました。',
     copyFailed: '自動コピーに失敗しました。手動でコピーしてください。',
-    chip: '寄付型トークン • BAGS APPローンチ計画',
-    heroTitle: 'オリーブの精神で、平和をつくる。',
-    heroLead:
-      '$ZTN（Zeitoun）は、透明なレポートとグローバル参加を通じて、コミュニティの注目をパレスチナ支援へつなぐモデルです。',
+    chip: 'FREE PALESTINE / $ZTN',
+    heroTitle: '$ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。',
+    heroLead: '$ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。',
     metric1Title: '毎週の透明性',
     metric1Body: '寄付日・金額・送付先を公開ログで共有。',
     metric2Title: 'グローバルコミュニティ',
@@ -179,36 +175,129 @@ const translations = {
 
 const getActiveLang = () => document.documentElement.lang || 'en';
 
+const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
+
 const chartState = {
-  points: Array.from({ length: 32 }, (_, idx) => 86000 + Math.sin(idx * 0.35) * 800 + idx * 12)
+  points: [],
+  min: 0,
+  max: 0,
+  dayKey: '',
+  chart: null
 };
 
-const renderChart = (series, chartLine, chartPrice) => {
-  if (!series.length || !chartLine || !chartPrice) return;
+const getUtcDayKey = (date = new Date()) =>
+  `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
 
-  const min = Math.min(...series);
-  const max = Math.max(...series);
-  const range = max - min || 1;
-
-  const points = series
-    .map((value, index) => {
-      const x = (index / (series.length - 1)) * 100;
-      const normalized = (value - min) / range;
-      const y = 38 - normalized * 34;
-      return `${x.toFixed(2)},${y.toFixed(2)}`;
-    })
-    .join(' ');
-
-  chartLine.setAttribute('points', points);
-  chartPrice.textContent = `$${series[series.length - 1].toFixed(2)}`;
+const seedDaySeries = (base = 86000) => {
+  const now = Date.now();
+  return Array.from({ length: 48 }, (_, idx) => ({
+    x: now - (47 - idx) * 30 * 60 * 1000,
+    y: base + Math.sin(idx * 0.4) * 540 + (Math.random() - 0.5) * 220
+  }));
 };
 
-const updateChartData = (chartLine, chartPrice) => {
-  const last = chartState.points[chartState.points.length - 1];
+const updateDayRange = () => {
+  const values = chartState.points.map((point) => point.y);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const padding = Math.max((maxValue - minValue) * 0.08, 120);
+  chartState.min = Math.floor(minValue - padding);
+  chartState.max = Math.ceil(maxValue + padding);
+};
+
+const resetDailyState = () => {
+  const lastPrice = chartState.points.at(-1)?.y ?? 86000;
+  chartState.dayKey = getUtcDayKey();
+  chartState.points = seedDaySeries(lastPrice);
+  updateDayRange();
+};
+
+const syncChart = (chartPrice) => {
+  if (!chartState.chart) return;
+  chartState.chart.data.datasets[0].data = chartState.points;
+  chartState.chart.options.scales.x.min = Date.now() - TWENTY_FOUR_HOURS_MS;
+  chartState.chart.options.scales.x.max = Date.now();
+  chartState.chart.options.scales.y.min = chartState.min;
+  chartState.chart.options.scales.y.max = chartState.max;
+  chartState.chart.update('none');
+  if (chartPrice) {
+    chartPrice.textContent = `$${chartState.points.at(-1).y.toFixed(2)}`;
+  }
+};
+
+const setupBtcChart = (canvas, chartPrice) => {
+  if (!canvas || typeof Chart === 'undefined') return;
+  if (!chartState.dayKey) resetDailyState();
+  const ctx = canvas.getContext('2d');
+  chartState.chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'BTC/USDT',
+          data: chartState.points,
+          borderColor: '#addd7b',
+          backgroundColor: 'rgba(173,221,123,0.15)',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.3,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      animation: false,
+      responsive: true,
+      maintainAspectRatio: false,
+      parsing: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          min: Date.now() - TWENTY_FOUR_HOURS_MS,
+          max: Date.now(),
+          grid: { color: 'rgba(213,229,188,0.12)' },
+          ticks: {
+            color: '#c8d7b8',
+            maxRotation: 0,
+            autoSkipPadding: 12,
+            callback: (value) => {
+              const date = new Date(Number(value));
+              return `${String(date.getHours()).padStart(2, '0')}:00`;
+            }
+          }
+        },
+        y: {
+          min: chartState.min,
+          max: chartState.max,
+          grid: { color: 'rgba(213,229,188,0.1)' },
+          ticks: {
+            color: '#c8d7b8',
+            callback: (value) => `$${Number(value).toLocaleString()}`
+          }
+        }
+      }
+    }
+  });
+  syncChart(chartPrice);
+};
+
+const updateChartData = (chartPrice) => {
+  if (getUtcDayKey() !== chartState.dayKey) {
+    resetDailyState();
+    syncChart(chartPrice);
+    return;
+  }
+  const last = chartState.points[chartState.points.length - 1]?.y ?? 86000;
   const drift = (Math.random() - 0.5) * 650;
-  chartState.points.push(Math.max(1000, last + drift));
-  chartState.points = chartState.points.slice(-32);
-  renderChart(chartState.points, chartLine, chartPrice);
+  const next = Math.max(1000, last + drift);
+  chartState.points.push({ x: Date.now(), y: next });
+  chartState.points = chartState.points.filter((point) => point.x >= Date.now() - TWENTY_FOUR_HOURS_MS);
+  updateDayRange();
+  syncChart(chartPrice);
 };
 
 const applyLanguage = (lang) => {
@@ -226,13 +315,14 @@ const applyLanguage = (lang) => {
 };
 
 const initApp = () => {
-  const languageSelect = document.querySelector('#language-select');
+  const languageOptions = document.querySelectorAll('.lang-option');
   const languageToggle = document.querySelector('#language-toggle');
   const languageMenu = document.querySelector('#language-menu');
   const copyCAButton = document.querySelector('#copy-ca');
   const copyStatus = document.querySelector('#copy-status');
-  const chartLine = document.querySelector('#btc-line');
+  const chartCanvas = document.querySelector('#btc-chart');
   const chartPrice = document.querySelector('#chart-price');
+  const root = document.documentElement;
 
   const showCopyStatus = (key) => {
     if (!copyStatus) return;
@@ -264,19 +354,30 @@ const initApp = () => {
   const browserLang = navigator.language?.slice(0, 2);
   const defaultLang = translations[storedLang] ? storedLang : translations[browserLang] ? browserLang : 'en';
 
-  if (languageSelect) {
-    languageSelect.value = defaultLang;
-  }
   applyLanguage(defaultLang);
+  languageOptions.forEach((button) => {
+    button.classList.toggle('is-active', button.dataset.lang === defaultLang);
+  });
 
-  renderChart(chartState.points, chartLine, chartPrice);
-  if (chartLine && chartPrice) {
-    window.setInterval(() => updateChartData(chartLine, chartPrice), 1800);
+  root.style.setProperty('--leaf-rot', '-20deg');
+  root.style.setProperty('--leaf-x', '16px');
+  root.style.setProperty('--leaf-y', '-14px');
+
+  setupBtcChart(chartCanvas, chartPrice);
+  if (chartCanvas && chartPrice) {
+    window.setInterval(() => updateChartData(chartPrice), 1800);
   }
 
-  languageSelect?.addEventListener('change', (e) => {
-    applyLanguage(e.target.value);
-    closeLanguageMenu();
+  languageOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      const selectedLang = option.dataset.lang;
+      if (!selectedLang) return;
+      applyLanguage(selectedLang);
+      languageOptions.forEach((button) => {
+        button.classList.toggle('is-active', button.dataset.lang === selectedLang);
+      });
+      closeLanguageMenu();
+    });
   });
 
   languageToggle?.addEventListener('click', toggleLanguageMenu);
@@ -297,6 +398,28 @@ const initApp = () => {
     } catch (error) {
       showCopyStatus('copyFailed');
     }
+  });
+
+  const leafPool = ['leaf-1', 'leaf-2', 'leaf-3'];
+  for (let i = 0; i < 7; i += 1) {
+    const leaf = document.createElement('div');
+    leaf.className = 'bg-leaf';
+    leaf.style.top = `${Math.random() * 95}%`;
+    leaf.style.left = `${Math.random() * 100 - 8}%`;
+    leaf.style.setProperty('--leaf-rot', `${Math.random() * 90 - 45}deg`);
+    leaf.style.setProperty('--leaf-x', `${Math.random() * 45 - 22}px`);
+    leaf.style.setProperty('--leaf-y', `${Math.random() * 26 - 13}px`);
+    leaf.style.setProperty('--leaf-duration', `${22 + Math.random() * 20}s`);
+    leaf.style.width = `clamp(120px, ${16 + Math.random() * 20}vw, 300px)`;
+    leaf.style.height = `clamp(44px, ${5 + Math.random() * 7}vw, 120px)`;
+    leaf.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(leaf);
+  }
+
+  leafPool.forEach((leafClass, index) => {
+    const leaf = document.querySelector(`.${leafClass}`);
+    if (!leaf) return;
+    leaf.style.setProperty('--leaf-duration', `${24 + index * 6}s`);
   });
 };
 
