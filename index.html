@@ -6,7 +6,7 @@
     <title>FREE PALESTINE ($ZTN) | Zeitoun</title>
     <meta
       name="description"
-      content="FREE PALESTINE ($ZTN) is a donation-first token inspired by the olive tree (zeitoun), built for transparent aid and global solidarity."
+      content="$ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,7 +25,7 @@
       <a class="brand" href="#home" aria-label="FREE PALESTINE $ZTN home">
         <span class="wordmark-main" aria-hidden="true">FREE PALESTINE</span>
         <span class="wordmark-sub" aria-hidden="true">$ZTN</span>
-        <span class="brand-caption">Zeitoun · Olive for Peace</span>
+        <span class="brand-caption">$ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。</span>
       </a>
     </header>
 
@@ -38,10 +38,10 @@
 
     <main>
       <section class="hero container">
-        <p class="chip" data-i18n="chip">Donation-Focused Token • BAGS APP Launch Plan</p>
-        <h1 data-i18n="heroTitle">Build peace with the olive tree spirit.</h1>
+        <p class="chip" data-i18n="chip">FREE PALESTINE / $ZTN</p>
+        <h1 data-i18n="heroTitle">$ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。</h1>
         <p class="lead" data-i18n="heroLead">
-          $ZTN (Zeitoun) is a community token model that turns attention into support for people in Palestine through transparent reporting and global participation.
+          $ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。
         </p>
       </section>
 
@@ -71,9 +71,7 @@
             <strong>BTC/USDT</strong>
             <span id="chart-price" aria-live="polite">--</span>
           </div>
-          <svg id="btc-chart" viewBox="0 0 100 40" role="img" aria-label="BTC chart line">
-            <polyline id="btc-line" points="" />
-          </svg>
+          <canvas id="btc-chart" role="img" aria-label="BTC chart line"></canvas>
           <p class="chart-footnote" data-i18n="chartFootnote">Simulated feed. Replace data source later.</p>
         </article>
       </section>
@@ -147,7 +145,7 @@
               />
             </svg>
           </a>
-          <a href="#" class="icon-link" aria-label="Telegram">
+          <a href="https://t.me/ZeitounPs" class="icon-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path
                 fill="currentColor"
@@ -166,16 +164,16 @@
     <div class="floating-language" aria-label="Language switcher">
       <button id="language-toggle" type="button" class="lang-fab" aria-expanded="false">🌐</button>
       <div id="language-menu" class="lang-menu" hidden>
-        <label for="language-select" class="sr-only">Language</label>
-        <select id="language-select">
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="ar">العربية</option>
-          <option value="ja">日本語</option>
-        </select>
+        <div class="lang-options" role="menu" aria-label="Language">
+          <button class="lang-option" type="button" data-lang="en" role="menuitem">EN</button>
+          <button class="lang-option" type="button" data-lang="fr" role="menuitem">FR</button>
+          <button class="lang-option" type="button" data-lang="ar" role="menuitem">AR</button>
+          <button class="lang-option" type="button" data-lang="ja" role="menuitem">JA</button>
+        </div>
       </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
