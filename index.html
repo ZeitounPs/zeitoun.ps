@@ -21,34 +21,31 @@
     <div class="bg-leaf leaf-2" aria-hidden="true"></div>
     <div class="bg-leaf leaf-3" aria-hidden="true"></div>
 
-    <div class="ca-strip">
+    <header class="site-header container" id="home">
+      <a class="brand" href="#home" aria-label="FREE PALESTINE $ZTN home">
+        <span class="wordmark-main" aria-hidden="true">FREE PALESTINE</span>
+        <span class="wordmark-sub" aria-hidden="true">$ZTN</span>
+        <span class="brand-caption">Zeitoun · Olive for Peace</span>
+      </a>
+    </header>
+
+    <div class="ca-strip container">
       <button id="copy-ca" class="btn ca-btn" type="button" data-ca="TBA" data-i18n="copyCA">
         Copy CA Address
       </button>
       <span id="copy-status" role="status" aria-live="polite"></span>
     </div>
 
-    <header class="site-header container">
-      <a class="brand" href="#home" aria-label="FREE PALESTINE $ZTN home">
-        <span class="wordmark" aria-hidden="true">FREE PALESTINE</span>
-        <span class="brand-sub">$ZTN / Zeitoun</span>
-      </a>
-    </header>
-
-    <main id="home">
+    <main>
       <section class="hero container">
         <p class="chip" data-i18n="chip">Donation-Focused Token • BAGS APP Launch Plan</p>
         <h1 data-i18n="heroTitle">Build peace with the olive tree spirit.</h1>
         <p class="lead" data-i18n="heroLead">
           $ZTN (Zeitoun) is a community token model that turns attention into support for people in Palestine through transparent reporting and global participation.
         </p>
-        <div class="hero-buttons">
-          <a class="btn" href="#roadmap" data-i18n="viewRoadmap">View Roadmap</a>
-          <a class="btn ghost" href="#tokenomics" data-i18n="viewTokenomics">View Tokenomics</a>
-        </div>
       </section>
 
-      <section class="metrics container" aria-label="project highlights">
+      <section class="section container metrics" aria-label="project highlights">
         <article class="metric">
           <h2 data-i18n="metric1Title">Weekly Transparency</h2>
           <p data-i18n="metric1Body">Donation logs published with date, amount, and destination.</p>
@@ -60,6 +57,24 @@
         <article class="metric">
           <h2 data-i18n="metric3Title">Olive Mission</h2>
           <p data-i18n="metric3Body">Peace, dignity, and long-term solidarity beyond speculation.</p>
+        </article>
+      </section>
+
+      <section id="chart" class="section container">
+        <h2 data-i18n="chartTitle">BTC Chart (Temporary)</h2>
+        <p class="chart-note" data-i18n="chartNote">
+          Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.
+        </p>
+
+        <article class="chart-frame" aria-label="Temporary BTC chart">
+          <div class="chart-head">
+            <strong>BTC/USDT</strong>
+            <span id="chart-price" aria-live="polite">--</span>
+          </div>
+          <svg id="btc-chart" viewBox="0 0 100 40" role="img" aria-label="BTC chart line">
+            <polyline id="btc-line" points="" />
+          </svg>
+          <p class="chart-footnote" data-i18n="chartFootnote">Simulated feed. Replace data source later.</p>
         </article>
       </section>
 
@@ -81,16 +96,6 @@
             <li data-i18n="model3">Community-driven prioritization for aid categories.</li>
           </ul>
         </article>
-      </section>
-
-      <section id="chart" class="section container">
-        <h2 data-i18n="chartTitle">Live BTC Chart (Temporary)</h2>
-        <p class="chart-note" data-i18n="chartNote">
-          Placeholder for future $ZTN chart integration. Showing Bitcoin real-time chart for now.
-        </p>
-        <div class="chart-frame">
-          <div id="tradingview_btc_chart"></div>
-        </div>
       </section>
 
       <section id="roadmap" class="section container">
@@ -159,16 +164,18 @@
     </footer>
 
     <div class="floating-language" aria-label="Language switcher">
-      <label for="language-select" class="sr-only">Language</label>
-      <select id="language-select">
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-        <option value="ar">العربية</option>
-        <option value="ja">日本語</option>
-      </select>
+      <button id="language-toggle" type="button" class="lang-fab" aria-expanded="false">🌐</button>
+      <div id="language-menu" class="lang-menu" hidden>
+        <label for="language-select" class="sr-only">Language</label>
+        <select id="language-select">
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+          <option value="ar">العربية</option>
+          <option value="ja">日本語</option>
+        </select>
+      </div>
     </div>
 
-    <script src="https://s3.tradingview.com/tv.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
