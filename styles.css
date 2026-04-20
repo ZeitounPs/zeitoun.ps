@@ -86,13 +86,19 @@ body {
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 0.92;
+  position: relative;
+  padding: 0 0.1em;
   background:
-    linear-gradient(125deg, #fbfff4 8%, #d8ebba 38%, #b8d98c 62%, #f8fff0 92%),
-    repeating-linear-gradient(133deg, rgba(0, 0, 0, 0.26), rgba(0, 0, 0, 0.26) 2px, transparent 2px, transparent 7px);
+    linear-gradient(125deg, #fbfff4 8%, #d8ebba 36%, #b8d98c 58%, #f8fff0 90%),
+    repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) 1.5px, transparent 1.5px, transparent 6px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px, transparent 7px),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.18) 0 8%, transparent 9% 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  text-shadow: 0 0 9px rgba(198, 228, 140, 0.24);
+  text-shadow:
+    0 0 9px rgba(198, 228, 140, 0.24),
+    0 1px 0 rgba(0, 0, 0, 0.45);
 }
 
 .wordmark-main {
@@ -224,6 +230,9 @@ h2 {
 
 #btc-chart {
   width: 100%;
+  display: block;
+  aspect-ratio: 5 / 2;
+  min-height: 180px;
   height: auto;
   border-radius: 12px;
   background: linear-gradient(180deg, rgba(24, 36, 18, 0.8), rgba(12, 18, 10, 0.95));
@@ -233,7 +242,7 @@ h2 {
 #btc-line {
   fill: none;
   stroke: #a8d66d;
-  stroke-width: 1.4;
+  stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -285,6 +294,7 @@ h2 {
 }
 
 .lang-fab {
+  cursor: pointer;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -295,6 +305,7 @@ h2 {
 }
 
 .lang-menu {
+  pointer-events: auto;
   border-radius: 14px;
   border: 1px solid var(--line);
   background: rgba(10, 17, 8, 0.97);
