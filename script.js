@@ -1,6 +1,8 @@
 const translations = {
   en: {
-    officialLinks: 'Official Links',
+    copyCA: 'Copy CA Address',
+    copied: 'CA copied to clipboard.',
+    copyFailed: 'Could not copy automatically. Please copy manually.',
     chip: 'Donation-Focused Token • BAGS APP Launch Plan',
     heroTitle: 'Build peace with the olive tree spirit.',
     heroLead:
@@ -22,6 +24,8 @@ const translations = {
     model1: 'Public donation records on a regular schedule.',
     model2: 'Proof updates via official channels and website logs.',
     model3: 'Community-driven prioritization for aid categories.',
+    chartTitle: 'Live BTC Chart (Temporary)',
+    chartNote: 'Placeholder for future $ZTN chart integration. Showing Bitcoin real-time chart for now.',
     roadmapTitle: 'Roadmap',
     phase1Title: 'Phase 1 — Foundation',
     phase1Body: 'Finalize branding, multilingual site, and transparency framework.',
@@ -39,11 +43,12 @@ const translations = {
     safe2: 'Never trust unofficial DMs for wallet connection.',
     safe3: 'This website is informational and not investment advice.',
     linksTitle: 'Official Links',
-    pending: '(pending)',
     footer: '© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.'
   },
   fr: {
-    officialLinks: 'Liens officiels',
+    copyCA: "Copier l'adresse CA",
+    copied: 'Adresse CA copiée.',
+    copyFailed: 'Copie automatique impossible. Merci de copier manuellement.',
     chip: 'Token solidaire • Plan de lancement sur BAGS APP',
     heroTitle: 'Construire la paix avec l’esprit de l’olivier.',
     heroLead:
@@ -64,6 +69,8 @@ const translations = {
     model1: 'Rapports publics de dons publiés régulièrement.',
     model2: 'Preuves et mises à jour via canaux officiels et journaux du site.',
     model3: 'Priorisation communautaire des catégories d’aide.',
+    chartTitle: 'Graphique BTC en direct (temporaire)',
+    chartNote: 'En attendant le graphique $ZTN, ce module affiche le prix Bitcoin en temps réel.',
     roadmapTitle: 'Feuille de route',
     phase1Title: 'Phase 1 — Fondation',
     phase1Body: 'Finaliser l’identité, le site multilingue et le cadre de transparence.',
@@ -81,11 +88,12 @@ const translations = {
     safe2: 'Ne faites jamais confiance aux DM non officiels.',
     safe3: 'Ce site est informatif et ne constitue pas un conseil en investissement.',
     linksTitle: 'Liens officiels',
-    pending: '(à venir)',
     footer: '© 2026 FREE PALESTINE ($ZTN) — zeitoun / olivier / paix.'
   },
   ar: {
-    officialLinks: 'الروابط الرسمية',
+    copyCA: 'نسخ عنوان العقد',
+    copied: 'تم نسخ عنوان العقد.',
+    copyFailed: 'تعذر النسخ تلقائياً. يرجى النسخ يدوياً.',
     chip: 'رمز تبرعات • خطة إطلاق على BAGS APP',
     heroTitle: 'ابنِ السلام بروح شجرة الزيتون.',
     heroLead:
@@ -105,6 +113,8 @@ const translations = {
     model1: 'سجلات تبرعات علنية وفق جدول منتظم.',
     model2: 'إثباتات وتحديثات عبر القنوات الرسمية وسجل الموقع.',
     model3: 'تحديد أولويات المساعدة بقرار مجتمعي.',
+    chartTitle: 'مخطط BTC مباشر (مؤقت)',
+    chartNote: 'تمهيداً لعرض مخطط $ZTN مستقبلاً، نعرض حالياً سعر بيتكوين المباشر.',
     roadmapTitle: 'خارطة الطريق',
     phase1Title: 'المرحلة 1 — التأسيس',
     phase1Body: 'استكمال الهوية، الموقع متعدد اللغات، وإطار الشفافية.',
@@ -122,11 +132,12 @@ const translations = {
     safe2: 'لا تثق بالرسائل الخاصة غير الرسمية لربط المحفظة.',
     safe3: 'هذا الموقع معلوماتي وليس نصيحة استثمارية.',
     linksTitle: 'الروابط الرسمية',
-    pending: '(قريباً)',
     footer: '© 2026 FREE PALESTINE ($ZTN) — زيتون / شجرة الزيتون / سلام.'
   },
   ja: {
-    officialLinks: '公式リンク',
+    copyCA: 'CAアドレスをコピー',
+    copied: 'CAアドレスをコピーしました。',
+    copyFailed: '自動コピーに失敗しました。手動でコピーしてください。',
     chip: '寄付型トークン • BAGS APPローンチ計画',
     heroTitle: 'オリーブの精神で、平和をつくる。',
     heroLead:
@@ -147,6 +158,8 @@ const translations = {
     model1: '定期的に公開される寄付レコード。',
     model2: '公式チャネルとサイトログで証跡を共有。',
     model3: '支援カテゴリの優先順位はコミュニティ主導。',
+    chartTitle: 'BTCリアルタイムチャート（暫定）',
+    chartNote: '将来の$ZTNチャート実装までの暫定として、BTCチャートを表示しています。',
     roadmapTitle: 'ロードマップ',
     phase1Title: 'Phase 1 — 基盤整備',
     phase1Body: 'ブランド、多言語サイト、透明性フレームを整備。',
@@ -164,12 +177,26 @@ const translations = {
     safe2: 'ウォレット接続を求める非公式DMは信用しない。',
     safe3: '本サイトは情報提供のみで、投資助言ではありません。',
     linksTitle: '公式リンク',
-    pending: '(準備中)',
     footer: '© 2026 FREE PALESTINE ($ZTN) — zeitoun / オリーブの木 / 平和。'
   }
 };
 
 const languageSelect = document.querySelector('#language-select');
+const copyCAButton = document.querySelector('#copy-ca');
+const copyStatus = document.querySelector('#copy-status');
+
+const getActiveLang = () => document.documentElement.lang || 'en';
+
+const showCopyStatus = (key) => {
+  const lang = getActiveLang();
+  const content = translations[lang] || translations.en;
+  copyStatus.textContent = content[key] || '';
+  window.setTimeout(() => {
+    if (copyStatus.textContent === (content[key] || '')) {
+      copyStatus.textContent = '';
+    }
+  }, 2200);
+};
 
 const applyLanguage = (lang) => {
   const content = translations[lang] || translations.en;
@@ -185,13 +212,44 @@ const applyLanguage = (lang) => {
   localStorage.setItem('ztn-language', lang);
 };
 
+const initChart = () => {
+  if (!window.TradingView || !document.querySelector('#tradingview_btc_chart')) return;
+
+  // eslint-disable-next-line no-new
+  new window.TradingView.widget({
+    autosize: true,
+    symbol: 'BINANCE:BTCUSDT',
+    interval: '30',
+    timezone: 'Etc/UTC',
+    theme: 'dark',
+    style: '1',
+    locale: 'en',
+    enable_publishing: false,
+    hide_legend: false,
+    allow_symbol_change: false,
+    container_id: 'tradingview_btc_chart'
+  });
+};
+
 const storedLang = localStorage.getItem('ztn-language');
 const browserLang = navigator.language?.slice(0, 2);
 const defaultLang = translations[storedLang] ? storedLang : translations[browserLang] ? browserLang : 'en';
 
 languageSelect.value = defaultLang;
 applyLanguage(defaultLang);
+initChart();
 
 languageSelect.addEventListener('change', (e) => {
   applyLanguage(e.target.value);
+});
+
+copyCAButton.addEventListener('click', async () => {
+  const caValue = copyCAButton.dataset.ca || 'TBA';
+
+  try {
+    await navigator.clipboard.writeText(caValue);
+    showCopyStatus('copied');
+  } catch (error) {
+    showCopyStatus('copyFailed');
+  }
 });
