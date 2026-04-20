@@ -3,7 +3,6 @@ const translations = {
     copyCA: 'Copy CA Address',
     copied: 'CA copied to clipboard.',
     copyFailed: 'Could not copy automatically. Please copy manually.',
-    heroTitle: '$ZTN (FREE PALESTINE) is one form of solidarity for humanity.',
 
     chartTitle: 'BTC Chart (Temporary)',
     chartNote: 'Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.',
@@ -40,7 +39,6 @@ const translations = {
     copyCA: "Copier l'adresse CA",
     copied: 'Adresse CA copiée.',
     copyFailed: 'Copie automatique impossible. Merci de copier manuellement.',
-    heroTitle: '$ZTN (FREE PALESTINE) est une forme de solidarité humaine.',
 
     chartTitle: 'Graphique BTC (temporaire)',
     chartNote: 'En attendant le graphique $ZTN, des données BTC simulées sont affichées.',
@@ -76,7 +74,6 @@ const translations = {
     copyCA: 'نسخ عنوان العقد',
     copied: 'تم نسخ عنوان العقد.',
     copyFailed: 'تعذر النسخ تلقائياً. يرجى النسخ يدوياً.',
-    heroTitle: '$ZTN (FREE PALESTINE) هو أحد أشكال التضامن الإنساني.',
 
     chartTitle: 'مخطط BTC (مؤقت)',
     chartNote: 'إلى حين إضافة مخطط $ZTN، يتم عرض بيانات BTC تجريبية.',
@@ -111,7 +108,6 @@ const translations = {
     copyCA: 'CAアドレスをコピー',
     copied: 'CAアドレスをコピーしました。',
     copyFailed: '自動コピーに失敗しました。手動でコピーしてください。',
-    heroTitle: '$ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。',
 
     chartTitle: 'BTCチャート（暫定）',
     chartNote: '将来の$ZTNチャート実装まで、BTCのダミーデータを表示しています。',
@@ -154,7 +150,9 @@ const chartState = {
   min: 0,
   max: 0,
   dayKey: '',
-  chart: null
+  chart: null,
+  updateTimer: null,
+  isUpdating: false
 };
 
 const getUtcDayKey = (date = new Date()) =>
@@ -191,7 +189,10 @@ const syncChart = (chartPrice) => {
   chartState.chart.options.scales.x.max = Date.now();
   chartState.chart.options.scales.y.min = chartState.min;
   chartState.chart.options.scales.y.max = chartState.max;
+  if (chartState.isUpdating) return;
+  chartState.isUpdating = true;
   chartState.chart.update('none');
+  chartState.isUpdating = false;
   if (chartPrice) {
     chartPrice.textContent = `$${chartState.points.at(-1).y.toFixed(2)}`;
   }
@@ -222,6 +223,7 @@ const setupBtcChart = (canvas, chartPrice) => {
       animation: false,
       responsive: true,
       maintainAspectRatio: false,
+      aspectRatio: 1.8,
       parsing: false,
       plugins: {
         legend: { display: false },
@@ -274,7 +276,6 @@ const updateChartData = (chartPrice) => {
   const next = Math.max(1000, last + drift);
   chartState.points.push({ x: Date.now(), y: next });
   chartState.points = chartState.points.filter((point) => point.x >= Date.now() - TWENTY_FOUR_HOURS_MS);
-  updateDayRange();
   syncChart(chartPrice);
 };
 
@@ -337,8 +338,8 @@ const initApp = () => {
   });
 
   setupBtcChart(chartCanvas, chartPrice);
-  if (chartCanvas && chartPrice) {
-    window.setInterval(() => updateChartData(chartPrice), 1800);
+  if (chartState.chart && chartPrice && !chartState.updateTimer) {
+    chartState.updateTimer = window.setInterval(() => updateChartData(chartPrice), 1800);
   }
 
   languageOptions.forEach((option) => {
