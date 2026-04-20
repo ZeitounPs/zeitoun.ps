@@ -191,8 +191,11 @@ const syncChart = (chartPrice) => {
   chartState.chart.options.scales.y.max = chartState.max;
   if (chartState.isUpdating) return;
   chartState.isUpdating = true;
-  chartState.chart.update('none');
-  chartState.isUpdating = false;
+  try {
+    chartState.chart.update('none');
+  } finally {
+    chartState.isUpdating = false;
+  }
   if (chartPrice) {
     chartPrice.textContent = `$${chartState.points.at(-1).y.toFixed(2)}`;
   }
@@ -203,6 +206,10 @@ const setupBtcChart = (canvas, chartPrice) => {
   if (!chartState.dayKey || chartState.points.length === 0) resetDailyState();
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
+  if (chartState.chart) {
+    chartState.chart.destroy();
+    chartState.chart = null;
+  }
   chartState.chart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -223,7 +230,8 @@ const setupBtcChart = (canvas, chartPrice) => {
       animation: false,
       responsive: true,
       maintainAspectRatio: false,
-      aspectRatio: 1.8,
+      aspectRatio: 2,
+      resizeDelay: 0,
       parsing: false,
       plugins: {
         legend: { display: false },
@@ -276,6 +284,7 @@ const updateChartData = (chartPrice) => {
   const next = Math.max(1000, last + drift);
   chartState.points.push({ x: Date.now(), y: next });
   chartState.points = chartState.points.filter((point) => point.x >= Date.now() - TWENTY_FOUR_HOURS_MS);
+  updateDayRange();
   syncChart(chartPrice);
 };
 
