@@ -11,33 +11,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Naskh+Arabic:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Naskh+Arabic:wght@500;700&family=Teko:wght@600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="bg-orb orb-1" aria-hidden="true"></div>
-    <div class="bg-orb orb-2" aria-hidden="true"></div>
+    <div class="bg-leaf leaf-1" aria-hidden="true"></div>
+    <div class="bg-leaf leaf-2" aria-hidden="true"></div>
+    <div class="bg-leaf leaf-3" aria-hidden="true"></div>
+
+    <div class="ca-strip">
+      <button id="copy-ca" class="btn ca-btn" type="button" data-ca="TBA" data-i18n="copyCA">
+        Copy CA Address
+      </button>
+      <span id="copy-status" role="status" aria-live="polite"></span>
+    </div>
 
     <header class="site-header container">
-      <a class="brand" href="#home">
-        <span class="brand-icon">🫒</span>
-        <span>
-          <strong>FREE PALESTINE</strong>
-          <small>$ZTN / Zeitoun</small>
-        </span>
+      <a class="brand" href="#home" aria-label="FREE PALESTINE $ZTN home">
+        <span class="wordmark" aria-hidden="true">FREE PALESTINE</span>
+        <span class="brand-sub">$ZTN / Zeitoun</span>
       </a>
-      <nav class="header-actions" aria-label="Actions">
-        <label for="language-select" class="sr-only">Language</label>
-        <select id="language-select">
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="ar">العربية</option>
-          <option value="ja">日本語</option>
-        </select>
-        <a class="btn ghost" href="#links" data-i18n="officialLinks">Official Links</a>
-      </nav>
     </header>
 
     <main id="home">
@@ -88,6 +83,16 @@
         </article>
       </section>
 
+      <section id="chart" class="section container">
+        <h2 data-i18n="chartTitle">Live BTC Chart (Temporary)</h2>
+        <p class="chart-note" data-i18n="chartNote">
+          Placeholder for future $ZTN chart integration. Showing Bitcoin real-time chart for now.
+        </p>
+        <div class="chart-frame">
+          <div id="tradingview_btc_chart"></div>
+        </div>
+      </section>
+
       <section id="roadmap" class="section container">
         <h2 data-i18n="roadmapTitle">Roadmap</h2>
         <div class="timeline">
@@ -128,11 +133,23 @@
 
       <section id="links" class="section container">
         <h2 data-i18n="linksTitle">Official Links</h2>
-        <div class="links-grid">
-          <a href="#" class="link-card">X / Twitter <span data-i18n="pending">(pending)</span></a>
-          <a href="#" class="link-card">Telegram <span data-i18n="pending">(pending)</span></a>
-          <a href="#" class="link-card">Website Log <span data-i18n="pending">(pending)</span></a>
-          <a href="#" class="link-card">Donation Reports <span data-i18n="pending">(pending)</span></a>
+        <div class="social-icons">
+          <a href="#" class="icon-link" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M18.244 2H21.5l-7.11 8.126L22.75 22h-6.54l-5.12-6.708L5.22 22H1.96l7.603-8.688L1.5 2h6.706l4.626 6.117L18.244 2Zm-1.146 18h1.813L7.232 3.894H5.286L17.098 20Z"
+              />
+            </svg>
+          </a>
+          <a href="#" class="icon-link" aria-label="Telegram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fill="currentColor"
+                d="M9.036 15.89 8.66 21.2c.538 0 .77-.232 1.05-.51l2.518-2.408 5.217 3.822c.957.53 1.634.252 1.892-.88l3.43-16.07c.33-1.53-.553-2.127-1.485-1.78L1.116 11.146c-1.373.53-1.352 1.296-.233 1.64l5.17 1.612L18.06 6.82c.57-.378 1.09-.168.662.21L9.036 15.89Z"
+              />
+            </svg>
+          </a>
         </div>
       </section>
     </main>
@@ -141,6 +158,17 @@
       <p data-i18n="footer">© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.</p>
     </footer>
 
+    <div class="floating-language" aria-label="Language switcher">
+      <label for="language-select" class="sr-only">Language</label>
+      <select id="language-select">
+        <option value="en">English</option>
+        <option value="fr">Français</option>
+        <option value="ar">العربية</option>
+        <option value="ja">日本語</option>
+      </select>
+    </div>
+
+    <script src="https://s3.tradingview.com/tv.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
