@@ -5,7 +5,7 @@ const translations = {
     copyFailed: 'Could not copy automatically. Please copy manually.',
     chip: 'FREE PALESTINE / $ZTN',
     heroTitle: '$ZTN (FREE PALESTINE) is one form of solidarity for humanity.',
-    heroLead: '$ZTN (FREE PALESTINE) is one form of solidarity for humanity.',
+    heroLead: '',
     metric1Title: 'Weekly Transparency',
     metric1Body: 'Donation logs published with date, amount, and destination.',
     metric2Title: 'Global Community',
@@ -49,7 +49,7 @@ const translations = {
     copyFailed: 'Copie automatique impossible. Merci de copier manuellement.',
     chip: 'FREE PALESTINE / $ZTN',
     heroTitle: '$ZTN (FREE PALESTINE) est une forme de solidarité humaine.',
-    heroLead: '$ZTN (FREE PALESTINE) est une forme de solidarité humaine.',
+    heroLead: '',
     metric1Title: 'Transparence hebdomadaire',
     metric1Body: 'Journal public des dons avec date, montant et destination.',
     metric2Title: 'Communauté mondiale',
@@ -92,7 +92,7 @@ const translations = {
     copyFailed: 'تعذر النسخ تلقائياً. يرجى النسخ يدوياً.',
     chip: 'FREE PALESTINE / $ZTN',
     heroTitle: '$ZTN (FREE PALESTINE) هو أحد أشكال التضامن الإنساني.',
-    heroLead: '$ZTN (FREE PALESTINE) هو أحد أشكال التضامن الإنساني.',
+    heroLead: '',
     metric1Title: 'شفافية أسبوعية',
     metric1Body: 'سجلات تبرعات علنية تشمل التاريخ والمبلغ والجهة المستفيدة.',
     metric2Title: 'مجتمع عالمي',
@@ -134,7 +134,7 @@ const translations = {
     copyFailed: '自動コピーに失敗しました。手動でコピーしてください。',
     chip: 'FREE PALESTINE / $ZTN',
     heroTitle: '$ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。',
-    heroLead: '$ZTN（FREE PALESTINE）は、人類の連帯を具現化する一形式です。',
+    heroLead: '',
     metric1Title: '毎週の透明性',
     metric1Body: '寄付日・金額・送付先を公開ログで共有。',
     metric2Title: 'グローバルコミュニティ',
@@ -273,6 +273,7 @@ const setupBtcChart = (canvas, chartPrice) => {
         y: {
           min: chartState.min,
           max: chartState.max,
+          grace: '10%',
           grid: { color: 'rgba(213,229,188,0.1)' },
           ticks: {
             color: '#c8d7b8',
@@ -320,7 +321,7 @@ const initApp = () => {
   const languageMenu = document.querySelector('#language-menu');
   const copyCAButton = document.querySelector('#copy-ca');
   const copyStatus = document.querySelector('#copy-status');
-  const chartCanvas = document.querySelector('#btc-chart');
+  const chartCanvas = document.querySelector('#btcChart');
   const chartPrice = document.querySelector('#chart-price');
   const root = document.documentElement;
 
@@ -401,26 +402,37 @@ const initApp = () => {
   });
 
   const leafPool = ['leaf-1', 'leaf-2', 'leaf-3'];
-  for (let i = 0; i < 7; i += 1) {
-    const leaf = document.createElement('div');
-    leaf.className = 'bg-leaf';
-    leaf.style.top = `${Math.random() * 95}%`;
-    leaf.style.left = `${Math.random() * 100 - 8}%`;
-    leaf.style.setProperty('--leaf-rot', `${Math.random() * 90 - 45}deg`);
-    leaf.style.setProperty('--leaf-x', `${Math.random() * 45 - 22}px`);
-    leaf.style.setProperty('--leaf-y', `${Math.random() * 26 - 13}px`);
-    leaf.style.setProperty('--leaf-duration', `${22 + Math.random() * 20}s`);
-    leaf.style.width = `clamp(120px, ${16 + Math.random() * 20}vw, 300px)`;
-    leaf.style.height = `clamp(44px, ${5 + Math.random() * 7}vw, 120px)`;
-    leaf.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(leaf);
-  }
-
   leafPool.forEach((leafClass, index) => {
     const leaf = document.querySelector(`.${leafClass}`);
     if (!leaf) return;
     leaf.style.setProperty('--leaf-duration', `${24 + index * 6}s`);
   });
+
+  const createFallingLeaf = () => {
+    const leaf = document.createElement('div');
+    const duration = 8 + Math.random() * 6;
+    const size = 16 + Math.random() * 22;
+    leaf.className = 'falling-leaf';
+    leaf.setAttribute('aria-hidden', 'true');
+    leaf.style.left = `${Math.random() * 100}vw`;
+    leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
+    leaf.style.setProperty('--sway-duration', `${(1.8 + Math.random() * 1.8).toFixed(2)}s`);
+    leaf.style.setProperty('--spin-duration', `${(5.5 + Math.random() * 4).toFixed(2)}s`);
+    leaf.style.setProperty('--start-x', `${Math.random() * 12 - 6}px`);
+    leaf.style.setProperty('--drift-x', `${Math.random() * 120 - 60}px`);
+    leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
+    document.body.appendChild(leaf);
+    const removeLeaf = () => leaf.remove();
+    leaf.addEventListener('animationend', removeLeaf, { once: true });
+    window.setTimeout(removeLeaf, (duration + 2) * 1000);
+  };
+
+  createFallingLeaf();
+  const scheduleLeaf = () => {
+    createFallingLeaf();
+    window.setTimeout(scheduleLeaf, 300 + Math.random() * 300);
+  };
+  window.setTimeout(scheduleLeaf, 360);
 };
 
 if (document.readyState === 'loading') {
