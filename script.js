@@ -390,7 +390,7 @@ const initApp = () => {
   const createFallingLeaf = () => {
     const leaf = document.createElement('div');
     const duration = 6.2 + Math.random() * 3.4;
-    const size = 10 + Math.random() * 18;
+    const size = 32 + Math.random() * 20;
     leaf.className = 'falling-leaf';
     leaf.setAttribute('aria-hidden', 'true');
     leaf.style.left = `${Math.random() * 100}vw`;
