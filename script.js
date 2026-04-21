@@ -389,36 +389,36 @@ const initApp = () => {
 
   const createFallingLeaf = () => {
     const leaf = document.createElement('div');
-    const duration = 10.5 + Math.random() * 4.4;
-    const size = 66 + Math.random() * 22;
+    const duration = 9.2 + Math.random() * 5.2;
+    const size = 42 + Math.random() * 18;
     leaf.className = 'falling-leaf';
     leaf.setAttribute('aria-hidden', 'true');
     leaf.style.left = `${Math.random() * 100}vw`;
     leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
-    leaf.style.setProperty('--sway-duration', `${(2.1 + Math.random() * 1.2).toFixed(2)}s`);
-    leaf.style.setProperty('--spin-duration', `${(6.2 + Math.random() * 2.4).toFixed(2)}s`);
-    leaf.style.setProperty('--start-x', `${Math.random() * 18 - 9}px`);
-    leaf.style.setProperty('--drift-x', `${Math.random() * 145 - 72}px`);
+    leaf.style.setProperty('--sway-duration', `${(2.3 + Math.random() * 1.8).toFixed(2)}s`);
+    leaf.style.setProperty('--spin-duration', `${(4.8 + Math.random() * 3).toFixed(2)}s`);
+    leaf.style.setProperty('--start-x', `${Math.random() * 24 - 12}px`);
+    leaf.style.setProperty('--drift-x', `${Math.random() * 170 - 85}px`);
     leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
-    leaf.style.setProperty('--leaf-opacity', `${(0.86 + Math.random() * 0.14).toFixed(2)}`);
+    leaf.style.setProperty('--leaf-opacity', `${(0.74 + Math.random() * 0.22).toFixed(2)}`);
     document.body.appendChild(leaf);
     const removeLeaf = () => leaf.remove();
     leaf.addEventListener(
       'animationend',
       (event) => {
-        if (event.animationName === 'leafDropNew') removeLeaf();
+        if (event.animationName === 'oliveLeafFall') removeLeaf();
       },
       { once: true }
     );
-    window.setTimeout(removeLeaf, (duration + 8) * 1000);
+    window.setTimeout(removeLeaf, (duration + 6) * 1000);
   };
 
   createFallingLeaf();
   const scheduleLeaf = () => {
     createFallingLeaf();
-    window.setTimeout(scheduleLeaf, 620 + Math.random() * 460);
+    window.setTimeout(scheduleLeaf, 520 + Math.random() * 380);
   };
-  window.setTimeout(scheduleLeaf, 620);
+  window.setTimeout(scheduleLeaf, 520);
 };
 
 if (document.readyState === 'loading') {
