@@ -47,9 +47,9 @@ body::after {
   z-index: -2;
   pointer-events: none;
   opacity: 1;
-  background-repeat: repeat-y;
-  background-size: min(95vw, 700px) auto;
-  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   background-attachment: fixed;
   background-image: url("olive-tree-bg.png");
 }
@@ -287,46 +287,41 @@ canvas {
 
 .falling-leaf {
   position: fixed;
-  top: -12vh;
+  top: -16vh;
   left: 0;
-  z-index: 8;
-  width: var(--leaf-size, 86px);
-  height: calc(var(--leaf-size, 86px) * 0.19);
+  z-index: 12;
+  width: var(--leaf-size, 56px);
+  height: calc(var(--leaf-size, 56px) * 0.24);
   pointer-events: none;
-  opacity: var(--leaf-opacity, 0.9);
+  opacity: var(--leaf-opacity, 0.88);
   background: linear-gradient(
-    180deg,
-    rgba(88, 125, 52, 0.94) 0%,
-    rgba(68, 105, 39, 0.94) 49%,
-    rgba(171, 188, 140, 0.92) 50%,
-    rgba(141, 160, 112, 0.92) 100%
+    106deg,
+    rgba(214, 206, 178, 0.95) 0%,
+    rgba(170, 164, 136, 0.95) 32%,
+    rgba(118, 126, 82, 0.96) 62%,
+    rgba(86, 96, 61, 0.96) 100%
   );
-  border-radius: 999px;
+  border-radius: 100% 0 100% 0 / 55% 0 55% 0;
+  box-shadow: inset 0 0 0.7px rgba(255, 255, 255, 0.34);
   clip-path: polygon(
-    0% 50%,
-    3% 42%,
-    9% 32%,
-    20% 23%,
-    36% 18%,
-    54% 16%,
-    72% 18%,
-    86% 24%,
-    95% 33%,
-    100% 50%,
-    95% 67%,
-    86% 76%,
-    72% 82%,
-    54% 84%,
-    36% 82%,
-    20% 77%,
-    9% 68%,
-    3% 58%
+    0% 52%,
+    10% 32%,
+    28% 16%,
+    50% 10%,
+    72% 16%,
+    90% 34%,
+    100% 52%,
+    90% 70%,
+    72% 88%,
+    50% 96%,
+    28% 88%,
+    10% 70%
   );
   transform-origin: center;
   animation:
-    leafDropNew var(--fall-duration, 8s) cubic-bezier(0.38, 0.06, 0.62, 0.94) forwards,
-    leafSwayNew var(--sway-duration, 2.8s) ease-in-out infinite,
-    leafTurnNew var(--spin-duration, 7.4s) ease-in-out infinite;
+    oliveLeafFall var(--fall-duration, 11s) linear forwards,
+    oliveLeafSway var(--sway-duration, 3.2s) ease-in-out infinite,
+    oliveLeafSpin var(--spin-duration, 6.8s) ease-in-out infinite;
 }
 
 .falling-leaf::before,
@@ -338,54 +333,60 @@ canvas {
 }
 
 .falling-leaf::before {
-  left: 7%;
-  right: 7%;
-  top: 49%;
+  left: 8%;
+  right: 8%;
+  top: 50%;
   bottom: auto;
-  height: 1px;
+  height: 1.2px;
   border-radius: 999px;
-  background: rgba(230, 238, 207, 0.72);
-  box-shadow: 0 0 0.8px rgba(230, 238, 207, 0.6);
+  background: rgba(237, 236, 220, 0.72);
+  box-shadow: 0 0 0.8px rgba(237, 236, 220, 0.48);
 }
 
 .falling-leaf::after {
-  background: radial-gradient(130% 90% at 22% 30%, rgba(245, 255, 224, 0.26) 0%, transparent 72%);
+  background: radial-gradient(120% 80% at 22% 28%, rgba(255, 255, 255, 0.28) 0%, transparent 72%);
 }
 
-@keyframes leafDropNew {
+@keyframes oliveLeafFall {
   0% {
-    transform: translate3d(var(--start-x, 0), -24vh, 0) rotate(-8deg);
+    transform: translate3d(var(--start-x, 0), -20vh, 0) rotate(-16deg);
   }
-  25% {
-    transform: translate3d(calc(var(--start-x, 0) + (var(--drift-x, 10px) * 0.25)), 20vh, 0) rotate(14deg);
+  20% {
+    transform: translate3d(calc(var(--start-x, 0) + (var(--drift-x, 8px) * 0.2)), 18vh, 0) rotate(8deg);
   }
-  50% {
-    transform: translate3d(calc(var(--start-x, 0) - (var(--drift-x, 10px) * 0.16)), 48vh, 0) rotate(-12deg);
+  45% {
+    transform: translate3d(calc(var(--start-x, 0) - (var(--drift-x, 8px) * 0.14)), 46vh, 0) rotate(-11deg);
   }
-  75% {
-    transform: translate3d(calc(var(--start-x, 0) + (var(--drift-x, 10px) * 0.68)), 80vh, 0) rotate(10deg);
+  70% {
+    transform: translate3d(calc(var(--start-x, 0) + (var(--drift-x, 8px) * 0.72)), 82vh, 0) rotate(12deg);
   }
   100% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 10px)), 142vh, 0) rotate(-9deg);
+    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 8px)), 132vh, 0) rotate(-14deg);
   }
 }
 
-@keyframes leafSwayNew {
+@keyframes oliveLeafSway {
   0%,
   100% {
-    margin-left: -16px;
+    margin-left: -12px;
+  }
+  35% {
+    margin-left: 6px;
   }
   50% {
-    margin-left: 16px;
+    margin-left: 14px;
+  }
+  75% {
+    margin-left: -4px;
   }
 }
 
-@keyframes leafTurnNew {
+@keyframes oliveLeafSpin {
   from {
-    rotate: -4deg;
+    rotate: -9deg;
   }
   to {
-    rotate: 6deg;
+    rotate: 11deg;
   }
 }
 
