@@ -69,27 +69,15 @@ body::after {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.16;
+  opacity: 0.18;
   background-repeat: repeat;
-  background-size: 240px 180px;
+  background-size: 320px 220px;
   background-attachment: fixed;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='180' viewBox='0 0 240 180'%3E%3Cg fill='none'%3E%3Cpath d='M42 0 L42 180 M162 0 L162 180' stroke='%23000000' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M42 22 C53 15 71 15 82 22 C71 29 53 29 42 22 Z M42 44 C31 37 15 37 4 44 C15 51 31 51 42 44 Z M42 70 C54 63 72 63 84 70 C72 77 54 77 42 70 Z M42 98 C30 91 14 91 2 98 C14 105 30 105 42 98 Z M42 126 C54 119 74 119 86 126 C74 133 54 133 42 126 Z M42 154 C31 147 16 147 5 154 C16 161 31 161 42 154 Z M162 30 C173 23 191 23 204 30 C191 37 173 37 162 30 Z M162 58 C151 51 135 51 124 58 C135 65 151 65 162 58 Z M162 86 C174 79 193 79 206 86 C193 93 174 93 162 86 Z M162 114 C150 107 134 107 122 114 C134 121 150 121 162 114 Z M162 142 C173 135 191 135 204 142 C191 149 173 149 162 142 Z' fill='%236b8e23' stroke='%233f5f1f' stroke-width='0.5'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='220' viewBox='0 0 320 220'%3E%3Crect width='320' height='220' fill='%23ffffff'/%3E%3Cg fill='none' stroke='%23161616' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M-30 36 C40 18 110 30 188 52 C250 70 308 70 350 56' stroke-width='1.4'/%3E%3Cpath d='M-22 132 C48 112 112 120 178 146 C244 170 298 172 342 156' stroke-width='1.2'/%3E%3Cpath d='M60 -24 C78 30 108 72 148 108 C192 146 238 184 270 246' stroke-width='1.1'/%3E%3Cpath d='M214 -26 C198 22 178 58 148 90 C118 124 86 162 70 248' stroke-width='1'/%3E%3Cpath d='M106 118 C116 104 126 98 138 94' stroke-width='0.9'/%3E%3Cpath d='M188 56 C198 44 210 38 226 36' stroke-width='0.85'/%3E%3Cpath d='M146 146 C154 136 166 130 178 126' stroke-width='0.85'/%3E%3C/g%3E%3Cg fill='%235f8f2f'%3E%3Cpath d='M76 28 C86 25 96 25 106 28 C96 31 86 31 76 28 Z' transform='rotate(-15 91 28)'/%3E%3Cpath d='M98 48 C108 45 118 45 128 48 C118 51 108 51 98 48 Z' transform='rotate(12 113 48)'/%3E%3Cpath d='M154 86 C164 83 174 83 184 86 C174 89 164 89 154 86 Z' transform='rotate(18 169 86)'/%3E%3Cpath d='M198 42 C208 39 218 39 228 42 C218 45 208 45 198 42 Z' transform='rotate(-14 213 42)'/%3E%3Cpath d='M108 136 C118 133 128 133 138 136 C128 139 118 139 108 136 Z' transform='rotate(-16 123 136)'/%3E%3Cpath d='M170 126 C180 123 190 123 200 126 C190 129 180 129 170 126 Z' transform='rotate(14 185 126)'/%3E%3Cpath d='M248 172 C258 169 268 169 278 172 C268 175 258 175 248 172 Z' transform='rotate(16 263 172)'/%3E%3Cpath d='M286 54 C296 51 306 51 316 54 C306 57 296 57 286 54 Z' transform='rotate(-12 301 54)'/%3E%3Cpath d='M-8 152 C2 149 12 149 22 152 C12 155 2 155 -8 152 Z' transform='rotate(10 7 152)'/%3E%3C/g%3E%3Cg fill='%234e6f34'%3E%3Cellipse cx='132' cy='90' rx='3.2' ry='2.6' transform='rotate(-22 132 90)'/%3E%3Cellipse cx='176' cy='120' rx='3.1' ry='2.5' transform='rotate(12 176 120)'/%3E%3Cellipse cx='220' cy='40' rx='3' ry='2.4' transform='rotate(-10 220 40)'/%3E%3Cellipse cx='258' cy='164' rx='3.3' ry='2.6' transform='rotate(18 258 164)'/%3E%3Cellipse cx='6' cy='150' rx='2.8' ry='2.2' transform='rotate(12 6 150)'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .bg-leaf {
-  position: fixed;
-  z-index: 0;
-  pointer-events: none;
-  width: clamp(170px, 34vw, 360px);
-  height: clamp(64px, 13vw, 150px);
-  border-radius: 60% 40% 60% 40%;
-  opacity: 0.22;
-  transform-origin: center;
-  background: radial-gradient(circle at 30% 30%, rgba(107, 142, 35, 0.56) 0%, rgba(59, 83, 35, 0.7) 60%, transparent 74%);
-  box-shadow:
-    inset 0 0 12px rgba(177, 213, 121, 0.2),
-    0 0 38px rgba(75, 105, 48, 0.2);
-  filter: blur(0.4px);
+  display: none;
 }
 
 .leaf-1 {
@@ -325,11 +313,11 @@ canvas {
   left: 0;
   z-index: 0;
   width: var(--leaf-size, 22px);
-  height: calc(var(--leaf-size, 22px) * 0.5);
-  border-radius: 62% 38% 60% 40%;
+  height: calc(var(--leaf-size, 22px) * 0.22);
   pointer-events: none;
   opacity: var(--leaf-opacity, 0.6);
-  background: radial-gradient(circle at 30% 30%, #6b8e23 0%, #3b5323 64%, transparent 74%);
+  background: #5f8f2f;
+  clip-path: polygon(0% 50%, 8% 42%, 18% 33%, 30% 24%, 42% 17%, 50% 14%, 58% 17%, 70% 24%, 82% 33%, 92% 42%, 100% 50%, 92% 58%, 82% 67%, 70% 76%, 58% 83%, 50% 86%, 42% 83%, 30% 76%, 18% 67%, 8% 58%);
   filter: blur(0.2px);
   animation:
     leafFall var(--fall-duration, 7.5s) linear forwards,
