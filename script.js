@@ -3,6 +3,7 @@ const translations = {
     copyCA: 'Copy CA Address',
     copied: 'CA copied to clipboard.',
     copyFailed: 'Could not copy automatically. Please copy manually.',
+    heroTitle: 'FREE PALESTINE ($ZTN) is a form that embodies human solidarity.',
 
     chartTitle: 'BTC Chart (Temporary)',
     chartNote: 'Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.',
@@ -39,6 +40,7 @@ const translations = {
     copyCA: "Copier l'adresse CA",
     copied: 'Adresse CA copiée.',
     copyFailed: 'Copie automatique impossible. Merci de copier manuellement.',
+    heroTitle: 'FREE PALESTINE ($ZTN) est une forme qui incarne la solidarité humaine.',
 
     chartTitle: 'Graphique BTC (temporaire)',
     chartNote: 'En attendant le graphique $ZTN, des données BTC simulées sont affichées.',
@@ -74,6 +76,7 @@ const translations = {
     copyCA: 'نسخ عنوان العقد',
     copied: 'تم نسخ عنوان العقد.',
     copyFailed: 'تعذر النسخ تلقائياً. يرجى النسخ يدوياً.',
+    heroTitle: 'FREE PALESTINE ($ZTN) هو شكل يجسد التضامن الإنساني。',
 
     chartTitle: 'مخطط BTC (مؤقت)',
     chartNote: 'إلى حين إضافة مخطط $ZTN، يتم عرض بيانات BTC تجريبية.',
@@ -108,6 +111,7 @@ const translations = {
     copyCA: 'CAアドレスをコピー',
     copied: 'CAアドレスをコピーしました。',
     copyFailed: '自動コピーに失敗しました。手動でコピーしてください。',
+    heroTitle: 'FREE PALESTINE（$ZTN）は、人類の連帯を具現化する一形式です。',
 
     chartTitle: 'BTCチャート（暫定）',
     chartNote: '将来の$ZTNチャート実装まで、BTCのダミーデータを表示しています。',
