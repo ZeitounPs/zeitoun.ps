@@ -410,7 +410,7 @@ const initApp = () => {
       },
       { once: true }
     );
-    window.setTimeout(removeLeaf, (duration + 4.5) * 1000);
+    window.setTimeout(removeLeaf, (duration + 8) * 1000);
   };
 
   createFallingLeaf();
