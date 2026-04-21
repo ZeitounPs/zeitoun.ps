@@ -397,8 +397,13 @@ const initApp = () => {
     leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
     leaf.style.setProperty('--sway-duration', `${(1.6 + Math.random() * 1.5).toFixed(2)}s`);
     leaf.style.setProperty('--spin-duration', `${(4.8 + Math.random() * 2.6).toFixed(2)}s`);
+    leaf.style.setProperty('--fall-ease', `cubic-bezier(${(0.22 + Math.random() * 0.16).toFixed(2)}, ${(0.1 + Math.random() * 0.2).toFixed(2)}, ${(0.36 + Math.random() * 0.18).toFixed(2)}, ${(0.82 + Math.random() * 0.12).toFixed(2)})`);
     leaf.style.setProperty('--start-x', `${Math.random() * 12 - 6}px`);
     leaf.style.setProperty('--drift-x', `${Math.random() * 110 - 55}px`);
+    leaf.style.setProperty('--curve-x1', `${Math.random() * 34 - 17}px`);
+    leaf.style.setProperty('--curve-x2', `${Math.random() * 46 - 23}px`);
+    leaf.style.setProperty('--curve-x3', `${Math.random() * 30 - 15}px`);
+    leaf.style.setProperty('--sway-amp', `${(8 + Math.random() * 11).toFixed(1)}px`);
     leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
     leaf.style.setProperty('--leaf-opacity', `${(0.4 + Math.random() * 0.4).toFixed(2)}`);
     document.body.appendChild(leaf);
