@@ -63,15 +63,17 @@ body::after {
   mix-blend-mode: soft-light;
 }
 
+
 .olive-branch-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.2;
+  opacity: 0.16;
   background-repeat: repeat;
   background-size: 240px 180px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='180' viewBox='0 0 240 180'%3E%3Cg fill='none'%3E%3Cpath d='M42 0 L42 180 M162 0 L162 180' stroke='%23000000' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M42 22 C55 16 67 16 82 18 C67 20 55 20 42 22Z M42 44 C28 39 18 39 4 41 C18 43 28 43 42 44Z M42 70 C56 64 67 65 84 68 C67 71 56 71 42 70Z M42 98 C28 93 16 93 2 95 C16 97 28 97 42 98Z M42 126 C56 120 69 121 86 124 C69 127 56 127 42 126Z M42 154 C30 148 18 148 5 150 C18 152 30 152 42 154Z M162 30 C176 24 188 24 204 27 C188 30 176 30 162 30Z M162 58 C149 52 138 52 124 54 C138 56 149 56 162 58Z M162 86 C176 80 189 81 206 84 C189 87 176 87 162 86Z M162 114 C149 108 136 108 122 110 C136 112 149 112 162 114Z M162 142 C176 136 188 137 204 140 C188 143 176 143 162 142Z' fill='%236b8e23'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: fixed;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='180' viewBox='0 0 240 180'%3E%3Cg fill='none'%3E%3Cpath d='M42 0 L42 180 M162 0 L162 180' stroke='%23000000' stroke-width='1.8' stroke-linecap='round'/%3E%3Cpath d='M42 22 C55 16 67 16 82 18 C67 20 55 20 42 22Z M42 44 C28 39 18 39 4 41 C18 43 28 43 42 44Z M42 70 C56 64 67 65 84 68 C67 71 56 71 42 70Z M42 98 C28 93 16 93 2 95 C16 97 28 97 42 98Z M42 126 C56 120 69 121 86 124 C69 127 56 127 42 126Z M42 154 C30 148 18 148 5 150 C18 152 30 152 42 154Z M162 30 C176 24 188 24 204 27 C188 30 176 30 162 30Z M162 58 C149 52 138 52 124 54 C138 56 149 56 162 58Z M162 86 C176 80 189 81 206 84 C189 87 176 87 162 86Z M162 114 C149 108 136 108 122 110 C136 112 149 112 162 114Z M162 142 C176 136 188 137 204 140 C188 143 176 143 162 142Z' fill='%236b8e23' stroke='%233f5f1f' stroke-width='0.5'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .bg-leaf {
@@ -80,14 +82,10 @@ body::after {
   pointer-events: none;
   width: clamp(170px, 34vw, 360px);
   height: clamp(64px, 13vw, 150px);
-  border-radius: 50%;
-  clip-path: polygon(0% 50%, 4% 46%, 11% 40%, 22% 33%, 36% 27%, 52% 24%, 68% 27%, 82% 33%, 92% 40%, 98% 46%, 100% 50%, 98% 54%, 92% 60%, 82% 67%, 68% 73%, 52% 76%, 36% 73%, 22% 67%, 11% 60%, 4% 54%);
+  border-radius: 60% 40% 60% 40%;
   opacity: 0.22;
   transform-origin: center;
-  background:
-    linear-gradient(90deg, transparent 0%, transparent 48.8%, rgba(198, 217, 170, 0.84) 50%, transparent 51.2%, transparent 100%),
-    linear-gradient(160deg, rgba(118, 143, 82, 0.24) 0%, rgba(101, 127, 72, 0.2) 44%, rgba(189, 198, 178, 0.18) 100%),
-    radial-gradient(circle at 24% 34%, rgba(124, 156, 70, 0.54) 0%, rgba(68, 97, 38, 0.72) 58%, transparent 76%);
+  background: radial-gradient(circle at 30% 30%, rgba(107, 142, 35, 0.56) 0%, rgba(59, 83, 35, 0.7) 60%, transparent 74%);
   box-shadow:
     inset 0 0 12px rgba(177, 213, 121, 0.2),
     0 0 38px rgba(75, 105, 48, 0.2);
@@ -328,17 +326,13 @@ canvas {
   z-index: 0;
   width: var(--leaf-size, 22px);
   height: calc(var(--leaf-size, 22px) * 0.5);
-  border-radius: 50%;
-  clip-path: polygon(0% 50%, 5% 46%, 12% 40%, 22% 33%, 36% 27%, 52% 24%, 68% 27%, 82% 33%, 92% 40%, 98% 46%, 100% 50%, 98% 54%, 92% 60%, 82% 67%, 68% 73%, 52% 76%, 36% 73%, 22% 67%, 12% 60%, 5% 54%);
+  border-radius: 62% 38% 60% 40%;
   pointer-events: none;
   opacity: var(--leaf-opacity, 0.6);
-  background:
-    linear-gradient(90deg, transparent 0%, transparent 48.8%, rgba(200, 223, 176, 0.86) 50%, transparent 51.2%, transparent 100%),
-    linear-gradient(162deg, rgba(126, 153, 82, 0.22) 0%, rgba(107, 139, 68, 0.18) 46%, rgba(189, 202, 182, 0.18) 100%),
-    radial-gradient(circle at 26% 32%, #6b8e23 0%, #3b5323 64%, transparent 78%);
+  background: radial-gradient(circle at 30% 30%, #6b8e23 0%, #3b5323 64%, transparent 74%);
   filter: blur(0.2px);
   animation:
-    leafFall var(--fall-duration, 7.5s) var(--fall-ease, ease-in-out) forwards,
+    leafFall var(--fall-duration, 7.5s) linear forwards,
     leafSway var(--sway-duration, 2.2s) ease-in-out infinite,
     leafSpin var(--spin-duration, 6.4s) ease-in-out infinite;
 }
@@ -346,15 +340,6 @@ canvas {
 @keyframes leafFall {
   from {
     transform: translate3d(var(--start-x, 0), -15vh, 0) rotate(0deg);
-  }
-  24% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--curve-x1, 10px)), 16vh, 0) rotate(-3deg);
-  }
-  52% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--curve-x2, -14px)), 52vh, 0) rotate(4deg);
-  }
-  78% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--curve-x3, 8px)), 84vh, 0) rotate(-2deg);
   }
   to {
     transform: translate3d(var(--drift-x, 10px), 112vh, 0) rotate(20deg);
@@ -364,31 +349,16 @@ canvas {
 @keyframes leafSway {
   0%,
   100% {
-    margin-left: calc(var(--sway-amp, 14px) * -1);
+    margin-left: -14px;
   }
-  35% {
-    margin-left: calc(var(--sway-amp, 14px) * 0.72);
-  }
-  65% {
-    margin-left: calc(var(--sway-amp, 14px) * -0.52);
-  }
-  85% {
-    margin-left: calc(var(--sway-amp, 14px) * 0.92);
+  50% {
+    margin-left: 14px;
   }
 }
 
 @keyframes leafSpin {
   from {
     rotate: -18deg;
-  }
-  30% {
-    rotate: 6deg;
-  }
-  58% {
-    rotate: -9deg;
-  }
-  84% {
-    rotate: 14deg;
   }
   to {
     rotate: 20deg;
