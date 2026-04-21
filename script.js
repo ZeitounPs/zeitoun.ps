@@ -3,16 +3,8 @@ const translations = {
     copyCA: 'Copy CA Address',
     copied: 'CA copied to clipboard.',
     copyFailed: 'Could not copy automatically. Please copy manually.',
-    chip: 'Donation-Focused Token • BAGS APP Launch Plan',
-    heroTitle: 'Build peace with the olive tree spirit.',
-    heroLead:
-      '$ZTN (Zeitoun) is a community token model that turns attention into support for people in Palestine through transparent reporting and global participation.',
-    metric1Title: 'Weekly Transparency',
-    metric1Body: 'Donation logs published with date, amount, and destination.',
-    metric2Title: 'Global Community',
-    metric2Body: 'English first, with French, Arabic, and Japanese support.',
-    metric3Title: 'Olive Mission',
-    metric3Body: 'Peace, dignity, and long-term solidarity beyond speculation.',
+    heroTitle: 'FREE PALESTINE ($ZTN) is a form that embodies human solidarity.',
+
     chartTitle: 'BTC Chart (Temporary)',
     chartNote: 'Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.',
     chartFootnote: 'Simulated feed. Replace data source later.',
@@ -48,16 +40,8 @@ const translations = {
     copyCA: "Copier l'adresse CA",
     copied: 'Adresse CA copiée.',
     copyFailed: 'Copie automatique impossible. Merci de copier manuellement.',
-    chip: 'Token solidaire • Plan de lancement sur BAGS APP',
-    heroTitle: 'Construire la paix avec l’esprit de l’olivier.',
-    heroLead:
-      '$ZTN (Zeitoun) transforme l’attention en soutien concret pour les Palestiniens via la transparence et la participation mondiale.',
-    metric1Title: 'Transparence hebdomadaire',
-    metric1Body: 'Journal public des dons avec date, montant et destination.',
-    metric2Title: 'Communauté mondiale',
-    metric2Body: 'Anglais principal + français, arabe et japonais.',
-    metric3Title: 'Mission olive',
-    metric3Body: 'Paix, dignité et solidarité durable au-delà de la spéculation.',
+    heroTitle: 'FREE PALESTINE ($ZTN) est une forme qui incarne la solidarité humaine.',
+
     chartTitle: 'Graphique BTC (temporaire)',
     chartNote: 'En attendant le graphique $ZTN, des données BTC simulées sont affichées.',
     chartFootnote: 'Flux simulé. Remplacez la source plus tard.',
@@ -92,16 +76,8 @@ const translations = {
     copyCA: 'نسخ عنوان العقد',
     copied: 'تم نسخ عنوان العقد.',
     copyFailed: 'تعذر النسخ تلقائياً. يرجى النسخ يدوياً.',
-    chip: 'رمز تبرعات • خطة إطلاق على BAGS APP',
-    heroTitle: 'ابنِ السلام بروح شجرة الزيتون.',
-    heroLead:
-      '$ZTN (زيتون) يحوّل اهتمام المجتمع إلى دعم حقيقي للشعب الفلسطيني عبر الشفافية والمشاركة العالمية.',
-    metric1Title: 'شفافية أسبوعية',
-    metric1Body: 'سجلات تبرعات علنية تشمل التاريخ والمبلغ والجهة المستفيدة.',
-    metric2Title: 'مجتمع عالمي',
-    metric2Body: 'الإنجليزية لغة أساسية مع دعم الفرنسية والعربية واليابانية.',
-    metric3Title: 'رسالة الزيتون',
-    metric3Body: 'سلام وكرامة وتضامن طويل الأمد بعيداً عن المضاربة.',
+    heroTitle: 'FREE PALESTINE ($ZTN) هو شكل يجسد التضامن الإنساني。',
+
     chartTitle: 'مخطط BTC (مؤقت)',
     chartNote: 'إلى حين إضافة مخطط $ZTN، يتم عرض بيانات BTC تجريبية.',
     chartFootnote: 'تغذية محاكاة. استبدل مصدر البيانات لاحقاً.',
@@ -135,16 +111,8 @@ const translations = {
     copyCA: 'CAアドレスをコピー',
     copied: 'CAアドレスをコピーしました。',
     copyFailed: '自動コピーに失敗しました。手動でコピーしてください。',
-    chip: '寄付型トークン • BAGS APPローンチ計画',
-    heroTitle: 'オリーブの精神で、平和をつくる。',
-    heroLead:
-      '$ZTN（Zeitoun）は、透明なレポートとグローバル参加を通じて、コミュニティの注目をパレスチナ支援へつなぐモデルです。',
-    metric1Title: '毎週の透明性',
-    metric1Body: '寄付日・金額・送付先を公開ログで共有。',
-    metric2Title: 'グローバルコミュニティ',
-    metric2Body: '英語メイン＋仏語・アラビア語・日本語対応。',
-    metric3Title: 'オリーブの使命',
-    metric3Body: '投機だけで終わらない、平和と尊厳への連帯。',
+    heroTitle: 'FREE PALESTINE（$ZTN）は、人類の連帯を具現化する一形式です。',
+
     chartTitle: 'BTCチャート（暫定）',
     chartNote: '将来の$ZTNチャート実装まで、BTCのダミーデータを表示しています。',
     chartFootnote: 'シミュレーション表示。後でデータソースを差し替えてください。',
@@ -179,36 +147,149 @@ const translations = {
 
 const getActiveLang = () => document.documentElement.lang || 'en';
 
+const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
+
 const chartState = {
-  points: Array.from({ length: 32 }, (_, idx) => 86000 + Math.sin(idx * 0.35) * 800 + idx * 12)
+  points: [],
+  min: 0,
+  max: 0,
+  dayKey: '',
+  chart: null,
+  updateTimer: null,
+  isUpdating: false
 };
 
-const renderChart = (series, chartLine, chartPrice) => {
-  if (!series.length || !chartLine || !chartPrice) return;
+const getUtcDayKey = (date = new Date()) =>
+  `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
 
-  const min = Math.min(...series);
-  const max = Math.max(...series);
-  const range = max - min || 1;
-
-  const points = series
-    .map((value, index) => {
-      const x = (index / (series.length - 1)) * 100;
-      const normalized = (value - min) / range;
-      const y = 38 - normalized * 34;
-      return `${x.toFixed(2)},${y.toFixed(2)}`;
-    })
-    .join(' ');
-
-  chartLine.setAttribute('points', points);
-  chartPrice.textContent = `$${series[series.length - 1].toFixed(2)}`;
+const seedDaySeries = (base = 86000) => {
+  const now = Date.now();
+  return Array.from({ length: 48 }, (_, idx) => ({
+    x: now - (47 - idx) * 30 * 60 * 1000,
+    y: base + Math.sin(idx * 0.4) * 540 + (Math.random() - 0.5) * 220
+  }));
 };
 
-const updateChartData = (chartLine, chartPrice) => {
-  const last = chartState.points[chartState.points.length - 1];
+const updateDayRange = () => {
+  const values = chartState.points.map((point) => point.y);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const padding = Math.max((maxValue - minValue) * 0.08, 120);
+  chartState.min = Math.floor(minValue - padding);
+  chartState.max = Math.ceil(maxValue + padding);
+};
+
+const resetDailyState = () => {
+  const lastPrice = chartState.points.at(-1)?.y ?? 86000;
+  chartState.dayKey = getUtcDayKey();
+  chartState.points = seedDaySeries(lastPrice);
+  updateDayRange();
+};
+
+const syncChart = (chartPrice) => {
+  if (!chartState.chart || chartState.points.length === 0) return;
+  chartState.chart.data.datasets[0].data = chartState.points;
+  chartState.chart.options.scales.x.min = Date.now() - TWENTY_FOUR_HOURS_MS;
+  chartState.chart.options.scales.x.max = Date.now();
+  chartState.chart.options.scales.y.min = chartState.min;
+  chartState.chart.options.scales.y.max = chartState.max;
+  if (chartState.isUpdating) return;
+  chartState.isUpdating = true;
+  try {
+    chartState.chart.update('none');
+  } finally {
+    chartState.isUpdating = false;
+  }
+  if (chartPrice) {
+    chartPrice.textContent = `$${chartState.points.at(-1).y.toFixed(2)}`;
+  }
+};
+
+const setupBtcChart = (canvas, chartPrice) => {
+  if (!canvas || typeof Chart === 'undefined') return;
+  if (!chartState.dayKey || chartState.points.length === 0) resetDailyState();
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  if (chartState.chart) {
+    chartState.chart.destroy();
+    chartState.chart = null;
+  }
+  chartState.chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'BTC/USDT',
+          data: chartState.points,
+          borderColor: '#addd7b',
+          backgroundColor: 'rgba(173,221,123,0.15)',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.3,
+          fill: true
+        }
+      ]
+    },
+    options: {
+      animation: false,
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 2,
+      resizeDelay: 0,
+      parsing: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          min: Date.now() - TWENTY_FOUR_HOURS_MS,
+          max: Date.now(),
+          grid: { color: 'rgba(213,229,188,0.12)' },
+          ticks: {
+            color: '#c8d7b8',
+            maxRotation: 0,
+            autoSkipPadding: 12,
+            callback: (value) => {
+              const date = new Date(Number(value));
+              return `${String(date.getHours()).padStart(2, '0')}:00`;
+            }
+          }
+        },
+        y: {
+          min: chartState.min,
+          max: chartState.max,
+          grace: '10%',
+          grid: { color: 'rgba(213,229,188,0.1)' },
+          ticks: {
+            color: '#c8d7b8',
+            callback: (value) => `$${Number(value).toLocaleString()}`
+          }
+        }
+      }
+    }
+  });
+  syncChart(chartPrice);
+};
+
+const updateChartData = (chartPrice) => {
+  if (chartState.points.length === 0) {
+    resetDailyState();
+  }
+
+  if (getUtcDayKey() !== chartState.dayKey) {
+    resetDailyState();
+    syncChart(chartPrice);
+    return;
+  }
+  const last = chartState.points[chartState.points.length - 1]?.y ?? 86000;
   const drift = (Math.random() - 0.5) * 650;
-  chartState.points.push(Math.max(1000, last + drift));
-  chartState.points = chartState.points.slice(-32);
-  renderChart(chartState.points, chartLine, chartPrice);
+  const next = Math.max(1000, last + drift);
+  chartState.points.push({ x: Date.now(), y: next });
+  chartState.points = chartState.points.filter((point) => point.x >= Date.now() - TWENTY_FOUR_HOURS_MS);
+  updateDayRange();
+  syncChart(chartPrice);
 };
 
 const applyLanguage = (lang) => {
@@ -226,12 +307,12 @@ const applyLanguage = (lang) => {
 };
 
 const initApp = () => {
-  const languageSelect = document.querySelector('#language-select');
+  const languageOptions = document.querySelectorAll('.lang-option');
   const languageToggle = document.querySelector('#language-toggle');
   const languageMenu = document.querySelector('#language-menu');
   const copyCAButton = document.querySelector('#copy-ca');
   const copyStatus = document.querySelector('#copy-status');
-  const chartLine = document.querySelector('#btc-line');
+  const chartCanvas = document.querySelector('#btcChart');
   const chartPrice = document.querySelector('#chart-price');
 
   const showCopyStatus = (key) => {
@@ -264,19 +345,26 @@ const initApp = () => {
   const browserLang = navigator.language?.slice(0, 2);
   const defaultLang = translations[storedLang] ? storedLang : translations[browserLang] ? browserLang : 'en';
 
-  if (languageSelect) {
-    languageSelect.value = defaultLang;
-  }
   applyLanguage(defaultLang);
+  languageOptions.forEach((button) => {
+    button.classList.toggle('is-active', button.dataset.lang === defaultLang);
+  });
 
-  renderChart(chartState.points, chartLine, chartPrice);
-  if (chartLine && chartPrice) {
-    window.setInterval(() => updateChartData(chartLine, chartPrice), 1800);
+  setupBtcChart(chartCanvas, chartPrice);
+  if (chartState.chart && chartPrice && !chartState.updateTimer) {
+    chartState.updateTimer = window.setInterval(() => updateChartData(chartPrice), 1800);
   }
 
-  languageSelect?.addEventListener('change', (e) => {
-    applyLanguage(e.target.value);
-    closeLanguageMenu();
+  languageOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      const selectedLang = option.dataset.lang;
+      if (!selectedLang) return;
+      applyLanguage(selectedLang);
+      languageOptions.forEach((button) => {
+        button.classList.toggle('is-active', button.dataset.lang === selectedLang);
+      });
+      closeLanguageMenu();
+    });
   });
 
   languageToggle?.addEventListener('click', toggleLanguageMenu);
@@ -298,6 +386,33 @@ const initApp = () => {
       showCopyStatus('copyFailed');
     }
   });
+
+  const createFallingLeaf = () => {
+    const leaf = document.createElement('div');
+    const duration = 6.2 + Math.random() * 3.4;
+    const size = 10 + Math.random() * 18;
+    leaf.className = 'falling-leaf';
+    leaf.setAttribute('aria-hidden', 'true');
+    leaf.style.left = `${Math.random() * 100}vw`;
+    leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
+    leaf.style.setProperty('--sway-duration', `${(1.6 + Math.random() * 1.5).toFixed(2)}s`);
+    leaf.style.setProperty('--spin-duration', `${(4.8 + Math.random() * 2.6).toFixed(2)}s`);
+    leaf.style.setProperty('--start-x', `${Math.random() * 12 - 6}px`);
+    leaf.style.setProperty('--drift-x', `${Math.random() * 110 - 55}px`);
+    leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
+    leaf.style.setProperty('--leaf-opacity', `${(0.4 + Math.random() * 0.4).toFixed(2)}`);
+    document.body.appendChild(leaf);
+    const removeLeaf = () => leaf.remove();
+    leaf.addEventListener('animationend', removeLeaf, { once: true });
+    window.setTimeout(removeLeaf, (duration + 1.8) * 1000);
+  };
+
+  createFallingLeaf();
+  const scheduleLeaf = () => {
+    createFallingLeaf();
+    window.setTimeout(scheduleLeaf, 300 + Math.random() * 300);
+  };
+  window.setTimeout(scheduleLeaf, 360);
 };
 
 if (document.readyState === 'loading') {
