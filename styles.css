@@ -17,7 +17,7 @@
 
 body,
 html {
-  background: #ffffff;
+  background: transparent;
 }
 
 body {
@@ -42,13 +42,13 @@ body::after {
 .olive-branch-bg {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   opacity: 1;
   background-repeat: repeat;
   background-size: 1000px 700px;
   background-attachment: fixed;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1000' height='700' viewBox='0 0 1000 700'%3E%3Crect width='1000' height='700' fill='%23ffffff'/%3E%3Cg fill='%23000000'%3E%3Cpath d='M42 -30 C20 140 22 300 44 470 C60 585 58 670 48 730 L104 730 C120 560 122 390 108 220 C98 120 100 36 116 -30 Z'/%3E%3Cpath d='M958 -30 C980 140 978 300 956 470 C940 585 942 670 952 730 L896 730 C880 560 878 390 892 220 C902 120 900 36 884 -30 Z'/%3E%3Cpath d='M102 110 C138 122 188 150 244 194 C248 202 240 212 228 214 C182 188 142 164 104 152 Z'/%3E%3Cpath d='M108 250 C156 256 214 292 286 350 C292 360 284 370 270 370 C214 324 158 294 108 286 Z'/%3E%3Cpath d='M112 410 C168 398 236 420 318 472 C326 482 318 494 304 494 C238 452 174 434 114 446 Z'/%3E%3Cpath d='M898 120 C862 130 812 158 758 202 C752 210 760 220 772 222 C818 194 858 170 896 160 Z'/%3E%3Cpath d='M892 264 C842 270 786 304 714 360 C706 370 716 380 730 380 C786 332 842 304 892 300 Z'/%3E%3Cpath d='M888 430 C834 418 764 438 682 490 C674 500 684 512 698 512 C764 468 828 450 886 464 Z'/%3E%3Cpath d='M238 188 C252 182 268 182 282 188 C268 194 252 194 238 188 Z'/%3E%3Cpath d='M262 208 C276 202 294 202 308 208 C294 214 276 214 262 208 Z'/%3E%3Cpath d='M278 344 C294 338 312 338 328 344 C312 350 294 350 278 344 Z'/%3E%3Cpath d='M306 366 C322 360 340 360 356 366 C340 372 322 372 306 366 Z'/%3E%3Cpath d='M304 466 C320 460 340 460 356 466 C340 472 320 472 304 466 Z'/%3E%3Cpath d='M334 486 C350 480 370 480 386 486 C370 492 350 492 334 486 Z'/%3E%3Cpath d='M718 196 C734 190 752 190 768 196 C752 202 734 202 718 196 Z'/%3E%3Cpath d='M690 218 C706 212 724 212 740 218 C724 224 706 224 690 218 Z'/%3E%3Cpath d='M672 354 C688 348 706 348 722 354 C706 360 688 360 672 354 Z'/%3E%3Cpath d='M644 376 C660 370 678 370 694 376 C678 382 660 382 644 376 Z'/%3E%3Cpath d='M636 484 C652 478 670 478 686 484 C670 490 652 490 636 484 Z'/%3E%3Cpath d='M608 508 C624 502 642 502 658 508 C642 514 624 514 608 508 Z'/%3E%3Cellipse cx='116' cy='288' rx='9' ry='12'/%3E%3Cellipse cx='892' cy='300' rx='9' ry='12'/%3E%3Cellipse cx='118' cy='446' rx='9' ry='12'/%3E%3Cellipse cx='884' cy='464' rx='9' ry='12'/%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1000' height='700' viewBox='0 0 1000 700'%3E%3Cg fill='%23000000'%3E%3Cpath d='M38 -40 C20 120 18 290 38 470 C56 610 56 700 44 740 L116 740 C132 560 132 392 116 224 C104 118 104 20 124 -40 Z'/%3E%3Cpath d='M962 -40 C980 120 982 290 962 470 C944 610 944 700 956 740 L884 740 C868 560 868 392 884 224 C896 118 896 20 876 -40 Z'/%3E%3Cpath d='M108 120 C162 132 220 164 286 212 C292 220 286 232 270 234 C214 198 162 172 108 160 Z'/%3E%3Cpath d='M112 272 C172 278 242 318 326 380 C334 390 326 402 308 402 C238 348 172 316 112 310 Z'/%3E%3Cpath d='M116 424 C178 414 252 440 346 504 C354 514 344 526 326 526 C252 474 184 454 116 462 Z'/%3E%3Cpath d='M892 136 C838 148 780 180 714 228 C708 236 714 248 730 250 C786 214 838 188 892 176 Z'/%3E%3Cpath d='M888 286 C828 294 758 334 674 396 C666 406 674 418 692 418 C762 364 828 332 888 324 Z'/%3E%3Cpath d='M884 438 C822 428 748 454 654 518 C646 528 656 540 674 540 C748 488 816 468 884 476 Z'/%3E%3Cpath d='M278 206 C292 198 308 198 322 206 C308 214 292 214 278 206 Z'/%3E%3Cpath d='M312 228 C326 220 342 220 356 228 C342 236 326 236 312 228 Z'/%3E%3Cpath d='M318 374 C334 366 352 366 368 374 C352 382 334 382 318 374 Z'/%3E%3Cpath d='M358 400 C374 392 392 392 408 400 C392 408 374 408 358 400 Z'/%3E%3Cpath d='M334 498 C350 490 370 490 386 498 C370 506 350 506 334 498 Z'/%3E%3Cpath d='M376 524 C392 516 412 516 428 524 C412 532 392 532 376 524 Z'/%3E%3Cpath d='M678 222 C694 214 712 214 728 222 C712 230 694 230 678 222 Z'/%3E%3Cpath d='M644 246 C658 238 674 238 688 246 C674 254 658 254 644 246 Z'/%3E%3Cpath d='M632 390 C648 382 666 382 682 390 C666 398 648 398 632 390 Z'/%3E%3Cpath d='M592 416 C608 408 626 408 642 416 C626 424 608 424 592 416 Z'/%3E%3Cpath d='M616 516 C632 508 652 508 668 516 C652 524 632 524 616 516 Z'/%3E%3Cpath d='M572 542 C588 534 608 534 624 542 C608 550 588 550 572 542 Z'/%3E%3Cellipse cx='116' cy='312' rx='9' ry='13'/%3E%3Cellipse cx='118' cy='462' rx='9' ry='13'/%3E%3Cellipse cx='884' cy='326' rx='9' ry='13'/%3E%3Cellipse cx='882' cy='476' rx='9' ry='13'/%3E%3C/g%3E%3C/svg%3E");
 }
 
 .bg-leaf {
@@ -291,15 +291,15 @@ canvas {
   height: calc(var(--leaf-size, 110px) * 0.22);
   pointer-events: none;
   opacity: var(--leaf-opacity, 0.9);
-  background: #000000;
-  clip-path: path('M 0 50 C 10 26 30 12 50 12 C 70 12 90 26 100 50 C 90 74 70 88 50 88 C 30 88 10 74 0 50 Z');
+  background: #3f5a1f;
+  clip-path: path('M 0 50 C 11 27 31 12 50 12 C 69 12 89 27 100 50 C 89 73 69 88 50 88 C 31 88 11 73 0 50 Z');
   animation:
-    leafFall var(--fall-duration, 8s) cubic-bezier(0.38, 0.06, 0.62, 0.94) forwards,
-    leafSway var(--sway-duration, 2.8s) ease-in-out infinite,
-    leafSpin var(--spin-duration, 7.4s) ease-in-out infinite;
+    leafDropNew var(--fall-duration, 8s) cubic-bezier(0.38, 0.06, 0.62, 0.94) forwards,
+    leafSwayNew var(--sway-duration, 2.8s) ease-in-out infinite,
+    leafTurnNew var(--spin-duration, 7.4s) ease-in-out infinite;
 }
 
-@keyframes leafFall {
+@keyframes leafDropNew {
   0% {
     transform: translate3d(var(--start-x, 0), -15vh, 0) rotate(0deg);
   }
@@ -311,7 +311,7 @@ canvas {
   }
 }
 
-@keyframes leafSway {
+@keyframes leafSwayNew {
   0%,
   100% {
     margin-left: -10px;
@@ -321,7 +321,7 @@ canvas {
   }
 }
 
-@keyframes leafSpin {
+@keyframes leafTurnNew {
   from {
     rotate: -4deg;
   }
