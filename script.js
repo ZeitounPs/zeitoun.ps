@@ -389,22 +389,28 @@ const initApp = () => {
 
   const createFallingLeaf = () => {
     const leaf = document.createElement('div');
-    const duration = 8.2 + Math.random() * 3.6;
-    const size = 96 + Math.random() * 36;
+    const duration = 10.5 + Math.random() * 4.4;
+    const size = 66 + Math.random() * 22;
     leaf.className = 'falling-leaf';
     leaf.setAttribute('aria-hidden', 'true');
     leaf.style.left = `${Math.random() * 100}vw`;
     leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
-    leaf.style.setProperty('--sway-duration', `${(2.6 + Math.random() * 1.4).toFixed(2)}s`);
-    leaf.style.setProperty('--spin-duration', `${(7.2 + Math.random() * 2.2).toFixed(2)}s`);
-    leaf.style.setProperty('--start-x', `${Math.random() * 12 - 6}px`);
-    leaf.style.setProperty('--drift-x', `${Math.random() * 110 - 55}px`);
+    leaf.style.setProperty('--sway-duration', `${(2.1 + Math.random() * 1.2).toFixed(2)}s`);
+    leaf.style.setProperty('--spin-duration', `${(6.2 + Math.random() * 2.4).toFixed(2)}s`);
+    leaf.style.setProperty('--start-x', `${Math.random() * 18 - 9}px`);
+    leaf.style.setProperty('--drift-x', `${Math.random() * 145 - 72}px`);
     leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
     leaf.style.setProperty('--leaf-opacity', `${(0.86 + Math.random() * 0.14).toFixed(2)}`);
     document.body.appendChild(leaf);
     const removeLeaf = () => leaf.remove();
-    leaf.addEventListener('animationend', removeLeaf, { once: true });
-    window.setTimeout(removeLeaf, (duration + 1.8) * 1000);
+    leaf.addEventListener(
+      'animationend',
+      (event) => {
+        if (event.animationName === 'leafDropNew') removeLeaf();
+      },
+      { once: true }
+    );
+    window.setTimeout(removeLeaf, (duration + 4.5) * 1000);
   };
 
   createFallingLeaf();
