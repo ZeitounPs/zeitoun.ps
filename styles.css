@@ -311,10 +311,7 @@ canvas {
     10% 70%
   );
   transform-origin: center;
-  animation:
-    oliveLeafFall var(--fall-duration, 11s) linear infinite,
-    oliveLeafSway var(--sway-duration, 3.2s) ease-in-out infinite,
-    oliveLeafSpin var(--spin-duration, 6.8s) ease-in-out infinite;
+  animation: oliveLeafMove var(--fall-duration, 11s) linear infinite;
 }
 
 .falling-leaf::before,
@@ -340,46 +337,21 @@ canvas {
   background: radial-gradient(120% 80% at 22% 28%, rgba(255, 255, 255, 0.28) 0%, transparent 72%);
 }
 
-@keyframes oliveLeafFall {
+@keyframes oliveLeafMove {
   0% {
     transform: translate3d(var(--start-x, 0), -20vh, 0) rotate(-16deg);
   }
-  20% {
-    transform: translate3d(calc(var(--start-x, 0) + (var(--drift-x, 8px) * 0.2)), 18vh, 0) rotate(8deg);
-  }
-  45% {
-    transform: translate3d(calc(var(--start-x, 0) - (var(--drift-x, 8px) * 0.14)), 46vh, 0) rotate(-11deg);
-  }
-  70% {
-    transform: translate3d(calc(var(--start-x, 0) + (var(--drift-x, 8px) * 0.72)), 82vh, 0) rotate(12deg);
-  }
-  100% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 8px)), 132vh, 0) rotate(-14deg);
-  }
-}
-
-@keyframes oliveLeafSway {
-  0%,
-  100% {
-    margin-left: -12px;
-  }
-  35% {
-    margin-left: 6px;
+  25% {
+    transform: translate3d(calc(var(--start-x, 0) + 6px), 25vh, 0) rotate(6deg);
   }
   50% {
-    margin-left: 14px;
+    transform: translate3d(calc(var(--start-x, 0) - 8px), 55vh, 0) rotate(-8deg);
   }
   75% {
-    margin-left: -4px;
+    transform: translate3d(calc(var(--start-x, 0) + 10px), 85vh, 0) rotate(10deg);
   }
-}
-
-@keyframes oliveLeafSpin {
-  from {
-    rotate: -9deg;
-  }
-  to {
-    rotate: 11deg;
+  100% {
+    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 8px)), 130vh, 0) rotate(-12deg);
   }
 }
 
