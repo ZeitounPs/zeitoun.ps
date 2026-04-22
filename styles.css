@@ -340,20 +340,24 @@ canvas {
     transform: translate3d(var(--start-x, 0), -20vh, 0) rotate(0deg);
   }
 
-  25% {
-    transform: translate3d(calc(var(--start-x, 0) + 10px), 25vh, 0) rotate(8deg);
+  20% {
+    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 10px)), 20vh, 0) rotate(8deg);
   }
 
-  50% {
-    transform: translate3d(calc(var(--start-x, 0) - 12px), 55vh, 0) rotate(-6deg);
+  40% {
+    transform: translate3d(calc(var(--start-x, 0) - var(--drift-x, 10px)), 40vh, 0) rotate(-6deg);
   }
 
-  75% {
-    transform: translate3d(calc(var(--start-x, 0) + 8px), 80vh, 0) rotate(10deg);
+  60% {
+    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 10px)), 60vh, 0) rotate(10deg);
+  }
+
+  80% {
+    transform: translate3d(calc(var(--start-x, 0) - var(--drift-x, 10px)), 80vh, 0) rotate(-8deg);
   }
 
   100% {
-    transform: translate3d(calc(var(--start-x, 0) - 6px), 110vh, 0) rotate(-12deg);
+    transform: translate3d(calc(var(--start-x, 0)), 110vh, 0) rotate(-12deg);
   }
 }
 
