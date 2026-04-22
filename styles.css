@@ -279,7 +279,7 @@ canvas {
 
 .falling-leaf {
   position: fixed;
-  top: -16vh;
+  top: -20vh;
   left: 0;
   width: var(--leaf-size, 42px);
   height: calc(var(--leaf-size, 42px) * 0.24);
@@ -349,7 +349,7 @@ canvas {
     transform: translate3d(calc(var(--start-x, 0) + 10px), 85vh, 0) rotate(10deg);
   }
   100% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 8px)), 130vh, 0) rotate(-12deg);
+    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 8px)), 110vh, 0) rotate(-12deg);
   }
 }
 
