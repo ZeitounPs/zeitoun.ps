@@ -397,8 +397,6 @@ const initApp = () => {
     leaf.setAttribute('aria-hidden', 'true');
     leaf.style.left = `${Math.random() * 100}vw`;
     leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
-    leaf.style.setProperty('--sway-duration', `${(2.3 + Math.random() * 1.8).toFixed(2)}s`);
-    leaf.style.setProperty('--spin-duration', `${(4.8 + Math.random() * 3).toFixed(2)}s`);
     leaf.style.setProperty('--start-x', `${Math.random() * 24 - 12}px`);
     leaf.style.setProperty('--drift-x', `${Math.random() * 170 - 85}px`);
     leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
@@ -408,7 +406,7 @@ const initApp = () => {
     leaf.addEventListener(
       'animationend',
       (event) => {
-        if (event.animationName === 'oliveLeafFall') removeLeaf();
+        if (event.animationName === 'oliveLeafMove') removeLeaf();
       },
       { once: true }
     );
