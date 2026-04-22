@@ -54,7 +54,7 @@ body::after {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  background-image: url("ot.png");
+  background-image: url("ot.PNG");
   background-color: #ffffff;
 }
 
