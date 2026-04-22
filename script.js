@@ -314,6 +314,7 @@ const initApp = () => {
   const copyStatus = document.querySelector('#copy-status');
   const chartCanvas = document.querySelector('#btcChart');
   const chartPrice = document.querySelector('#chart-price');
+  const leafLayer = document.querySelector('.leaf-layer');
 
   const showCopyStatus = (key) => {
     if (!copyStatus) return;
@@ -388,9 +389,10 @@ const initApp = () => {
   });
 
   const createFallingLeaf = () => {
+    if (!leafLayer) return;
     const leaf = document.createElement('div');
     const duration = 9.2 + Math.random() * 5.2;
-    const size = 42 + Math.random() * 18;
+    const size = 32 + Math.random() * 13;
     leaf.className = 'falling-leaf';
     leaf.setAttribute('aria-hidden', 'true');
     leaf.style.left = `${Math.random() * 100}vw`;
@@ -401,7 +403,7 @@ const initApp = () => {
     leaf.style.setProperty('--drift-x', `${Math.random() * 170 - 85}px`);
     leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
     leaf.style.setProperty('--leaf-opacity', `${(0.74 + Math.random() * 0.22).toFixed(2)}`);
-    document.body.appendChild(leaf);
+    leafLayer.appendChild(leaf);
     const removeLeaf = () => leaf.remove();
     leaf.addEventListener(
       'animationend',
