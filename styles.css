@@ -17,18 +17,19 @@
 
 body,
 html {
-  background: transparent;
+  margin: 0;
+  height: 100%;
+  background: #ffffff;
 }
 
 body {
-  margin: 0;
   min-height: 100vh;
   color: var(--text);
   font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
   line-height: 1.7;
   overflow-x: hidden;
+  background-color: #ffffff;
   position: relative;
-  isolation: isolate;
 }
 
 
@@ -41,39 +42,36 @@ body::after {
 }
 
 
-.olive-branch-bg {
+.background {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: -2;
   pointer-events: none;
   opacity: 1;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-attachment: fixed;
-  background-image: url("olive-tree-bg.png");
+  background-image: url("bg.jpg");
+  background-color: #ffffff;
 }
 
-.bg-leaf {
-  display: none;
+.leaf-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
 }
 
-.leaf-1 {
-  top: 5%;
-  left: -14%;
-  transform: rotate(-20deg);
-}
-
-.leaf-2 {
-  top: 42%;
-  right: -16%;
-  transform: rotate(18deg);
-}
-
-.leaf-3 {
-  top: 78%;
-  left: 2%;
-  transform: rotate(-28deg);
+.content {
+  position: relative;
+  z-index: 1;
 }
 
 .container {
@@ -87,7 +85,7 @@ main,
 .site-footer,
 .floating-language {
   position: relative;
-  z-index: 20;
+  z-index: 1;
 }
 
 .site-header {
@@ -289,9 +287,9 @@ canvas {
   position: fixed;
   top: -16vh;
   left: 0;
-  z-index: 12;
-  width: var(--leaf-size, 56px);
-  height: calc(var(--leaf-size, 56px) * 0.24);
+  z-index: -1;
+  width: var(--leaf-size, 42px);
+  height: calc(var(--leaf-size, 42px) * 0.24);
   pointer-events: none;
   opacity: var(--leaf-opacity, 0.88);
   background: linear-gradient(
