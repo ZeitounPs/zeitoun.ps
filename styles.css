@@ -44,11 +44,8 @@ body::after {
 
 .background {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -2;
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
   opacity: 1;
   background-repeat: no-repeat;
@@ -61,17 +58,14 @@ body::after {
 
 .leaf-layer {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  inset: 0;
   pointer-events: none;
-  z-index: -1;
+  z-index: 1;
 }
 
 .content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .container {
@@ -85,7 +79,7 @@ main,
 .site-footer,
 .floating-language {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .site-header {
@@ -287,7 +281,7 @@ canvas {
   position: fixed;
   top: -16vh;
   left: 0;
-  z-index: -1;
+  z-index: 1;
   width: var(--leaf-size, 42px);
   height: calc(var(--leaf-size, 42px) * 0.24);
   pointer-events: none;
