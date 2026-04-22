@@ -17,26 +17,25 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="olive-branch-bg" aria-hidden="true"></div>
-    <div class="bg-leaf leaf-1" aria-hidden="true"></div>
-    <div class="bg-leaf leaf-2" aria-hidden="true"></div>
-    <div class="bg-leaf leaf-3" aria-hidden="true"></div>
+    <div class="background" aria-hidden="true"></div>
+    <div class="leaf-layer" aria-hidden="true"></div>
+    <div class="content">
 
-    <header class="site-header container" id="home">
-      <a class="brand" href="#home" aria-label="FREE PALESTINE $ZTN home">
-        <span class="wordmark-main" data-wordmark="FREE PALESTINE" aria-hidden="true">FREE PALESTINE</span>
-        <span class="wordmark-sub" data-wordmark="$ZTN" aria-hidden="true">$ZTN</span>
-      </a>
-    </header>
+      <header class="site-header container" id="home">
+        <a class="brand" href="#home" aria-label="FREE PALESTINE $ZTN home">
+          <span class="wordmark-main" data-wordmark="FREE PALESTINE" aria-hidden="true">FREE PALESTINE</span>
+          <span class="wordmark-sub" data-wordmark="$ZTN" aria-hidden="true">$ZTN</span>
+        </a>
+      </header>
 
-    <div class="ca-strip container">
-      <button id="copy-ca" class="btn ca-btn" type="button" data-ca="TBA" data-i18n="copyCA">
-        Copy CA Address
-      </button>
-      <span id="copy-status" role="status" aria-live="polite"></span>
-    </div>
+      <div class="ca-strip container">
+        <button id="copy-ca" class="btn ca-btn" type="button" data-ca="TBA" data-i18n="copyCA">
+          Copy CA Address
+        </button>
+        <span id="copy-status" role="status" aria-live="polite"></span>
+      </div>
 
-    <main>
+      <main>
       <section class="hero container">
         <h1 data-i18n="heroTitle">FREE PALESTINE（$ZTN）は、人類の連帯を具現化する一形式です。</h1>
       </section>
@@ -99,20 +98,21 @@
           </a>
         </div>
       </section>
-    </main>
+      </main>
 
-    <footer class="site-footer container">
-      <p data-i18n="footer">© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.</p>
-    </footer>
+      <footer class="site-footer container">
+        <p data-i18n="footer">© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.</p>
+      </footer>
 
-    <div class="floating-language" aria-label="Language switcher">
-      <button id="language-toggle" type="button" class="lang-fab" aria-expanded="false">🌐</button>
-      <div id="language-menu" class="lang-menu" hidden>
-        <div class="lang-options" role="menu" aria-label="Language">
-          <button class="lang-option" type="button" data-lang="en" role="menuitem">EN</button>
-          <button class="lang-option" type="button" data-lang="fr" role="menuitem">FR</button>
-          <button class="lang-option" type="button" data-lang="ar" role="menuitem">AR</button>
-          <button class="lang-option" type="button" data-lang="ja" role="menuitem">JA</button>
+      <div class="floating-language" aria-label="Language switcher">
+        <button id="language-toggle" type="button" class="lang-fab" aria-expanded="false">🌐</button>
+        <div id="language-menu" class="lang-menu" hidden>
+          <div class="lang-options" role="menu" aria-label="Language">
+            <button class="lang-option" type="button" data-lang="en" role="menuitem">EN</button>
+            <button class="lang-option" type="button" data-lang="fr" role="menuitem">FR</button>
+            <button class="lang-option" type="button" data-lang="ar" role="menuitem">AR</button>
+            <button class="lang-option" type="button" data-lang="ja" role="menuitem">JA</button>
+          </div>
         </div>
       </div>
     </div>
