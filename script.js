@@ -398,7 +398,7 @@ const initApp = () => {
     leaf.style.left = `${Math.random() * 100}vw`;
     leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
     leaf.style.setProperty('--start-x', `${Math.random() * 24 - 12}px`);
-    leaf.style.setProperty('--drift-x', `${Math.random() * 170 - 85}px`);
+    leaf.style.setProperty('--drift-x', `${Math.random() * 40 - 20}px`);
     leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
     leaf.style.setProperty('--leaf-opacity', `${(0.74 + Math.random() * 0.22).toFixed(2)}`);
     leafLayer.appendChild(leaf);
