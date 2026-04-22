@@ -312,7 +312,7 @@ canvas {
   );
   transform-origin: center;
   animation:
-    oliveLeafFall var(--fall-duration, 11s) linear forwards,
+    oliveLeafFall var(--fall-duration, 11s) linear infinite,
     oliveLeafSway var(--sway-duration, 3.2s) ease-in-out infinite,
     oliveLeafSpin var(--spin-duration, 6.8s) ease-in-out infinite;
 }
