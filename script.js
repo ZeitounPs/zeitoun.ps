@@ -298,43 +298,33 @@ const applyLanguage = (lang) => {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
-  const nodes = document.querySelectorAll('[data-i18n]');
-  nodes.forEach((node) => {
+  document.querySelectorAll('[data-i18n]').forEach((node) => {
     const key = node.dataset.i18n;
-    if (key && content[key]) {
-      node.textContent = content[key];
-    }
+    node.textContent = content[key] || translations.en[key] || '';
   });
-
-  const copyCAButton = document.getElementById('copy-ca');
-  if (copyCAButton && content.copyCA) {
-    copyCAButton.textContent = content.copyCA;
-  }
 
   localStorage.setItem('ztn-language', lang);
 };
 
 const initApp = () => {
-  const copyCAButton = document.getElementById('copy-ca');
-  const copyStatus = document.getElementById('copy-status');
-  const leafLayer = document.querySelector('.leaf-layer');
-  const languageToggle = document.getElementById('language-toggle');
-  const languageMenu = document.getElementById('language-menu');
   const languageOptions = document.querySelectorAll('.lang-option');
-  const chartCanvas = document.getElementById('btcChart');
-  const chartPrice = document.getElementById('chart-price');
-  let copyStatusTimer = null;
+  const languageToggle = document.querySelector('#language-toggle');
+  const languageMenu = document.querySelector('#language-menu');
+  const copyCAButton = document.querySelector('#copy-ca');
+  const copyStatus = document.querySelector('#copy-status');
+  const chartCanvas = document.querySelector('#btcChart');
+  const chartPrice = document.querySelector('#chart-price');
+  const leafLayer = document.querySelector('.leaf-layer');
 
-  const showCopyStatus = (messageKey) => {
+  const showCopyStatus = (key) => {
     if (!copyStatus) return;
     const lang = getActiveLang();
     const content = translations[lang] || translations.en;
-    copyStatus.textContent = content[messageKey] || '';
-    if (copyStatusTimer) {
-      window.clearTimeout(copyStatusTimer);
-    }
-    copyStatusTimer = window.setTimeout(() => {
-      copyStatus.textContent = '';
+    copyStatus.textContent = content[key] || '';
+    window.setTimeout(() => {
+      if (copyStatus.textContent === (content[key] || '')) {
+        copyStatus.textContent = '';
+      }
     }, 2200);
   };
 
@@ -344,8 +334,9 @@ const initApp = () => {
     languageToggle.setAttribute('aria-expanded', 'false');
   };
 
-  const toggleLanguageMenu = () => {
+  const toggleLanguageMenu = (event) => {
     if (!languageMenu || !languageToggle) return;
+    if (event) event.stopPropagation();
     const willOpen = languageMenu.hidden;
     languageMenu.hidden = !willOpen;
     languageToggle.setAttribute('aria-expanded', String(willOpen));
