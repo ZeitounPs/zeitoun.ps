@@ -390,6 +390,8 @@ const initApp = () => {
 
   const createFallingLeaf = () => {
     if (!leafLayer) return;
+    const currentLeaves = document.querySelectorAll('.falling-leaf');
+    if (currentLeaves.length >= 15) return;
     const leaf = document.createElement('div');
     const duration = 9.2 + Math.random() * 5.2;
     const size = 32 + Math.random() * 13;
