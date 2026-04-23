@@ -54,7 +54,7 @@ body::after {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  background-image: url("a.png");
+  background-image: url("ot.png");
   background-color: #ffffff;
 }
 
@@ -139,6 +139,13 @@ main,
 
 .wordmark-sub {
   font-size: clamp(1.6rem, 8.8vw, 2.9rem);
+}
+
+
+.coin-logo {
+  width: clamp(72px, 15vw, 120px);
+  height: auto;
+  display: block;
 }
 
 .brand-caption {
@@ -283,8 +290,8 @@ canvas {
   position: fixed;
   top: -16vh;
   left: 0;
-  width: var(--leaf-size);
-  height: calc(var(--leaf-size) * 0.24);
+  width: var(--leaf-size, 42px);
+  height: calc(var(--leaf-size, 42px) * 0.24);
   pointer-events: none;
   opacity: var(--leaf-opacity, 0.88);
   background: linear-gradient(
