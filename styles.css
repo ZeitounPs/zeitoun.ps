@@ -142,17 +142,43 @@ main,
 }
 
 
-.coin-logo {
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.coin-3d {
   width: clamp(144px, 30vw, 240px);
+  aspect-ratio: 1 / 1;
   max-width: 85vw;
-  height: auto;
   display: block;
+  position: relative;
   transform-style: preserve-3d;
-  backface-visibility: hidden;
   animation: coinSpin3d 14s linear infinite;
   will-change: transform;
 }
 
+.coin-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  backface-visibility: hidden;
+}
+
+.coin-face.back {
+  transform: rotateY(180deg);
+}
+
+/* CSSの3Dレンダリング仕様に基づいて正しく実装すること */
 @keyframes coinSpin3d {
   0% {
     transform: perspective(900px) rotateX(6deg) rotateY(0deg);
@@ -258,13 +284,12 @@ h2 {
 }
 
 .chart-container {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  position: relative;
+  width: 100%;
   min-height: 260px;
-  height: 260px !important;
-  max-height: 260px !important;
+  max-height: 260px;
   overflow: hidden !important;
+  contain: size layout paint;
 }
 
 canvas,
@@ -307,35 +332,40 @@ canvas {
   position: fixed;
   top: -16vh;
   left: 0;
-  width: var(--leaf-size, 42px);
-  height: calc(var(--leaf-size, 42px) * 0.24);
+  width: var(--leaf-size, 16px);
+  height: calc(var(--leaf-size, 16px) * 0.34);
   pointer-events: none;
-  opacity: var(--leaf-opacity, 0.88);
+  opacity: var(--leaf-opacity, 0.66);
   background: linear-gradient(
-    106deg,
-    rgba(214, 206, 178, 0.95) 0%,
-    rgba(170, 164, 136, 0.95) 32%,
-    rgba(118, 126, 82, 0.96) 62%,
-    rgba(86, 96, 61, 0.96) 100%
+    112deg,
+    color-mix(in srgb, var(--leaf-base, #b8ad87) 84%, #efe7ce 16%) 0%,
+    var(--leaf-base, #b8ad87) 36%,
+    color-mix(in srgb, var(--leaf-base, #b8ad87) 80%, #8d825f 20%) 70%,
+    color-mix(in srgb, var(--leaf-base, #b8ad87) 74%, #72684c 26%) 100%
   );
-  border-radius: 100% 0 100% 0 / 55% 0 55% 0;
-  box-shadow: inset 0 0 0.7px rgba(255, 255, 255, 0.34);
+  border-radius: 100% 0 100% 0 / 56% 0 56% 0;
+  box-shadow:
+    inset 0 0 1px rgba(255, 255, 246, 0.4),
+    0 0 1px rgba(62, 56, 40, 0.2);
+  filter: contrast(1.06) saturate(0.84);
   clip-path: polygon(
     0% 52%,
-    10% 32%,
-    28% 16%,
-    50% 10%,
-    72% 16%,
-    90% 34%,
+    12% 33%,
+    30% 16%,
+    50% 9%,
+    70% 16%,
+    88% 34%,
     100% 52%,
-    90% 70%,
-    72% 88%,
+    88% 70%,
+    70% 88%,
     50% 96%,
-    28% 88%,
-    10% 70%
+    30% 88%,
+    12% 70%
   );
   transform-origin: center;
-  animation: oliveLeafMove var(--fall-duration, 11s) linear infinite;
+  animation: oliveLeafMove var(--fall-duration, 16s) cubic-bezier(0.38, 0.03, 0.62, 0.99) infinite;
+  animation-delay: var(--fall-delay, 0s);
+  will-change: transform, opacity;
 }
 
 .falling-leaf::before,
@@ -347,35 +377,71 @@ canvas {
 }
 
 .falling-leaf::before {
-  left: 8%;
-  right: 8%;
-  top: 50%;
+  left: 10%;
+  right: 10%;
+  top: 49%;
   bottom: auto;
-  height: 1.2px;
+  height: 1px;
   border-radius: 999px;
-  background: rgba(237, 236, 220, 0.72);
-  box-shadow: 0 0 0.8px rgba(237, 236, 220, 0.48);
+  background: rgba(236, 232, 210, 0.66);
+  box-shadow: 0 0 0.8px rgba(236, 232, 210, 0.4);
 }
 
 .falling-leaf::after {
-  background: radial-gradient(120% 80% at 22% 28%, rgba(255, 255, 255, 0.28) 0%, transparent 72%);
+  background: radial-gradient(120% 84% at 24% 26%, rgba(255, 255, 255, 0.22) 0%, transparent 74%);
 }
 
 @keyframes oliveLeafMove {
   0% {
-    transform: translate3d(var(--start-x, 0), -20vh, 0) rotate(-16deg);
+    transform: translate3d(var(--start-x, 0), -18vh, 0)
+      rotateZ(calc(var(--rot-z, 9deg) * -0.6))
+      rotateX(calc(var(--rot-x, 5deg) * -0.4))
+      rotateY(calc(var(--rot-y, 7deg) * 0.35));
+    opacity: 0;
   }
-  25% {
-    transform: translate3d(calc(var(--start-x, 0) + 6px), 25vh, 0) rotate(6deg);
+  10% {
+    opacity: var(--leaf-opacity, 0.66);
   }
-  50% {
-    transform: translate3d(calc(var(--start-x, 0) - 8px), 55vh, 0) rotate(-8deg);
+  22% {
+    transform: translate3d(
+        calc(var(--start-x, 0) + var(--sway-a, 7px)),
+        18vh,
+        0
+      )
+      rotateZ(calc(var(--rot-z, 9deg) * 0.25))
+      rotateX(calc(var(--rot-x, 5deg) * 0.6))
+      rotateY(calc(var(--rot-y, 7deg) * -0.35));
   }
-  75% {
-    transform: translate3d(calc(var(--start-x, 0) + 10px), 85vh, 0) rotate(10deg);
+  47% {
+    transform: translate3d(
+        calc(var(--start-x, 0) - var(--sway-b, 9px)),
+        48vh,
+        0
+      )
+      rotateZ(calc(var(--rot-z, 9deg) * -0.2))
+      rotateX(calc(var(--rot-x, 5deg) * -0.45))
+      rotateY(calc(var(--rot-y, 7deg) * 0.4));
+  }
+  72% {
+    transform: translate3d(
+        calc(var(--start-x, 0) + var(--sway-c, 8px)),
+        78vh,
+        0
+      )
+      rotateZ(calc(var(--rot-z, 9deg) * 0.35))
+      rotateX(calc(var(--rot-x, 5deg) * 0.58))
+      rotateY(calc(var(--rot-y, 7deg) * -0.3));
   }
   100% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 8px)), 130vh, 0) rotate(-12deg);
+    transform: translate3d(
+        calc(var(--start-x, 0) + var(--drift-x, 22px)),
+        126vh,
+        0
+      )
+      rotateZ(calc(var(--rot-z, 9deg) * -0.45))
+      rotateX(calc(var(--rot-x, 5deg) * -0.35))
+      rotateY(calc(var(--rot-y, 7deg) * 0.45));
+    opacity: 0;
   }
 }
 
@@ -480,15 +546,6 @@ canvas {
   background: #ffe6e6;
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-}
-
 html[dir='rtl'] body {
   font-family: 'Noto Naskh Arabic', Inter, sans-serif;
 }
@@ -511,7 +568,18 @@ html[dir='rtl'] body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .site-footer {
-    padding-bottom: 2.4rem;
+  .floating-language {
+    right: 1.3rem;
+    bottom: 1.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coin-logo,
+  .falling-leaf,
+  .icon-link,
+  .lang-fab {
+    animation: none !important;
+    transition: none !important;
   }
 }
