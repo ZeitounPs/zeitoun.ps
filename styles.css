@@ -450,6 +450,23 @@ canvas {
   font-size: 0.78rem;
 }
 
+.roadmap-visual {
+  margin-top: 0.9rem;
+  min-height: 260px;
+  max-height: 260px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+
+.roadmap-visual img {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
 .social-icons {
   display: flex;
   align-items: center;
@@ -546,6 +563,7 @@ canvas {
   background: #ffe6e6;
 }
 
+
 html[dir='rtl'] body {
   font-family: 'Noto Naskh Arabic', Inter, sans-serif;
 }
@@ -568,18 +586,7 @@ html[dir='rtl'] body {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .floating-language {
-    right: 1.3rem;
-    bottom: 1.2rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .coin-logo,
-  .falling-leaf,
-  .icon-link,
-  .lang-fab {
-    animation: none !important;
-    transition: none !important;
+  .site-footer {
+    padding-bottom: 2.4rem;
   }
 }
