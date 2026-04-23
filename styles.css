@@ -452,7 +452,7 @@ canvas {
 }
 
 .roadmap-visual {
-  margin: 0.55rem 0 0.85rem;
+  margin: 0.4rem 0 1.2rem;
   min-height: 260px;
   max-height: 260px;
   padding: 12px;
@@ -460,6 +460,10 @@ canvas {
   display: grid;
   place-items: center;
   box-sizing: border-box;
+}
+
+.roadmap-visual + .timeline {
+  margin-top: 0.35rem;
 }
 
 .roadmap-visual img {
