@@ -3,121 +3,694 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FREE PALESTINE ($ZTN) | Zeitoun</title>
-    <meta
-      name="description"
-      content="FREE PALESTINE ($ZTN) official website."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Naskh+Arabic:wght@500;700&family=Teko:wght@600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <title>Premium Coin Hero</title>
+
+    <style>
+      /* =========================
+         Base / Layout
+      ========================== */
+      :root {
+        --bg-0: #0f1117;
+        --bg-1: #171a24;
+        --text: #f2f4f8;
+        --coin-size: clamp(180px, 38vw, 320px);
+        --coin-thickness: clamp(10px, 2.2vw, 16px);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        width: 100%;
+        min-height: 100%;
+      }
+
+      body {
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(120% 70% at 50% -10%, rgba(96, 113, 173, 0.2), transparent 55%),
+          linear-gradient(180deg, var(--bg-1), var(--bg-0));
+      }
+
+      /* =========================
+         Hero Section
+      ========================== */
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto auto;
+        justify-items: center;
+        align-content: start;
+        gap: 1.2rem;
+        padding-top: clamp(24px, 6vh, 64px);
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(1.1rem, 3.8vw, 1.8rem);
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        opacity: 0.88;
+      }
+
+      /* =========================
+         Coin Scene / 3D
+      ========================== */
+      .coin-scene {
+        width: var(--coin-size);
+        height: var(--coin-size);
+        display: grid;
+        place-items: center;
+        perspective: 1100px;
+        perspective-origin: 50% 45%;
+      }
+
+      .coin-float {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        animation: floatY 6.4s ease-in-out infinite;
+        will-change: transform;
+      }
+
+      .coin {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: 50%;
+        transform-style: preserve-3d;
+        animation: spinY 8s linear infinite;
+        will-change: transform;
+        filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.4));
+      }
+
+      .face {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        overflow: hidden;
+        backface-visibility: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+      }
+
+      .face img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .face.front {
+        transform: translateZ(calc(var(--coin-thickness) / 2));
+      }
+
+      .face.back {
+        transform: rotateY(180deg) translateZ(calc(var(--coin-thickness) / 2));
+      }
+
+      /* Coin edge + lighting */
+      .edge {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        transform: rotateY(90deg) translateZ(calc(var(--coin-thickness) / 2));
+        border: var(--coin-thickness) solid rgba(205, 214, 255, 0.36);
+        box-shadow:
+          inset 0 0 8px rgba(255, 255, 255, 0.26),
+          0 0 10px rgba(255, 255, 255, 0.08);
+      }
+
+      .shine {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.06) 22%, transparent 48%),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 40%);
+        transform: translateZ(calc(var(--coin-thickness) / 2 + 0.5px));
+      }
+
+      .coin-shadow {
+        width: clamp(130px, 28vw, 220px);
+        height: clamp(22px, 5vw, 34px);
+        border-radius: 50%;
+        background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.04) 70%);
+        transform: translateY(-10px);
+        filter: blur(1px);
+      }
+
+      @keyframes spinY {
+        0% {
+          transform: rotateX(16deg) rotateY(0deg);
+        }
+        100% {
+          transform: rotateX(16deg) rotateY(360deg);
+        }
+      }
+
+      @keyframes floatY {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .coin,
+        .coin-float {
+          animation-duration: 0.001ms;
+          animation-iteration-count: 1;
+        }
+      }
+    </style>
   </head>
+
   <body>
-    <div class="background" aria-hidden="true"></div>
-    <div class="leaf-layer" aria-hidden="true"></div>
-    <div class="content">
+    <!-- =========================
+         HTML: Hero / Coin
+    ========================== -->
+    <section class="hero" aria-label="Hero">
+      <h1>Premium Coin Rotation</h1>
 
-      <header class="site-header container" id="home">
-        <a class="brand" href="#home" aria-label="FREE PALESTINE $ZTN home">
-          <span class="wordmark-main" data-wordmark="FREE PALESTINE" aria-hidden="true">FREE PALESTINE</span>
-          <span class="wordmark-sub" data-wordmark="$ZTN" aria-hidden="true">$ZTN</span>
-        </a>
-      </header>
-
-      <div class="ca-strip container">
-        <button id="copy-ca" class="btn ca-btn" type="button" data-ca="TBA" data-i18n="copyCA">
-          Copy CA Address
-        </button>
-        <span id="copy-status" role="status" aria-live="polite"></span>
-      </div>
-
-      <main>
-      <section class="hero container">
-        <h1 data-i18n="heroTitle">FREE PALESTINE（$ZTN）は、人類の連帯を具現化する一形式です。</h1>
-      </section>
-
-
-      <section id="chart" class="section container">
-        <h2 data-i18n="chartTitle">BTC Chart (Temporary)</h2>
-        <p class="chart-note" data-i18n="chartNote">
-          Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.
-        </p>
-
-        <article class="chart-frame chart-container" aria-label="Temporary BTC chart">
-          <div class="chart-head">
-            <strong>BTC/USDT</strong>
-            <span id="chart-price" aria-live="polite">--</span>
-          </div>
-          <canvas id="btcChart" role="img" aria-label="BTC chart line"></canvas>
-          <p class="chart-footnote" data-i18n="chartFootnote">Simulated feed. Replace data source later.</p>
-        </article>
-      </section>
-
-
-      <section id="roadmap" class="section container">
-        <h2 data-i18n="roadmapTitle">Roadmap</h2>
-        <div class="timeline">
-          <article class="time-card">
-            <h3 data-i18n="phase1Title">Phase 1 — Foundation</h3>
-            <p data-i18n="phase1Body">Finalize branding, multilingual site, and transparency framework.</p>
-          </article>
-          <article class="time-card">
-            <h3 data-i18n="phase2Title">Phase 2 — Launch</h3>
-            <p data-i18n="phase2Body">Launch on BAGS APP and start recurring donation disclosures.</p>
-          </article>
-          <article class="time-card">
-            <h3 data-i18n="phase3Title">Phase 3 — Expansion</h3>
-            <p data-i18n="phase3Body">Grow global community participation and expand aid reporting coverage.</p>
-          </article>
-        </div>
-      </section>
-
-
-      <section id="links" class="section container">
-        <h2 data-i18n="linksTitle">Official Links</h2>
-        <div class="social-icons">
-          <a href="https://x.com/ZeitounPs" class="icon-link" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M18.244 2H21.5l-7.11 8.126L22.75 22h-6.54l-5.12-6.708L5.22 22H1.96l7.603-8.688L1.5 2h6.706l4.626 6.117L18.244 2Zm-1.146 18h1.813L7.232 3.894H5.286L17.098 20Z"
-              />
-            </svg>
-          </a>
-          <a href="https://t.me/ZeitounPs" class="icon-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M9.036 15.89 8.66 21.2c.538 0 .77-.232 1.05-.51l2.518-2.408 5.217 3.822c.957.53 1.634.252 1.892-.88l3.43-16.07c.33-1.53-.553-2.127-1.485-1.78L1.116 11.146c-1.373.53-1.352 1.296-.233 1.64l5.17 1.612L18.06 6.82c.57-.378 1.09-.168.662.21L9.036 15.89Z"
-              />
-            </svg>
-          </a>
-        </div>
-      </section>
-      </main>
-
-      <footer class="site-footer container">
-        <p data-i18n="footer">© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.</p>
-      </footer>
-
-      <div class="floating-language" aria-label="Language switcher">
-        <button id="language-toggle" type="button" class="lang-fab" aria-expanded="false">🌐</button>
-        <div id="language-menu" class="lang-menu" hidden>
-          <div class="lang-options" role="menu" aria-label="Language">
-            <button class="lang-option" type="button" data-lang="en" role="menuitem">EN</button>
-            <button class="lang-option" type="button" data-lang="fr" role="menuitem">FR</button>
-            <button class="lang-option" type="button" data-lang="ar" role="menuitem">AR</button>
-            <button class="lang-option" type="button" data-lang="ja" role="menuitem">JA</button>
+      <div class="coin-scene" aria-hidden="true">
+        <div class="coin-float">
+          <div class="coin">
+            <div class="face front">
+              <img src="coin.png" alt="" />
+            </div>
+            <div class="face back">
+              <img src="coin.png" alt="" />
+            </div>
+            <div class="edge"></div>
+            <div class="shine"></div>
           </div>
         </div>
       </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-    <script src="script.js"></script>
+      <div class="coin-shadow" aria-hidden="true"></div>
+    </section>
   </body>
 </html>
+--- styles.css ---
+:root {
+  --bg-0: #ffffff;
+  --bg-1: #ffffff;
+  --bg-2: #ffffff;
+  --text: #111111;
+  --muted: #2a2a2a;
+  --line: rgba(180, 0, 0, 0.28);
+  --olive: #b30000;
+  --olive-soft: #ffd7d7;
+  --gold: #ff6b6b;
+  --panel: rgba(255, 255, 255, 0.96);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+  background-color: #ffffff;
+  position: relative;
+}
+
+
+body::before {
+  content: none;
+}
+
+body::after {
+  content: none;
+}
+
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  opacity: 1;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url("ot.png");
+  background-color: #ffffff;
+}
+
+.leaf-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.content {
+  position: relative;
+}
+
+.container {
+  width: min(1060px, 92vw);
+  margin-inline: auto;
+}
+
+.site-header,
+.ca-strip,
+main,
+.site-footer,
+.floating-language {
+  position: relative;
+}
+
+.site-header {
+  padding-top: 2rem;
+}
+
+.brand {
+  text-decoration: none;
+  color: inherit;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 0.1rem;
+}
+
+.wordmark-main,
+.wordmark-sub {
+  font-family: Teko, Inter, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 0.92;
+  position: relative;
+  padding: 0 0.1em;
+  color: #111111;
+  text-shadow: none;
+}
+
+.wordmark-main::before,
+.wordmark-sub::before {
+  content: attr(data-wordmark);
+  position: absolute;
+  inset: 0;
+  color: #fff;
+  background:
+    repeating-linear-gradient(135deg, #111111 0 6px, #b30000 6px 12px),
+    radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.86) 1.15px, transparent 1.16px);
+  background-size:
+    auto,
+    10px 10px;
+  background-position:
+    0 0,
+    0 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-mask-image: linear-gradient(#000 0 0);
+  mask-image: linear-gradient(#000 0 0);
+  text-shadow: none;
+  pointer-events: none;
+}
+
+.wordmark-main {
+  font-size: clamp(2.2rem, 13vw, 4.4rem);
+}
+
+.wordmark-sub {
+  font-size: clamp(1.6rem, 8.8vw, 2.9rem);
+}
+
+.brand-caption {
+  color: var(--muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  max-width: min(90vw, 700px);
+}
+
+.ca-strip {
+  margin-top: 0.85rem;
+  display: grid;
+  place-items: center;
+  gap: 0.35rem;
+}
+
+.btn {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.64rem 1rem;
+  font-weight: 600;
+  color: #000000;
+  text-decoration: none;
+  background: linear-gradient(125deg, var(--olive-soft), var(--gold));
+}
+
+.ca-btn {
+  min-width: min(92vw, 420px);
+}
+
+#copy-status {
+  min-height: 1.3rem;
+  font-size: 0.83rem;
+  color: #333333;
+}
+
+.hero {
+  padding: 2.75rem 0 1.2rem;
+}
+
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  margin: 0.95rem 0;
+  font-size: clamp(1.95rem, 10vw, 3.7rem);
+}
+
+h2 {
+  margin-top: 0;
+  font-size: clamp(1.1rem, 5.2vw, 1.55rem);
+}
+
+.panel p,
+.panel li,
+.time-card p,
+.chart-note,
+.chart-footnote {
+  color: var(--muted);
+}
+
+.section {
+  margin-top: 1.8rem;
+}
+
+.grid-2,
+.timeline {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.panel,
+.time-card,
+.chart-frame {
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.panel,
+.time-card,
+.chart-frame {
+  padding: 1.25rem;
+}
+
+.panel.accent {
+  background: linear-gradient(146deg, rgba(255, 244, 244, 0.96), rgba(255, 255, 255, 0.96));
+}
+
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 260px;
+  height: 260px !important;
+  max-height: 260px !important;
+  overflow: hidden !important;
+}
+
+canvas,
+#btcChart {
+  height: 260px !important;
+  max-height: 260px !important;
+  overflow: hidden !important;
+}
+
+canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 260px !important;
+}
+
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.45rem;
+  font-size: 0.9rem;
+}
+
+#chart-price {
+  color: #b30000;
+}
+
+#btcChart {
+  width: 100%;
+  height: 260px !important;
+  max-height: 260px !important;
+  overflow: hidden !important;
+  display: block !important;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(24, 36, 18, 0.8), rgba(12, 18, 10, 0.95));
+  border: 1px solid rgba(199, 217, 176, 0.14);
+}
+
+.falling-leaf {
+  position: fixed;
+  top: -16vh;
+  left: 0;
+  width: var(--leaf-size, 42px);
+  height: calc(var(--leaf-size, 42px) * 0.24);
+  pointer-events: none;
+  opacity: var(--leaf-opacity, 0.88);
+  background: linear-gradient(
+    106deg,
+    rgba(214, 206, 178, 0.95) 0%,
+    rgba(170, 164, 136, 0.95) 32%,
+    rgba(118, 126, 82, 0.96) 62%,
+    rgba(86, 96, 61, 0.96) 100%
+  );
+  border-radius: 100% 0 100% 0 / 55% 0 55% 0;
+  box-shadow: inset 0 0 0.7px rgba(255, 255, 255, 0.34);
+  clip-path: polygon(
+    0% 52%,
+    10% 32%,
+    28% 16%,
+    50% 10%,
+    72% 16%,
+    90% 34%,
+    100% 52%,
+    90% 70%,
+    72% 88%,
+    50% 96%,
+    28% 88%,
+    10% 70%
+  );
+  transform-origin: center;
+  animation: oliveLeafMove var(--fall-duration, 11s) linear infinite;
+}
+
+.falling-leaf::before,
+.falling-leaf::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.falling-leaf::before {
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  bottom: auto;
+  height: 1.2px;
+  border-radius: 999px;
+  background: rgba(237, 236, 220, 0.72);
+  box-shadow: 0 0 0.8px rgba(237, 236, 220, 0.48);
+}
+
+.falling-leaf::after {
+  background: radial-gradient(120% 80% at 22% 28%, rgba(255, 255, 255, 0.28) 0%, transparent 72%);
+}
+
+@keyframes oliveLeafMove {
+  0% {
+    transform: translate3d(var(--start-x, 0), -20vh, 0) rotate(-16deg);
+  }
+  25% {
+    transform: translate3d(calc(var(--start-x, 0) + 6px), 25vh, 0) rotate(6deg);
+  }
+  50% {
+    transform: translate3d(calc(var(--start-x, 0) - 8px), 55vh, 0) rotate(-8deg);
+  }
+  75% {
+    transform: translate3d(calc(var(--start-x, 0) + 10px), 85vh, 0) rotate(10deg);
+  }
+  100% {
+    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 8px)), 130vh, 0) rotate(-12deg);
+  }
+}
+
+.chart-footnote {
+  margin-bottom: 0;
+  font-size: 0.78rem;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.icon-link {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text);
+  background: #ffffff;
+  border: 1px solid var(--line);
+  transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+}
+
+.icon-link svg {
+  width: 23px;
+  height: 23px;
+}
+
+.icon-link:hover {
+  transform: translateY(-3px) scale(1.04);
+  border-color: rgba(179, 0, 0, 0.48);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.36);
+}
+
+.site-footer {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  padding: 1.2rem 0 5.2rem;
+  color: #222222;
+  font-size: 0.88rem;
+}
+
+.floating-language {
+  position: fixed;
+  right: 0.85rem;
+  bottom: 0.85rem;
+  display: grid;
+  justify-items: end;
+  gap: 0.45rem;
+}
+
+.lang-fab {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--text);
+  font-size: 1.1rem;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.lang-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+.lang-menu {
+  pointer-events: auto;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  padding: 0.46rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.lang-options {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.lang-option {
+  width: 62px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--text);
+  padding: 0.28rem 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.lang-option:hover,
+.lang-option.is-active {
+  border-color: rgba(179, 0, 0, 0.66);
+  background: #ffe6e6;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+html[dir='rtl'] body {
+  font-family: 'Noto Naskh Arabic', Inter, sans-serif;
+}
+
+@media (min-width: 740px) {
+  .hero {
+    padding-top: 3.4rem;
+  }
+
+  .section {
+    margin-top: 2.2rem;
+  }
+
+
+  .grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .timeline {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .site-footer {
+    padding-bottom: 2.4rem;
+  }
+}
