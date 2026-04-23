@@ -54,7 +54,7 @@ body::after {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  background-image: url("ot.png");
+  background-image: url("a.png");
   background-color: #ffffff;
 }
 
@@ -143,9 +143,26 @@ main,
 
 
 .coin-logo {
-  width: clamp(72px, 15vw, 120px);
+  width: clamp(144px, 30vw, 240px);
+  max-width: 85vw;
   height: auto;
   display: block;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation: coinSpin3d 14s linear infinite;
+  will-change: transform;
+}
+
+@keyframes coinSpin3d {
+  0% {
+    transform: perspective(900px) rotateX(6deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(900px) rotateX(-6deg) rotateY(180deg);
+  }
+  100% {
+    transform: perspective(900px) rotateX(6deg) rotateY(360deg);
+  }
 }
 
 .brand-caption {
