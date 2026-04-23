@@ -54,15 +54,17 @@ body::after {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  background-image: url("a.png");
+  background-image: url("ot.png");
   background-color: #ffffff;
 }
 
 .leaf-layer {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   pointer-events: none;
-  overflow: visible;
 }
 
 .content {
@@ -279,10 +281,10 @@ canvas {
 
 .falling-leaf {
   position: fixed;
-  top: -20vh;
+  top: -16vh;
   left: 0;
-  width: var(--leaf-size, 22px);
-  height: calc(var(--leaf-size, 22px) * 0.28);
+  width: var(--leaf-size, 42px);
+  height: calc(var(--leaf-size, 42px) * 0.24);
   pointer-events: none;
   opacity: var(--leaf-opacity, 0.88);
   background: linear-gradient(
@@ -337,27 +339,19 @@ canvas {
 
 @keyframes oliveLeafMove {
   0% {
-    transform: translate3d(var(--start-x, 0), -20vh, 0) rotate(0deg);
+    transform: translate3d(var(--start-x, 0), -20vh, 0) rotate(-16deg);
   }
-
-  20% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 10px)), 20vh, 0) rotate(8deg);
+  25% {
+    transform: translate3d(calc(var(--start-x, 0) + 6px), 25vh, 0) rotate(6deg);
   }
-
-  40% {
-    transform: translate3d(calc(var(--start-x, 0) - var(--drift-x, 10px)), 40vh, 0) rotate(-6deg);
+  50% {
+    transform: translate3d(calc(var(--start-x, 0) - 8px), 55vh, 0) rotate(-8deg);
   }
-
-  60% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 10px)), 60vh, 0) rotate(10deg);
+  75% {
+    transform: translate3d(calc(var(--start-x, 0) + 10px), 85vh, 0) rotate(10deg);
   }
-
-  80% {
-    transform: translate3d(calc(var(--start-x, 0) - var(--drift-x, 10px)), 80vh, 0) rotate(-8deg);
-  }
-
   100% {
-    transform: translate3d(calc(var(--start-x, 0)), 110vh, 0) rotate(-12deg);
+    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 8px)), 130vh, 0) rotate(-12deg);
   }
 }
 
