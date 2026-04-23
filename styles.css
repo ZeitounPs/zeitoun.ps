@@ -283,8 +283,8 @@ canvas {
   position: fixed;
   top: -16vh;
   left: 0;
-  width: var(--leaf-size, 18px);
-  height: calc(var(--leaf-size, 18px) * 0.24);
+  width: var(--leaf-size);
+  height: calc(var(--leaf-size) * 0.24);
   pointer-events: none;
   opacity: var(--leaf-opacity, 0.88);
   background: linear-gradient(
