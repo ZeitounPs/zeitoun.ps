@@ -1,696 +1,428 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Premium Coin Hero</title>
+const translations = {
+  en: {
+    copyCA: 'Copy CA Address',
+    copied: 'CA copied to clipboard.',
+    copyFailed: 'Could not copy automatically. Please copy manually.',
+    heroTitle: 'FREE PALESTINE ($ZTN) is a form that embodies human solidarity.',
 
-    <style>
-      /* =========================
-         Base / Layout
-      ========================== */
-      :root {
-        --bg-0: #0f1117;
-        --bg-1: #171a24;
-        --text: #f2f4f8;
-        --coin-size: clamp(180px, 38vw, 320px);
-        --coin-thickness: clamp(10px, 2.2vw, 16px);
-      }
+    chartTitle: 'BTC Chart (Temporary)',
+    chartNote: 'Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.',
+    chartFootnote: 'Simulated feed. Replace data source later.',
+    storyTitle: 'Project Story',
+    storyBody1:
+      '“Zeitoun” means olive tree in Arabic. For many people, olive branches represent peace and resilience.',
+    storyBody2:
+      'FREE PALESTINE ($ZTN) applies that symbol to a donation-first crypto community where reporting and accountability come first.',
+    modelTitle: 'Donation Model',
+    model1: 'Public donation records on a regular schedule.',
+    model2: 'Proof updates via official channels and website logs.',
+    model3: 'Community-driven prioritization for aid categories.',
+    roadmapTitle: 'Roadmap',
+    phase1Title: 'Phase 1 — Foundation',
+    phase1Body: 'Finalize branding, multilingual site, and transparency framework.',
+    phase2Title: 'Phase 2 — Launch',
+    phase2Body: 'Launch on BAGS APP and start recurring donation disclosures.',
+    phase3Title: 'Phase 3 — Expansion',
+    phase3Body: 'Grow global community participation and expand aid reporting coverage.',
+    tokenomicsTitle: 'Tokenomics (Draft)',
+    tokenomicsBody: 'Final values will be published before launch with full transparency.',
+    tok1: 'Token: FREE PALESTINE ($ZTN)',
+    tok2: 'Theme: Zeitoun (Olive Tree / Peace)',
+    tok3: 'Network & contract: To be announced officially',
+    safetyTitle: 'Safety & Verification',
+    safe1: 'Always verify contract address only from official links.',
+    safe2: 'Never trust unofficial DMs for wallet connection.',
+    safe3: 'This website is informational and not investment advice.',
+    linksTitle: 'Official Links',
+    footer: '© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.'
+  },
+  fr: {
+    copyCA: "Copier l'adresse CA",
+    copied: 'Adresse CA copiée.',
+    copyFailed: 'Copie automatique impossible. Merci de copier manuellement.',
+    heroTitle: 'FREE PALESTINE ($ZTN) est une forme qui incarne la solidarité humaine.',
 
-      * {
-        box-sizing: border-box;
-      }
+    chartTitle: 'Graphique BTC (temporaire)',
+    chartNote: 'En attendant le graphique $ZTN, des données BTC simulées sont affichées.',
+    chartFootnote: 'Flux simulé. Remplacez la source plus tard.',
+    storyTitle: 'Histoire du projet',
+    storyBody1: '« Zeitoun » signifie olivier en arabe, symbole de paix et de résilience.',
+    storyBody2:
+      'FREE PALESTINE ($ZTN) applique ce symbole à une communauté crypto centrée sur le don et la responsabilité.',
+    modelTitle: 'Modèle de dons',
+    model1: 'Rapports publics de dons publiés régulièrement.',
+    model2: 'Preuves et mises à jour via canaux officiels et journaux du site.',
+    model3: 'Priorisation communautaire des catégories d’aide.',
+    roadmapTitle: 'Feuille de route',
+    phase1Title: 'Phase 1 — Fondation',
+    phase1Body: 'Finaliser l’identité, le site multilingue et le cadre de transparence.',
+    phase2Title: 'Phase 2 — Lancement',
+    phase2Body: 'Lancement sur BAGS APP et début des rapports de dons récurrents.',
+    phase3Title: 'Phase 3 — Expansion',
+    phase3Body: 'Étendre la participation mondiale et la couverture des rapports d’aide.',
+    tokenomicsTitle: 'Tokenomics (brouillon)',
+    tokenomicsBody: 'Les valeurs finales seront publiées avant le lancement.',
+    tok1: 'Token : FREE PALESTINE ($ZTN)',
+    tok2: 'Thème : Zeitoun (olivier / paix)',
+    tok3: 'Réseau et contrat : annonce officielle à venir',
+    safetyTitle: 'Sécurité & vérification',
+    safe1: 'Vérifiez toujours l’adresse du contrat via les liens officiels.',
+    safe2: 'Ne faites jamais confiance aux DM non officiels.',
+    safe3: 'Ce site est informatif et ne constitue pas un conseil en investissement.',
+    linksTitle: 'Liens officiels',
+    footer: '© 2026 FREE PALESTINE ($ZTN) — zeitoun / olivier / paix.'
+  },
+  ar: {
+    copyCA: 'نسخ عنوان العقد',
+    copied: 'تم نسخ عنوان العقد.',
+    copyFailed: 'تعذر النسخ تلقائياً. يرجى النسخ يدوياً.',
+    heroTitle: 'FREE PALESTINE ($ZTN) هو شكل يجسد التضامن الإنساني。',
 
-      html,
-      body {
-        margin: 0;
-        width: 100%;
-        min-height: 100%;
-      }
+    chartTitle: 'مخطط BTC (مؤقت)',
+    chartNote: 'إلى حين إضافة مخطط $ZTN، يتم عرض بيانات BTC تجريبية.',
+    chartFootnote: 'تغذية محاكاة. استبدل مصدر البيانات لاحقاً.',
+    storyTitle: 'قصة المشروع',
+    storyBody1: 'كلمة «زيتون» ترمز لشجرة الزيتون، وهي رمز للسلام والصمود.',
+    storyBody2: 'يوظف FREE PALESTINE ($ZTN) هذا المعنى ضمن مجتمع تبرعات قائم على الشفافية.',
+    modelTitle: 'نموذج التبرع',
+    model1: 'سجلات تبرعات علنية وفق جدول منتظم.',
+    model2: 'إثباتات وتحديثات عبر القنوات الرسمية وسجل الموقع.',
+    model3: 'تحديد أولويات المساعدة بقرار مجتمعي.',
+    roadmapTitle: 'خارطة الطريق',
+    phase1Title: 'المرحلة 1 — التأسيس',
+    phase1Body: 'استكمال الهوية، الموقع متعدد اللغات، وإطار الشفافية.',
+    phase2Title: 'المرحلة 2 — الإطلاق',
+    phase2Body: 'الإطلاق على BAGS APP وبدء تقارير التبرع الدورية.',
+    phase3Title: 'المرحلة 3 — التوسع',
+    phase3Body: 'توسيع المشاركة العالمية وتغطية تقارير المساعدات.',
+    tokenomicsTitle: 'التوكنوميكس (مسودة)',
+    tokenomicsBody: 'سيتم نشر القيم النهائية قبل الإطلاق بشفافية كاملة.',
+    tok1: 'الرمز: FREE PALESTINE ($ZTN)',
+    tok2: 'الهوية: زيتون (شجرة الزيتون / السلام)',
+    tok3: 'الشبكة والعقد: سيُعلن رسمياً لاحقاً',
+    safetyTitle: 'السلامة والتحقق',
+    safe1: 'تحقق دائماً من عنوان العقد عبر الروابط الرسمية فقط.',
+    safe2: 'لا تثق بالرسائل الخاصة غير الرسمية لربط المحفظة.',
+    safe3: 'هذا الموقع معلوماتي وليس نصيحة استثمارية.',
+    linksTitle: 'الروابط الرسمية',
+    footer: '© 2026 FREE PALESTINE ($ZTN) — زيتون / شجرة الزيتون / سلام.'
+  },
+  ja: {
+    copyCA: 'CAアドレスをコピー',
+    copied: 'CAアドレスをコピーしました。',
+    copyFailed: '自動コピーに失敗しました。手動でコピーしてください。',
+    heroTitle: 'FREE PALESTINE（$ZTN）は、人類の連帯を具現化する一形式です。',
 
-      body {
-        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-        color: var(--text);
-        background:
-          radial-gradient(120% 70% at 50% -10%, rgba(96, 113, 173, 0.2), transparent 55%),
-          linear-gradient(180deg, var(--bg-1), var(--bg-0));
-      }
+    chartTitle: 'BTCチャート（暫定）',
+    chartNote: '将来の$ZTNチャート実装まで、BTCのダミーデータを表示しています。',
+    chartFootnote: 'シミュレーション表示。後でデータソースを差し替えてください。',
+    storyTitle: 'プロジェクトストーリー',
+    storyBody1: '「zeitoun」はアラビア語でオリーブの木。平和とレジリエンスの象徴です。',
+    storyBody2:
+      'FREE PALESTINE（$ZTN）は、その象徴を「寄付第一・透明性重視」のコミュニティに落とし込みます。',
+    modelTitle: '寄付モデル',
+    model1: '定期的に公開される寄付レコード。',
+    model2: '公式チャネルとサイトログで証跡を共有。',
+    model3: '支援カテゴリの優先順位はコミュニティ主導。',
+    roadmapTitle: 'ロードマップ',
+    phase1Title: 'Phase 1 — 基盤整備',
+    phase1Body: 'ブランド、多言語サイト、透明性フレームを整備。',
+    phase2Title: 'Phase 2 — ローンチ',
+    phase2Body: 'BAGS APPでローンチし、寄付報告を開始。',
+    phase3Title: 'Phase 3 — 拡大',
+    phase3Body: '世界参加を拡大し、支援レポートを強化。',
+    tokenomicsTitle: 'トークノミクス（草案）',
+    tokenomicsBody: '最終値はローンチ前に透明性をもって公開します。',
+    tok1: 'トークン: FREE PALESTINE ($ZTN)',
+    tok2: 'テーマ: Zeitoun（オリーブの木 / 平和）',
+    tok3: 'ネットワーク・コントラクト: 公式発表予定',
+    safetyTitle: '安全性と検証',
+    safe1: 'コントラクトアドレスは必ず公式リンクのみで確認。',
+    safe2: 'ウォレット接続を求める非公式DMは信用しない。',
+    safe3: '本サイトは情報提供のみで、投資助言ではありません。',
+    linksTitle: '公式リンク',
+    footer: '© 2026 FREE PALESTINE ($ZTN) — zeitoun / オリーブの木 / 平和。'
+  }
+};
 
-      /* =========================
-         Hero Section
-      ========================== */
-      .hero {
-        min-height: 100vh;
-        display: grid;
-        grid-template-rows: auto auto;
-        justify-items: center;
-        align-content: start;
-        gap: 1.2rem;
-        padding-top: clamp(24px, 6vh, 64px);
-      }
+const getActiveLang = () => document.documentElement.lang || 'en';
 
-      .hero h1 {
-        margin: 0;
-        font-size: clamp(1.1rem, 3.8vw, 1.8rem);
-        font-weight: 600;
-        letter-spacing: 0.04em;
-        opacity: 0.88;
-      }
+const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
 
-      /* =========================
-         Coin Scene / 3D
-      ========================== */
-      .coin-scene {
-        width: var(--coin-size);
-        height: var(--coin-size);
-        display: grid;
-        place-items: center;
-        perspective: 1100px;
-        perspective-origin: 50% 45%;
-      }
+const chartState = {
+  points: [],
+  min: 0,
+  max: 0,
+  dayKey: '',
+  chart: null,
+  updateTimer: null,
+  isUpdating: false
+};
 
-      .coin-float {
-        width: 100%;
-        height: 100%;
-        display: grid;
-        place-items: center;
-        animation: floatY 6.4s ease-in-out infinite;
-        will-change: transform;
-      }
+const getUtcDayKey = (date = new Date()) =>
+  `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
 
-      .coin {
-        position: relative;
-        width: 100%;
-        aspect-ratio: 1 / 1;
-        border-radius: 50%;
-        transform-style: preserve-3d;
-        animation: spinY 8s linear infinite;
-        will-change: transform;
-        filter: drop-shadow(0 16px 20px rgba(0, 0, 0, 0.4));
-      }
+const seedDaySeries = (base = 86000) => {
+  const now = Date.now();
+  return Array.from({ length: 48 }, (_, idx) => ({
+    x: now - (47 - idx) * 30 * 60 * 1000,
+    y: base + Math.sin(idx * 0.4) * 540 + (Math.random() - 0.5) * 220
+  }));
+};
 
-      .face {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        overflow: hidden;
-        backface-visibility: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.16);
-      }
+const updateDayRange = () => {
+  const values = chartState.points.map((point) => point.y);
+  const minValue = Math.min(...values);
+  const maxValue = Math.max(...values);
+  const padding = Math.max((maxValue - minValue) * 0.08, 120);
+  chartState.min = Math.floor(minValue - padding);
+  chartState.max = Math.ceil(maxValue + padding);
+};
 
-      .face img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
+const resetDailyState = () => {
+  const lastPrice = chartState.points.at(-1)?.y ?? 86000;
+  chartState.dayKey = getUtcDayKey();
+  chartState.points = seedDaySeries(lastPrice);
+  updateDayRange();
+};
 
-      .face.front {
-        transform: translateZ(calc(var(--coin-thickness) / 2));
-      }
+const syncChart = (chartPrice) => {
+  if (!chartState.chart || chartState.points.length === 0) return;
+  chartState.chart.data.datasets[0].data = chartState.points;
+  chartState.chart.options.scales.x.min = Date.now() - TWENTY_FOUR_HOURS_MS;
+  chartState.chart.options.scales.x.max = Date.now();
+  chartState.chart.options.scales.y.min = chartState.min;
+  chartState.chart.options.scales.y.max = chartState.max;
+  if (chartState.isUpdating) return;
+  chartState.isUpdating = true;
+  try {
+    chartState.chart.update('none');
+  } finally {
+    chartState.isUpdating = false;
+  }
+  if (chartPrice) {
+    chartPrice.textContent = `$${chartState.points.at(-1).y.toFixed(2)}`;
+  }
+};
 
-      .face.back {
-        transform: rotateY(180deg) translateZ(calc(var(--coin-thickness) / 2));
-      }
-
-      /* Coin edge + lighting */
-      .edge {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        transform: rotateY(90deg) translateZ(calc(var(--coin-thickness) / 2));
-        border: var(--coin-thickness) solid rgba(205, 214, 255, 0.36);
-        box-shadow:
-          inset 0 0 8px rgba(255, 255, 255, 0.26),
-          0 0 10px rgba(255, 255, 255, 0.08);
-      }
-
-      .shine {
-        position: absolute;
-        inset: 0;
-        border-radius: 50%;
-        pointer-events: none;
-        background:
-          radial-gradient(circle at 28% 24%, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.06) 22%, transparent 48%),
-          linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 40%);
-        transform: translateZ(calc(var(--coin-thickness) / 2 + 0.5px));
-      }
-
-      .coin-shadow {
-        width: clamp(130px, 28vw, 220px);
-        height: clamp(22px, 5vw, 34px);
-        border-radius: 50%;
-        background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.04) 70%);
-        transform: translateY(-10px);
-        filter: blur(1px);
-      }
-
-      @keyframes spinY {
-        0% {
-          transform: rotateX(16deg) rotateY(0deg);
+const setupBtcChart = (canvas, chartPrice) => {
+  if (!canvas || typeof Chart === 'undefined') return;
+  if (!chartState.dayKey || chartState.points.length === 0) resetDailyState();
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  if (chartState.chart) {
+    chartState.chart.destroy();
+    chartState.chart = null;
+  }
+  chartState.chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [
+        {
+          label: 'BTC/USDT',
+          data: chartState.points,
+          borderColor: '#addd7b',
+          backgroundColor: 'rgba(173,221,123,0.15)',
+          borderWidth: 2,
+          pointRadius: 0,
+          tension: 0.3,
+          fill: true
         }
-        100% {
-          transform: rotateX(16deg) rotateY(360deg);
+      ]
+    },
+    options: {
+      animation: false,
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 2,
+      resizeDelay: 0,
+      parsing: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          min: Date.now() - TWENTY_FOUR_HOURS_MS,
+          max: Date.now(),
+          grid: { color: 'rgba(213,229,188,0.12)' },
+          ticks: {
+            color: '#c8d7b8',
+            maxRotation: 0,
+            autoSkipPadding: 12,
+            callback: (value) => {
+              const date = new Date(Number(value));
+              return `${String(date.getHours()).padStart(2, '0')}:00`;
+            }
+          }
+        },
+        y: {
+          min: chartState.min,
+          max: chartState.max,
+          grace: '10%',
+          grid: { color: 'rgba(213,229,188,0.1)' },
+          ticks: {
+            color: '#c8d7b8',
+            callback: (value) => `$${Number(value).toLocaleString()}`
+          }
         }
       }
+    }
+  });
+  syncChart(chartPrice);
+};
 
-      @keyframes floatY {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
+const updateChartData = (chartPrice) => {
+  if (chartState.points.length === 0) {
+    resetDailyState();
+  }
+
+  if (getUtcDayKey() !== chartState.dayKey) {
+    resetDailyState();
+    syncChart(chartPrice);
+    return;
+  }
+  const last = chartState.points[chartState.points.length - 1]?.y ?? 86000;
+  const drift = (Math.random() - 0.5) * 650;
+  const next = Math.max(1000, last + drift);
+  chartState.points.push({ x: Date.now(), y: next });
+  chartState.points = chartState.points.filter((point) => point.x >= Date.now() - TWENTY_FOUR_HOURS_MS);
+  updateDayRange();
+  syncChart(chartPrice);
+};
+
+const applyLanguage = (lang) => {
+  const content = translations[lang] || translations.en;
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+  document.querySelectorAll('[data-i18n]').forEach((node) => {
+    const key = node.dataset.i18n;
+    node.textContent = content[key] || translations.en[key] || '';
+  });
+
+  localStorage.setItem('ztn-language', lang);
+};
+
+const initApp = () => {
+  const languageOptions = document.querySelectorAll('.lang-option');
+  const languageToggle = document.querySelector('#language-toggle');
+  const languageMenu = document.querySelector('#language-menu');
+  const copyCAButton = document.querySelector('#copy-ca');
+  const copyStatus = document.querySelector('#copy-status');
+  const chartCanvas = document.querySelector('#btcChart');
+  const chartPrice = document.querySelector('#chart-price');
+  const leafLayer = document.querySelector('.leaf-layer');
+
+  const showCopyStatus = (key) => {
+    if (!copyStatus) return;
+    const lang = getActiveLang();
+    const content = translations[lang] || translations.en;
+    copyStatus.textContent = content[key] || '';
+    window.setTimeout(() => {
+      if (copyStatus.textContent === (content[key] || '')) {
+        copyStatus.textContent = '';
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        .coin,
-        .coin-float {
-          animation-duration: 0.001ms;
-          animation-iteration-count: 1;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- =========================
-         HTML: Hero / Coin
-    ========================== -->
-    <section class="hero" aria-label="Hero">
-      <h1>Premium Coin Rotation</h1>
-
-      <div class="coin-scene" aria-hidden="true">
-        <div class="coin-float">
-          <div class="coin">
-            <div class="face front">
-              <img src="coin.png" alt="" />
-            </div>
-            <div class="face back">
-              <img src="coin.png" alt="" />
-            </div>
-            <div class="edge"></div>
-            <div class="shine"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="coin-shadow" aria-hidden="true"></div>
-    </section>
-  </body>
-</html>
---- styles.css ---
-:root {
-  --bg-0: #ffffff;
-  --bg-1: #ffffff;
-  --bg-2: #ffffff;
-  --text: #111111;
-  --muted: #2a2a2a;
-  --line: rgba(180, 0, 0, 0.28);
-  --olive: #b30000;
-  --olive-soft: #ffd7d7;
-  --gold: #ff6b6b;
-  --panel: rgba(255, 255, 255, 0.96);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  min-height: 100vh;
-  color: var(--text);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
-  line-height: 1.7;
-  overflow-x: hidden;
-  background-color: #ffffff;
-  position: relative;
-}
-
-
-body::before {
-  content: none;
-}
-
-body::after {
-  content: none;
-}
-
-
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  opacity: 1;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  background-image: url("ot.png");
-  background-color: #ffffff;
-}
-
-.leaf-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-}
-
-.content {
-  position: relative;
-}
-
-.container {
-  width: min(1060px, 92vw);
-  margin-inline: auto;
-}
-
-.site-header,
-.ca-strip,
-main,
-.site-footer,
-.floating-language {
-  position: relative;
-}
-
-.site-header {
-  padding-top: 2rem;
-}
-
-.brand {
-  text-decoration: none;
-  color: inherit;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  gap: 0.1rem;
-}
-
-.wordmark-main,
-.wordmark-sub {
-  font-family: Teko, Inter, sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 0.92;
-  position: relative;
-  padding: 0 0.1em;
-  color: #111111;
-  text-shadow: none;
-}
-
-.wordmark-main::before,
-.wordmark-sub::before {
-  content: attr(data-wordmark);
-  position: absolute;
-  inset: 0;
-  color: #fff;
-  background:
-    repeating-linear-gradient(135deg, #111111 0 6px, #b30000 6px 12px),
-    radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.86) 1.15px, transparent 1.16px);
-  background-size:
-    auto,
-    10px 10px;
-  background-position:
-    0 0,
-    0 0;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-mask-image: linear-gradient(#000 0 0);
-  mask-image: linear-gradient(#000 0 0);
-  text-shadow: none;
-  pointer-events: none;
-}
-
-.wordmark-main {
-  font-size: clamp(2.2rem, 13vw, 4.4rem);
-}
-
-.wordmark-sub {
-  font-size: clamp(1.6rem, 8.8vw, 2.9rem);
-}
-
-.brand-caption {
-  color: var(--muted);
-  font-size: 0.9rem;
-  letter-spacing: 0.03em;
-  max-width: min(90vw, 700px);
-}
-
-.ca-strip {
-  margin-top: 0.85rem;
-  display: grid;
-  place-items: center;
-  gap: 0.35rem;
-}
-
-.btn {
-  border-radius: 999px;
-  border: 1px solid transparent;
-  padding: 0.64rem 1rem;
-  font-weight: 600;
-  color: #000000;
-  text-decoration: none;
-  background: linear-gradient(125deg, var(--olive-soft), var(--gold));
-}
-
-.ca-btn {
-  min-width: min(92vw, 420px);
-}
-
-#copy-status {
-  min-height: 1.3rem;
-  font-size: 0.83rem;
-  color: #333333;
-}
-
-.hero {
-  padding: 2.75rem 0 1.2rem;
-}
-
-
-h1,
-h2,
-h3 {
-  line-height: 1.2;
-  letter-spacing: 0.01em;
-}
-
-h1 {
-  margin: 0.95rem 0;
-  font-size: clamp(1.95rem, 10vw, 3.7rem);
-}
-
-h2 {
-  margin-top: 0;
-  font-size: clamp(1.1rem, 5.2vw, 1.55rem);
-}
-
-.panel p,
-.panel li,
-.time-card p,
-.chart-note,
-.chart-footnote {
-  color: var(--muted);
-}
-
-.section {
-  margin-top: 1.8rem;
-}
-
-.grid-2,
-.timeline {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.panel,
-.time-card,
-.chart-frame {
-  border-radius: 20px;
-  border: 1px solid var(--line);
-  background: var(--panel);
-}
-
-.panel,
-.time-card,
-.chart-frame {
-  padding: 1.25rem;
-}
-
-.panel.accent {
-  background: linear-gradient(146deg, rgba(255, 244, 244, 0.96), rgba(255, 255, 255, 0.96));
-}
-
-.chart-container {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  min-height: 260px;
-  height: 260px !important;
-  max-height: 260px !important;
-  overflow: hidden !important;
-}
-
-canvas,
-#btcChart {
-  height: 260px !important;
-  max-height: 260px !important;
-  overflow: hidden !important;
-}
-
-canvas {
-  display: block !important;
-  width: 100% !important;
-  height: 260px !important;
-}
-
-.chart-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.45rem;
-  font-size: 0.9rem;
-}
-
-#chart-price {
-  color: #b30000;
-}
-
-#btcChart {
-  width: 100%;
-  height: 260px !important;
-  max-height: 260px !important;
-  overflow: hidden !important;
-  display: block !important;
-  border-radius: 12px;
-  background: linear-gradient(180deg, rgba(24, 36, 18, 0.8), rgba(12, 18, 10, 0.95));
-  border: 1px solid rgba(199, 217, 176, 0.14);
-}
-
-.falling-leaf {
-  position: fixed;
-  top: -16vh;
-  left: 0;
-  width: var(--leaf-size, 42px);
-  height: calc(var(--leaf-size, 42px) * 0.24);
-  pointer-events: none;
-  opacity: var(--leaf-opacity, 0.88);
-  background: linear-gradient(
-    106deg,
-    rgba(214, 206, 178, 0.95) 0%,
-    rgba(170, 164, 136, 0.95) 32%,
-    rgba(118, 126, 82, 0.96) 62%,
-    rgba(86, 96, 61, 0.96) 100%
-  );
-  border-radius: 100% 0 100% 0 / 55% 0 55% 0;
-  box-shadow: inset 0 0 0.7px rgba(255, 255, 255, 0.34);
-  clip-path: polygon(
-    0% 52%,
-    10% 32%,
-    28% 16%,
-    50% 10%,
-    72% 16%,
-    90% 34%,
-    100% 52%,
-    90% 70%,
-    72% 88%,
-    50% 96%,
-    28% 88%,
-    10% 70%
-  );
-  transform-origin: center;
-  animation: oliveLeafMove var(--fall-duration, 11s) linear infinite;
-}
-
-.falling-leaf::before,
-.falling-leaf::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.falling-leaf::before {
-  left: 8%;
-  right: 8%;
-  top: 50%;
-  bottom: auto;
-  height: 1.2px;
-  border-radius: 999px;
-  background: rgba(237, 236, 220, 0.72);
-  box-shadow: 0 0 0.8px rgba(237, 236, 220, 0.48);
-}
-
-.falling-leaf::after {
-  background: radial-gradient(120% 80% at 22% 28%, rgba(255, 255, 255, 0.28) 0%, transparent 72%);
-}
-
-@keyframes oliveLeafMove {
-  0% {
-    transform: translate3d(var(--start-x, 0), -20vh, 0) rotate(-16deg);
-  }
-  25% {
-    transform: translate3d(calc(var(--start-x, 0) + 6px), 25vh, 0) rotate(6deg);
-  }
-  50% {
-    transform: translate3d(calc(var(--start-x, 0) - 8px), 55vh, 0) rotate(-8deg);
-  }
-  75% {
-    transform: translate3d(calc(var(--start-x, 0) + 10px), 85vh, 0) rotate(10deg);
-  }
-  100% {
-    transform: translate3d(calc(var(--start-x, 0) + var(--drift-x, 8px)), 130vh, 0) rotate(-12deg);
-  }
-}
-
-.chart-footnote {
-  margin-bottom: 0;
-  font-size: 0.78rem;
-}
-
-.social-icons {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-}
-
-.icon-link {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--text);
-  background: #ffffff;
-  border: 1px solid var(--line);
-  transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
-}
-
-.icon-link svg {
-  width: 23px;
-  height: 23px;
-}
-
-.icon-link:hover {
-  transform: translateY(-3px) scale(1.04);
-  border-color: rgba(179, 0, 0, 0.48);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.36);
-}
-
-.site-footer {
-  margin-top: 1.5rem;
-  border-top: 1px solid var(--line);
-  padding: 1.2rem 0 5.2rem;
-  color: #222222;
-  font-size: 0.88rem;
-}
-
-.floating-language {
-  position: fixed;
-  right: 0.85rem;
-  bottom: 0.85rem;
-  display: grid;
-  justify-items: end;
-  gap: 0.45rem;
-}
-
-.lang-fab {
-  cursor: pointer;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: #ffffff;
-  color: var(--text);
-  font-size: 1.1rem;
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
-}
-
-.lang-fab:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
-}
-
-.lang-menu {
-  pointer-events: auto;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  background: #ffffff;
-  padding: 0.46rem;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-}
-
-.lang-options {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.lang-option {
-  width: 62px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: #ffffff;
-  color: var(--text);
-  padding: 0.28rem 0.5rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-}
-
-.lang-option:hover,
-.lang-option.is-active {
-  border-color: rgba(179, 0, 0, 0.66);
-  background: #ffe6e6;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-}
-
-html[dir='rtl'] body {
-  font-family: 'Noto Naskh Arabic', Inter, sans-serif;
-}
-
-@media (min-width: 740px) {
-  .hero {
-    padding-top: 3.4rem;
+    }, 2200);
+  };
+
+  const closeLanguageMenu = () => {
+    if (!languageMenu || !languageToggle) return;
+    languageMenu.hidden = true;
+    languageToggle.setAttribute('aria-expanded', 'false');
+  };
+
+  const toggleLanguageMenu = (event) => {
+    if (!languageMenu || !languageToggle) return;
+    if (event) event.stopPropagation();
+    const willOpen = languageMenu.hidden;
+    languageMenu.hidden = !willOpen;
+    languageToggle.setAttribute('aria-expanded', String(willOpen));
+  };
+
+  const storedLang = localStorage.getItem('ztn-language');
+  const browserLang = navigator.language?.slice(0, 2);
+  const defaultLang = translations[storedLang] ? storedLang : translations[browserLang] ? browserLang : 'en';
+
+  applyLanguage(defaultLang);
+  languageOptions.forEach((button) => {
+    button.classList.toggle('is-active', button.dataset.lang === defaultLang);
+  });
+
+  setupBtcChart(chartCanvas, chartPrice);
+  if (chartState.chart && chartPrice && !chartState.updateTimer) {
+    chartState.updateTimer = window.setInterval(() => updateChartData(chartPrice), 1800);
   }
 
-  .section {
-    margin-top: 2.2rem;
-  }
+  languageOptions.forEach((option) => {
+    option.addEventListener('click', () => {
+      const selectedLang = option.dataset.lang;
+      if (!selectedLang) return;
+      applyLanguage(selectedLang);
+      languageOptions.forEach((button) => {
+        button.classList.toggle('is-active', button.dataset.lang === selectedLang);
+      });
+      closeLanguageMenu();
+    });
+  });
 
+  languageToggle?.addEventListener('click', toggleLanguageMenu);
+  languageMenu?.addEventListener('click', (event) => event.stopPropagation());
 
-  .grid-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.floating-language')) {
+      closeLanguageMenu();
+    }
+  });
 
-  .timeline {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  copyCAButton?.addEventListener('click', async () => {
+    const caValue = copyCAButton.dataset.ca || 'TBA';
 
-  .site-footer {
-    padding-bottom: 2.4rem;
-  }
+    try {
+      await navigator.clipboard.writeText(caValue);
+      showCopyStatus('copied');
+    } catch (error) {
+      showCopyStatus('copyFailed');
+    }
+  });
+
+  const createFallingLeaf = () => {
+    if (!leafLayer) return;
+    const leaf = document.createElement('div');
+    const duration = 9.2 + Math.random() * 5.2;
+    const size = 32 + Math.random() * 13;
+    leaf.className = 'falling-leaf';
+    leaf.setAttribute('aria-hidden', 'true');
+    leaf.style.left = `${Math.random() * 100}vw`;
+    leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
+    leaf.style.setProperty('--start-x', `${Math.random() * 24 - 12}px`);
+    leaf.style.setProperty('--drift-x', `${Math.random() * 170 - 85}px`);
+    leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
+    leaf.style.setProperty('--leaf-opacity', `${(0.74 + Math.random() * 0.22).toFixed(2)}`);
+    leafLayer.appendChild(leaf);
+    const removeLeaf = () => leaf.remove();
+    leaf.addEventListener(
+      'animationend',
+      (event) => {
+        if (event.animationName === 'oliveLeafMove') removeLeaf();
+      },
+      { once: true }
+    );
+    window.setTimeout(removeLeaf, (duration + 6) * 1000);
+  };
+
+  createFallingLeaf();
+  const scheduleLeaf = () => {
+    createFallingLeaf();
+    window.setTimeout(scheduleLeaf, 520 + Math.random() * 380);
+  };
+  window.setTimeout(scheduleLeaf, 520);
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp, { once: true });
+} else {
+  initApp();
 }
