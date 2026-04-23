@@ -298,33 +298,43 @@ const applyLanguage = (lang) => {
   document.documentElement.lang = lang;
   document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
 
-  document.querySelectorAll('[data-i18n]').forEach((node) => {
+  const nodes = document.querySelectorAll('[data-i18n]');
+  nodes.forEach((node) => {
     const key = node.dataset.i18n;
-    node.textContent = content[key] || translations.en[key] || '';
+    if (key && content[key]) {
+      node.textContent = content[key];
+    }
   });
+
+  const copyCAButton = document.getElementById('copy-ca');
+  if (copyCAButton && content.copyCA) {
+    copyCAButton.textContent = content.copyCA;
+  }
 
   localStorage.setItem('ztn-language', lang);
 };
 
 const initApp = () => {
-  const languageOptions = document.querySelectorAll('.lang-option');
-  const languageToggle = document.querySelector('#language-toggle');
-  const languageMenu = document.querySelector('#language-menu');
-  const copyCAButton = document.querySelector('#copy-ca');
-  const copyStatus = document.querySelector('#copy-status');
-  const chartCanvas = document.querySelector('#btcChart');
-  const chartPrice = document.querySelector('#chart-price');
+  const copyCAButton = document.getElementById('copy-ca');
+  const copyStatus = document.getElementById('copy-status');
   const leafLayer = document.querySelector('.leaf-layer');
+  const languageToggle = document.getElementById('language-toggle');
+  const languageMenu = document.getElementById('language-menu');
+  const languageOptions = document.querySelectorAll('.lang-option');
+  const chartCanvas = document.getElementById('btcChart');
+  const chartPrice = document.getElementById('chart-price');
+  let copyStatusTimer = null;
 
-  const showCopyStatus = (key) => {
+  const showCopyStatus = (messageKey) => {
     if (!copyStatus) return;
     const lang = getActiveLang();
     const content = translations[lang] || translations.en;
-    copyStatus.textContent = content[key] || '';
-    window.setTimeout(() => {
-      if (copyStatus.textContent === (content[key] || '')) {
-        copyStatus.textContent = '';
-      }
+    copyStatus.textContent = content[messageKey] || '';
+    if (copyStatusTimer) {
+      window.clearTimeout(copyStatusTimer);
+    }
+    copyStatusTimer = window.setTimeout(() => {
+      copyStatus.textContent = '';
     }, 2200);
   };
 
@@ -334,9 +344,8 @@ const initApp = () => {
     languageToggle.setAttribute('aria-expanded', 'false');
   };
 
-  const toggleLanguageMenu = (event) => {
+  const toggleLanguageMenu = () => {
     if (!languageMenu || !languageToggle) return;
-    if (event) event.stopPropagation();
     const willOpen = languageMenu.hidden;
     languageMenu.hidden = !willOpen;
     languageToggle.setAttribute('aria-expanded', String(willOpen));
@@ -388,19 +397,43 @@ const initApp = () => {
     }
   });
 
+  // 派手さではなく、静かでリアルな自然表現を最優先すること。
   const createFallingLeaf = () => {
     if (!leafLayer) return;
+
     const leaf = document.createElement('div');
-    const duration = 9.2 + Math.random() * 5.2;
-    const size = 32 + Math.random() * 13;
+    const duration = 14 + Math.random() * 8;
+    const size = 12 + Math.random() * 8;
+    const startX = Math.random() * 24 - 12;
+    const driftX = Math.random() * 56 - 28;
+    const swayA = 4 + Math.random() * 7;
+    const swayB = 4 + Math.random() * 9;
+    const swayC = 4 + Math.random() * 8;
+    const rotateZ = 7 + Math.random() * 9;
+    const rotateX = 3 + Math.random() * 5;
+    const rotateY = 3 + Math.random() * 6;
+    const opacity = 0.54 + Math.random() * 0.22;
+    const hue = 45 + Math.random() * 9;
+    const sat = 19 + Math.random() * 9;
+    const light = 56 + Math.random() * 12;
+
     leaf.className = 'falling-leaf';
     leaf.setAttribute('aria-hidden', 'true');
     leaf.style.left = `${Math.random() * 100}vw`;
     leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
-    leaf.style.setProperty('--start-x', `${Math.random() * 24 - 12}px`);
-    leaf.style.setProperty('--drift-x', `${Math.random() * 170 - 85}px`);
-    leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
-    leaf.style.setProperty('--leaf-opacity', `${(0.74 + Math.random() * 0.22).toFixed(2)}`);
+    leaf.style.setProperty('--fall-delay', `${(-1 * Math.random() * duration).toFixed(2)}s`);
+    leaf.style.setProperty('--start-x', `${startX.toFixed(2)}px`);
+    leaf.style.setProperty('--drift-x', `${driftX.toFixed(2)}px`);
+    leaf.style.setProperty('--sway-a', `${swayA.toFixed(2)}px`);
+    leaf.style.setProperty('--sway-b', `${swayB.toFixed(2)}px`);
+    leaf.style.setProperty('--sway-c', `${swayC.toFixed(2)}px`);
+    leaf.style.setProperty('--rot-z', `${rotateZ.toFixed(2)}deg`);
+    leaf.style.setProperty('--rot-x', `${rotateX.toFixed(2)}deg`);
+    leaf.style.setProperty('--rot-y', `${rotateY.toFixed(2)}deg`);
+    leaf.style.setProperty('--leaf-size', `${size.toFixed(2)}px`);
+    leaf.style.setProperty('--leaf-opacity', `${opacity.toFixed(2)}`);
+    leaf.style.setProperty('--leaf-base', `hsl(${hue.toFixed(1)} ${sat.toFixed(1)}% ${light.toFixed(1)}%)`);
+
     leafLayer.appendChild(leaf);
     const removeLeaf = () => leaf.remove();
     leaf.addEventListener(
@@ -410,15 +443,18 @@ const initApp = () => {
       },
       { once: true }
     );
-    window.setTimeout(removeLeaf, (duration + 6) * 1000);
+    window.setTimeout(removeLeaf, (duration + 4) * 1000);
   };
 
-  createFallingLeaf();
+  for (let index = 0; index < 18; index += 1) {
+    window.setTimeout(createFallingLeaf, index * 180);
+  }
+
   const scheduleLeaf = () => {
     createFallingLeaf();
-    window.setTimeout(scheduleLeaf, 520 + Math.random() * 380);
+    window.setTimeout(scheduleLeaf, 840 + Math.random() * 560);
   };
-  window.setTimeout(scheduleLeaf, 520);
+  window.setTimeout(scheduleLeaf, 900);
 };
 
 if (document.readyState === 'loading') {
