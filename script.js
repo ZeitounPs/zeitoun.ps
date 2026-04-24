@@ -305,9 +305,9 @@ const initApp = () => {
 
   if (leafLayer) {
     const leafPalette = [
-      { light: '#e2e9d7', mid: '#c1cfad', dark: '#8ca476' },
-      { light: '#dbe4cd', mid: '#b7c7a0', dark: '#7e9662' },
-      { light: '#d4dfc4', mid: '#afc095', dark: '#758c5b' }
+      { light: '#edf3e2', mid: '#c6d4b0', dark: '#839b6a' },
+      { light: '#e7efda', mid: '#bdcda6', dark: '#7a9261' },
+      { light: '#e3ecd4', mid: '#b4c59c', dark: '#72895a' }
     ];
 
     const createLeaf = () => {
@@ -323,7 +323,7 @@ const initApp = () => {
       leaf.style.setProperty('--leaf-dark', tone.dark);
       leaf.style.setProperty('--leaf-drift', `${(Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 60)}vw`);
       leaf.style.setProperty('--leaf-rotate', `${120 + Math.random() * 240}deg`);
-      leaf.style.setProperty('--leaf-scale', `${0.55 + Math.random() * 0.4}`);
+      leaf.style.setProperty('--leaf-scale', `${0.16 + Math.random() * 0.14}`);
       leaf.style.setProperty('--leaf-base-rotate', `${Math.random() * 360}deg`);
       leafLayer.appendChild(leaf);
       leaf.addEventListener('animationend', () => leaf.remove());
