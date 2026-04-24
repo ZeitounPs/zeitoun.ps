@@ -20,10 +20,10 @@ const translations = {
     roadmapTitle: 'Roadmap',
     phase1Title: 'Phase 1 — Foundation',
     phase1Body: 'Finalize branding, multilingual site, and transparency framework.',
-    phase2Title: 'Phase 2 — Launch',
-    phase2Body: 'Launch on BAGS APP and start recurring donation disclosures.',
-    phase3Title: 'Phase 3 — Expansion',
-    phase3Body: 'Grow global community participation and expand aid reporting coverage.',
+    phase2Title: 'Solidarity',
+    phase2Body: '“Be water, my friend.” - Bruce Lee',
+    phase3Title: 'Impact',
+    phase3Body: '“Let it be a tale.” - Refaat Alareer',
     tokenomicsTitle: 'Tokenomics (Draft)',
     tokenomicsBody: 'Final values will be published before launch with full transparency.',
     tok1: 'Token: FREE PALESTINE ($ZTN)',
@@ -56,10 +56,10 @@ const translations = {
     roadmapTitle: 'Feuille de route',
     phase1Title: 'Phase 1 — Fondation',
     phase1Body: 'Finaliser l’identité, le site multilingue et le cadre de transparence.',
-    phase2Title: 'Phase 2 — Lancement',
-    phase2Body: 'Lancement sur BAGS APP et début des rapports de dons récurrents.',
-    phase3Title: 'Phase 3 — Expansion',
-    phase3Body: 'Étendre la participation mondiale et la couverture des rapports d’aide.',
+    phase2Title: 'Solidarity',
+    phase2Body: '“Be water, my friend.” - Bruce Lee',
+    phase3Title: 'Impact',
+    phase3Body: '“Let it be a tale.” - Refaat Alareer',
     tokenomicsTitle: 'Tokenomics (brouillon)',
     tokenomicsBody: 'Les valeurs finales seront publiées avant le lancement.',
     tok1: 'Token : FREE PALESTINE ($ZTN)',
@@ -91,10 +91,10 @@ const translations = {
     roadmapTitle: 'خارطة الطريق',
     phase1Title: 'المرحلة 1 — التأسيس',
     phase1Body: 'استكمال الهوية، الموقع متعدد اللغات، وإطار الشفافية.',
-    phase2Title: 'المرحلة 2 — الإطلاق',
-    phase2Body: 'الإطلاق على BAGS APP وبدء تقارير التبرع الدورية.',
-    phase3Title: 'المرحلة 3 — التوسع',
-    phase3Body: 'توسيع المشاركة العالمية وتغطية تقارير المساعدات.',
+    phase2Title: 'Solidarity',
+    phase2Body: '“Be water, my friend.” - Bruce Lee',
+    phase3Title: 'Impact',
+    phase3Body: '“Let it be a tale.” - Refaat Alareer',
     tokenomicsTitle: 'التوكنوميكس (مسودة)',
     tokenomicsBody: 'سيتم نشر القيم النهائية قبل الإطلاق بشفافية كاملة.',
     tok1: 'الرمز: FREE PALESTINE ($ZTN)',
@@ -127,10 +127,10 @@ const translations = {
     roadmapTitle: 'ロードマップ',
     phase1Title: 'Phase 1 — 基盤整備',
     phase1Body: 'ブランド、多言語サイト、透明性フレームを整備。',
-    phase2Title: 'Phase 2 — ローンチ',
-    phase2Body: 'BAGS APPでローンチし、寄付報告を開始。',
-    phase3Title: 'Phase 3 — 拡大',
-    phase3Body: '世界参加を拡大し、支援レポートを強化。',
+    phase2Title: 'Solidarity',
+    phase2Body: '“Be water, my friend.” - Bruce Lee',
+    phase3Title: 'Impact',
+    phase3Body: '“Let it be a tale.” - Refaat Alareer',
     tokenomicsTitle: 'トークノミクス（草案）',
     tokenomicsBody: '最終値はローンチ前に透明性をもって公開します。',
     tok1: 'トークン: FREE PALESTINE ($ZTN)',
@@ -314,6 +314,7 @@ const initApp = () => {
   const copyStatus = document.querySelector('#copy-status');
   const chartCanvas = document.querySelector('#btcChart');
   const chartPrice = document.querySelector('#chart-price');
+  const leafLayer = document.querySelector('.leaf-layer');
 
   const showCopyStatus = (key) => {
     if (!copyStatus) return;
@@ -387,32 +388,64 @@ const initApp = () => {
     }
   });
 
+  // 派手さではなく、静かでリアルな自然表現を最優先すること。
   const createFallingLeaf = () => {
+    if (!leafLayer) return;
+
     const leaf = document.createElement('div');
-    const duration = 6.2 + Math.random() * 3.4;
-    const size = 10 + Math.random() * 18;
+    const duration = 14 + Math.random() * 8;
+    const size = 12 + Math.random() * 8;
+    const startX = Math.random() * 24 - 12;
+    const driftX = Math.random() * 56 - 28;
+    const swayA = 4 + Math.random() * 7;
+    const swayB = 4 + Math.random() * 9;
+    const swayC = 4 + Math.random() * 8;
+    const rotateZ = 7 + Math.random() * 9;
+    const rotateX = 3 + Math.random() * 5;
+    const rotateY = 3 + Math.random() * 6;
+    const opacity = 0.54 + Math.random() * 0.22;
+    const hue = 45 + Math.random() * 9;
+    const sat = 19 + Math.random() * 9;
+    const light = 56 + Math.random() * 12;
+
     leaf.className = 'falling-leaf';
     leaf.setAttribute('aria-hidden', 'true');
     leaf.style.left = `${Math.random() * 100}vw`;
     leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
-    leaf.style.setProperty('--sway-duration', `${(1.6 + Math.random() * 1.5).toFixed(2)}s`);
-    leaf.style.setProperty('--spin-duration', `${(4.8 + Math.random() * 2.6).toFixed(2)}s`);
-    leaf.style.setProperty('--start-x', `${Math.random() * 12 - 6}px`);
-    leaf.style.setProperty('--drift-x', `${Math.random() * 110 - 55}px`);
-    leaf.style.setProperty('--leaf-size', `${size.toFixed(0)}px`);
-    leaf.style.setProperty('--leaf-opacity', `${(0.4 + Math.random() * 0.4).toFixed(2)}`);
-    document.body.appendChild(leaf);
+    leaf.style.setProperty('--fall-delay', `${(-1 * Math.random() * duration).toFixed(2)}s`);
+    leaf.style.setProperty('--start-x', `${startX.toFixed(2)}px`);
+    leaf.style.setProperty('--drift-x', `${driftX.toFixed(2)}px`);
+    leaf.style.setProperty('--sway-a', `${swayA.toFixed(2)}px`);
+    leaf.style.setProperty('--sway-b', `${swayB.toFixed(2)}px`);
+    leaf.style.setProperty('--sway-c', `${swayC.toFixed(2)}px`);
+    leaf.style.setProperty('--rot-z', `${rotateZ.toFixed(2)}deg`);
+    leaf.style.setProperty('--rot-x', `${rotateX.toFixed(2)}deg`);
+    leaf.style.setProperty('--rot-y', `${rotateY.toFixed(2)}deg`);
+    leaf.style.setProperty('--leaf-size', `${size.toFixed(2)}px`);
+    leaf.style.setProperty('--leaf-opacity', `${opacity.toFixed(2)}`);
+    leaf.style.setProperty('--leaf-base', `hsl(${hue.toFixed(1)} ${sat.toFixed(1)}% ${light.toFixed(1)}%)`);
+
+    leafLayer.appendChild(leaf);
     const removeLeaf = () => leaf.remove();
-    leaf.addEventListener('animationend', removeLeaf, { once: true });
-    window.setTimeout(removeLeaf, (duration + 1.8) * 1000);
+    leaf.addEventListener(
+      'animationend',
+      (event) => {
+        if (event.animationName === 'oliveLeafMove') removeLeaf();
+      },
+      { once: true }
+    );
+    window.setTimeout(removeLeaf, (duration + 4) * 1000);
   };
 
-  createFallingLeaf();
+  for (let index = 0; index < 18; index += 1) {
+    window.setTimeout(createFallingLeaf, index * 180);
+  }
+
   const scheduleLeaf = () => {
     createFallingLeaf();
-    window.setTimeout(scheduleLeaf, 300 + Math.random() * 300);
+    window.setTimeout(scheduleLeaf, 840 + Math.random() * 560);
   };
-  window.setTimeout(scheduleLeaf, 360);
+  window.setTimeout(scheduleLeaf, 900);
 };
 
 if (document.readyState === 'loading') {
