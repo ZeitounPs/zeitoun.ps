@@ -304,16 +304,26 @@ const initApp = () => {
   }
 
   if (leafLayer) {
+    const leafPalette = [
+      { light: '#d6dfad', mid: '#a9b87a', dark: '#66784b' },
+      { light: '#ccd8a2', mid: '#9eae71', dark: '#5c6f43' },
+      { light: '#c2cf96', mid: '#95a667', dark: '#566a3e' }
+    ];
+
     const createLeaf = () => {
       const leaf = document.createElement('span');
+      const tone = leafPalette[Math.floor(Math.random() * leafPalette.length)];
       leaf.className = 'olive-leaf';
       leaf.style.left = `${Math.random() * 100}vw`;
       leaf.style.top = '-8vh';
-      leaf.style.opacity = `${0.2 + Math.random() * 0.45}`;
+      leaf.style.opacity = `${0.24 + Math.random() * 0.4}`;
       leaf.style.animation = `leafFloat ${11 + Math.random() * 7}s linear forwards`;
+      leaf.style.setProperty('--leaf-light', tone.light);
+      leaf.style.setProperty('--leaf-mid', tone.mid);
+      leaf.style.setProperty('--leaf-dark', tone.dark);
       leaf.style.setProperty('--leaf-drift', `${(Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 60)}vw`);
       leaf.style.setProperty('--leaf-rotate', `${120 + Math.random() * 240}deg`);
-      leaf.style.setProperty('--leaf-scale', `${0.8 + Math.random() * 0.9}`);
+      leaf.style.setProperty('--leaf-scale', `${0.85 + Math.random() * 0.75}`);
       leaf.style.setProperty('--leaf-base-rotate', `${Math.random() * 360}deg`);
       leafLayer.appendChild(leaf);
       leaf.addEventListener('animationend', () => leaf.remove());
