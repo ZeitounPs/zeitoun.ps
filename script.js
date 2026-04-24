@@ -113,8 +113,8 @@ const translations = {
     copyFailed: '自動コピーに失敗しました。手動でコピーしてください。',
     heroTitle: 'FREE PALESTINE（$ZTN）は、人類の連帯を具現化する一形式です。',
 
-    chartTitle: 'BTCチャート（暫定）',
-    chartNote: '将来の$ZTNチャート実装まで、BTCのダミーデータを表示しています。',
+    chartTitle: 'DEX Screener',
+    chartNote: '',
     chartFootnote: 'シミュレーション表示。後でデータソースを差し替えてください。',
     storyTitle: 'プロジェクトストーリー',
     storyBody1: '「zeitoun」はアラビア語でオリーブの木。平和とレジリエンスの象徴です。',
