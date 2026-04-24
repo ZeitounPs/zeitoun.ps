@@ -261,14 +261,14 @@ const setupBtcChart = (canvas, chartPrice) => {
           }
         },
         y: {
+          beginAtZero: false,
           min: chartState.min,
           max: chartState.max,
-          grace: '10%',
-          grid: { color: 'rgba(213,229,188,0.1)' },
           ticks: {
             color: '#c8d7b8',
-            callback: (value) => `$${Number(value).toLocaleString()}`
-          }
+            callback: (value) => `$${Math.round(value).toLocaleString()}`
+          },
+          grid: { color: 'rgba(213,229,188,0.12)' }
         }
       }
     }
@@ -276,17 +276,14 @@ const setupBtcChart = (canvas, chartPrice) => {
   syncChart(chartPrice);
 };
 
-const updateChartData = (chartPrice) => {
-  if (chartState.points.length === 0) {
-    resetDailyState();
-  }
-
-  if (getUtcDayKey() !== chartState.dayKey) {
+const advanceChartPoint = (chartPrice) => {
+  const nextDayKey = getUtcDayKey();
+  if (nextDayKey !== chartState.dayKey) {
     resetDailyState();
     syncChart(chartPrice);
     return;
   }
-  const last = chartState.points[chartState.points.length - 1]?.y ?? 86000;
+  const last = chartState.points.at(-1)?.y ?? 86000;
   const drift = (Math.random() - 0.5) * 650;
   const next = Math.max(1000, last + drift);
   chartState.points.push({ x: Date.now(), y: next });
@@ -325,20 +322,21 @@ async function loadMessages() {
 
     container.innerHTML = "";
 
-    data.reverse().forEach((msg) => {
-      const div = document.createElement("div");
+    data
+      .slice(-5)
+      .reverse()
+      .forEach((msg) => {
+        const div = document.createElement("div");
+        div.className = "chat-msg";
 
-      div.style.padding = "10px";
-      div.style.margin = "6px 0";
-      div.style.background = "rgba(0,0,0,0.6)";
-      div.style.color = "#fff";
-      div.style.borderRadius = "10px";
-      div.style.fontSize = "14px";
+        const text = msg.text || JSON.stringify(msg);
+        const MAX_LENGTH = 140;
 
-      div.textContent = msg.text || JSON.stringify(msg);
+        div.textContent =
+          text.length > MAX_LENGTH ? text.slice(0, MAX_LENGTH) + "…" : text;
 
-      container.appendChild(div);
-    });
+        container.appendChild(div);
+      });
   } catch (err) {
     console.error("Supabase error:", err);
   }
@@ -389,108 +387,76 @@ const initApp = () => {
     button.classList.toggle('is-active', button.dataset.lang === defaultLang);
   });
 
-  setupBtcChart(chartCanvas, chartPrice);
-  if (chartState.chart && chartPrice && !chartState.updateTimer) {
-    chartState.updateTimer = window.setInterval(() => updateChartData(chartPrice), 1800);
+  if (languageToggle && languageMenu) {
+    languageToggle.addEventListener('click', toggleLanguageMenu);
+    document.addEventListener('click', (event) => {
+      if (!languageMenu.hidden && !languageMenu.contains(event.target) && !languageToggle.contains(event.target)) {
+        closeLanguageMenu();
+      }
+    });
   }
 
-  languageOptions.forEach((option) => {
-    option.addEventListener('click', () => {
-      const selectedLang = option.dataset.lang;
-      if (!selectedLang) return;
-      applyLanguage(selectedLang);
-      languageOptions.forEach((button) => {
-        button.classList.toggle('is-active', button.dataset.lang === selectedLang);
+  languageOptions.forEach((button) => {
+    button.addEventListener('click', () => {
+      const selected = button.dataset.lang;
+      applyLanguage(selected);
+      languageOptions.forEach((node) => {
+        node.classList.toggle('is-active', node === button);
       });
       closeLanguageMenu();
     });
   });
 
-  languageToggle?.addEventListener('click', toggleLanguageMenu);
-  languageMenu?.addEventListener('click', (event) => event.stopPropagation());
-
-  document.addEventListener('click', (event) => {
-    if (!event.target.closest('.floating-language')) {
-      closeLanguageMenu();
-    }
-  });
-
-  copyCAButton?.addEventListener('click', async () => {
-    const caValue = copyCAButton.dataset.ca || 'TBA';
-
-    try {
-      await navigator.clipboard.writeText(caValue);
-      showCopyStatus('copied');
-    } catch (error) {
-      showCopyStatus('copyFailed');
-    }
-  });
-
-  // 派手さではなく、静かでリアルな自然表現を最優先すること。
-  const createFallingLeaf = () => {
-    if (!leafLayer) return;
-
-    const leaf = document.createElement('div');
-    const duration = 14 + Math.random() * 8;
-    const size = 12 + Math.random() * 8;
-    const startX = Math.random() * 24 - 12;
-    const driftX = Math.random() * 56 - 28;
-    const swayA = 4 + Math.random() * 7;
-    const swayB = 4 + Math.random() * 9;
-    const swayC = 4 + Math.random() * 8;
-    const rotateZ = 7 + Math.random() * 9;
-    const rotateX = 3 + Math.random() * 5;
-    const rotateY = 3 + Math.random() * 6;
-    const opacity = 0.54 + Math.random() * 0.22;
-    const hue = 45 + Math.random() * 9;
-    const sat = 19 + Math.random() * 9;
-    const light = 56 + Math.random() * 12;
-
-    leaf.className = 'falling-leaf';
-    leaf.setAttribute('aria-hidden', 'true');
-    leaf.style.left = `${Math.random() * 100}vw`;
-    leaf.style.setProperty('--fall-duration', `${duration.toFixed(2)}s`);
-    leaf.style.setProperty('--fall-delay', `${(-1 * Math.random() * duration).toFixed(2)}s`);
-    leaf.style.setProperty('--start-x', `${startX.toFixed(2)}px`);
-    leaf.style.setProperty('--drift-x', `${driftX.toFixed(2)}px`);
-    leaf.style.setProperty('--sway-a', `${swayA.toFixed(2)}px`);
-    leaf.style.setProperty('--sway-b', `${swayB.toFixed(2)}px`);
-    leaf.style.setProperty('--sway-c', `${swayC.toFixed(2)}px`);
-    leaf.style.setProperty('--rot-z', `${rotateZ.toFixed(2)}deg`);
-    leaf.style.setProperty('--rot-x', `${rotateX.toFixed(2)}deg`);
-    leaf.style.setProperty('--rot-y', `${rotateY.toFixed(2)}deg`);
-    leaf.style.setProperty('--leaf-size', `${size.toFixed(2)}px`);
-    leaf.style.setProperty('--leaf-opacity', `${opacity.toFixed(2)}`);
-    leaf.style.setProperty('--leaf-base', `hsl(${hue.toFixed(1)} ${sat.toFixed(1)}% ${light.toFixed(1)}%)`);
-
-    leafLayer.appendChild(leaf);
-    const removeLeaf = () => leaf.remove();
-    leaf.addEventListener(
-      'animationend',
-      (event) => {
-        if (event.animationName === 'oliveLeafMove') removeLeaf();
-      },
-      { once: true }
-    );
-    window.setTimeout(removeLeaf, (duration + 4) * 1000);
-  };
-
-  for (let index = 0; index < 18; index += 1) {
-    window.setTimeout(createFallingLeaf, index * 180);
+  if (copyCAButton) {
+    copyCAButton.addEventListener('click', async () => {
+      const caValue = copyCAButton.dataset.ca || 'TBA';
+      try {
+        await navigator.clipboard.writeText(caValue);
+        showCopyStatus('copied');
+      } catch {
+        showCopyStatus('copyFailed');
+      }
+    });
   }
 
-  const scheduleLeaf = () => {
-    createFallingLeaf();
-    window.setTimeout(scheduleLeaf, 840 + Math.random() * 560);
-  };
-  window.setTimeout(scheduleLeaf, 900);
-  
+  setupBtcChart(chartCanvas, chartPrice);
+  if (chartState.updateTimer) {
+    window.clearInterval(chartState.updateTimer);
+  }
+  chartState.updateTimer = window.setInterval(() => advanceChartPoint(chartPrice), 60_000);
+
+  if (leafLayer) {
+    const createLeaf = () => {
+      const leaf = document.createElement('span');
+      leaf.textContent = '🍃';
+      leaf.style.position = 'absolute';
+      leaf.style.left = `${Math.random() * 100}vw`;
+      leaf.style.top = '-8vh';
+      leaf.style.fontSize = `${0.7 + Math.random() * 1.1}rem`;
+      leaf.style.opacity = `${0.15 + Math.random() * 0.45}`;
+      leaf.style.filter = 'drop-shadow(0 2px 3px rgba(0,0,0,0.2))';
+      leaf.style.animation = `leafFloat ${11 + Math.random() * 7}s linear forwards`;
+      leafLayer.appendChild(leaf);
+      leaf.addEventListener('animationend', () => leaf.remove());
+    };
+
+    if (!document.querySelector('#leaf-keyframes')) {
+      const style = document.createElement('style');
+      style.id = 'leaf-keyframes';
+      style.textContent = `
+        @keyframes leafFloat {
+          0% { transform: translate3d(0,0,0) rotate(0deg); }
+          100% { transform: translate3d(${(Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 60)}vw, 110vh, 0) rotate(${120 + Math.random() * 240}deg); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    window.setInterval(createLeaf, 900);
+  }
+
   loadMessages();
-  setInterval(loadMessages, 3000);
+  window.setInterval(loadMessages, 5000);
 };
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp, { once: true });
-} else {
-  initApp();
-}
+document.addEventListener('DOMContentLoaded', initApp);
