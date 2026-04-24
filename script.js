@@ -124,7 +124,7 @@ const translations = {
     model1: '定期的に公開される寄付レコード。',
     model2: '公式チャネルとサイトログで証跡を共有。',
     model3: '支援カテゴリの優先順位はコミュニティ主導。',
-    roadmapTitle: 'ロードマップ',
+    roadmapTitle: '設計思想',
     phase1Title: 'Phase 1 — 基盤整備',
     phase1Body: 'ブランド、多言語サイト、透明性フレームを整備。',
     phase2Title: 'Solidarity',
@@ -434,7 +434,8 @@ const initApp = () => {
       leaf.style.top = '-8vh';
       leaf.style.fontSize = `${0.7 + Math.random() * 1.1}rem`;
       leaf.style.opacity = `${0.15 + Math.random() * 0.45}`;
-      leaf.style.filter = 'drop-shadow(0 2px 3px rgba(0,0,0,0.2))';
+      leaf.style.filter =
+        'sepia(0.8) saturate(1.5) hue-rotate(-18deg) brightness(0.95) drop-shadow(0 2px 3px rgba(0,0,0,0.2))';
       leaf.style.animation = `leafFloat ${11 + Math.random() * 7}s linear forwards`;
       leafLayer.appendChild(leaf);
       leaf.addEventListener('animationend', () => leaf.remove());
