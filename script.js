@@ -306,15 +306,15 @@ const initApp = () => {
   if (leafLayer) {
     const createLeaf = () => {
       const leaf = document.createElement('span');
-      leaf.textContent = '🍃';
-      leaf.style.position = 'absolute';
+      leaf.className = 'olive-leaf';
       leaf.style.left = `${Math.random() * 100}vw`;
       leaf.style.top = '-8vh';
-      leaf.style.fontSize = `${0.7 + Math.random() * 1.1}rem`;
-      leaf.style.opacity = `${0.15 + Math.random() * 0.45}`;
-      leaf.style.filter =
-        'sepia(0.8) saturate(1.5) hue-rotate(-18deg) brightness(0.95) drop-shadow(0 2px 3px rgba(0,0,0,0.2))';
+      leaf.style.opacity = `${0.2 + Math.random() * 0.45}`;
       leaf.style.animation = `leafFloat ${11 + Math.random() * 7}s linear forwards`;
+      leaf.style.setProperty('--leaf-drift', `${(Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 60)}vw`);
+      leaf.style.setProperty('--leaf-rotate', `${120 + Math.random() * 240}deg`);
+      leaf.style.setProperty('--leaf-scale', `${0.8 + Math.random() * 0.9}`);
+      leaf.style.setProperty('--leaf-base-rotate', `${Math.random() * 360}deg`);
       leafLayer.appendChild(leaf);
       leaf.addEventListener('animationend', () => leaf.remove());
     };
@@ -324,8 +324,8 @@ const initApp = () => {
       style.id = 'leaf-keyframes';
       style.textContent = `
         @keyframes leafFloat {
-          0% { transform: translate3d(0,0,0) rotate(0deg); }
-          100% { transform: translate3d(${(Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 60)}vw, 110vh, 0) rotate(${120 + Math.random() * 240}deg); }
+          0% { transform: translate3d(0, 0, 0) rotate(var(--leaf-base-rotate, 0deg)) scale(var(--leaf-scale, 1)); }
+          100% { transform: translate3d(var(--leaf-drift, 24vw), 110vh, 0) rotate(calc(var(--leaf-base-rotate, 0deg) + var(--leaf-rotate, 180deg))) scale(var(--leaf-scale, 1)); }
         }
       `;
       document.head.appendChild(style);
