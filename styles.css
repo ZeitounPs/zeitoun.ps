@@ -252,10 +252,6 @@ main,
   letter-spacing: 0.02em;
   color: #111111;
   font-weight: 700;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  hyphens: auto;
 }
 
 .section h3 {
@@ -265,10 +261,6 @@ main,
   letter-spacing: 0.02em;
   color: #111111;
   font-weight: 700;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  hyphens: auto;
 }
 
 .donation-title {
@@ -289,10 +281,6 @@ main,
   color: #8f0000;
   text-decoration: none;
   font-weight: 700;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  hyphens: auto;
 }
 
 .donation-table a:hover {
@@ -436,10 +424,6 @@ main,
   margin-bottom: 0.4rem;
   color: #111111;
   font-weight: 700;
-  white-space: normal;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-  hyphens: auto;
 }
 
 #chart-price {
@@ -613,6 +597,15 @@ canvas {
   width: 1px;
   height: 82%;
   background: rgba(63, 82, 20, 0.55);
+}
+
+@keyframes leafFloat {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(var(--leaf-base-rotate, 0deg)) scale(var(--leaf-scale, 1));
+  }
+  100% {
+    transform: translate3d(var(--leaf-drift, 24vw), 110vh, 0) rotate(calc(var(--leaf-base-rotate, 0deg) + var(--leaf-rotate, 180deg))) scale(var(--leaf-scale, 1));
+  }
 }
 
 @keyframes chatIn {
