@@ -401,6 +401,12 @@ canvas {
   object-fit: contain;
 }
 
+.roadmap-caption {
+  margin-top: 0.7rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
 .floating-language {
   position: fixed;
   right: 1rem;
