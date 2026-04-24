@@ -44,23 +44,6 @@
       </section>
 
 
-      <section id="chart" class="section container">
-        <h2 data-i18n="chartTitle">BTC Chart (Temporary)</h2>
-        <p class="chart-note" data-i18n="chartNote">
-          Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.
-        </p>
-
-        <article class="chart-frame chart-container" aria-label="Temporary BTC chart">
-          <div class="chart-head">
-            <strong>BTC/USDT</strong>
-            <span id="chart-price" aria-live="polite">--</span>
-          </div>
-          <canvas id="btcChart" role="img" aria-label="BTC chart line"></canvas>
-          <p class="chart-footnote" data-i18n="chartFootnote">Simulated feed. Replace data source later.</p>
-        </article>
-      </section>
-
-
       <section id="roadmap" class="section container">
         <h2 data-i18n="roadmapTitle">Roadmap</h2>
 
@@ -71,7 +54,18 @@
         <div class="timeline">
           <article class="time-card">
             <h2 data-i18n="phase1Title">Justice</h2>
-            <p data-i18n="phase1Body">Finalize branding, multilingual site, and transparency framework.</p>
+            <h3 data-i18n="chartTitle">BTC Chart (Temporary)</h3>
+            <p class="chart-note" data-i18n="chartNote">
+              Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.
+            </p>
+            <article class="chart-frame chart-container" aria-label="Temporary BTC chart">
+              <div class="chart-head">
+                <strong>BTC/USDT</strong>
+                <span id="chart-price" aria-live="polite">--</span>
+              </div>
+              <canvas id="btcChart" role="img" aria-label="BTC chart line"></canvas>
+              <p class="chart-footnote" data-i18n="chartFootnote">Simulated feed. Replace data source later.</p>
+            </article>
           </article>
           <article class="time-card">
             <h2 data-i18n="phase2Title">Solidarity</h2>
