@@ -58,13 +58,20 @@
             <p class="chart-note" data-i18n="chartNote">
               Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.
             </p>
-            <article class="chart-frame chart-container" aria-label="Temporary BTC chart">
+            <article class="chart-frame chart-container" aria-label="Dexscreener chart">
               <div class="chart-head">
-                <strong>BTC/USDT</strong>
-                <span id="chart-price" aria-live="polite">--</span>
+                <strong>SOL / Chart</strong>
               </div>
-              <canvas id="btcChart" role="img" aria-label="BTC chart line"></canvas>
-              <p class="chart-footnote" data-i18n="chartFootnote">Simulated feed. Replace data source later.</p>
+              <div style="width:100%; height:500px;">
+                <iframe
+                  src="https://dexscreener.com/solana/So11111111111111111111111111111111111111112?embed=1&theme=dark"
+                  style="width:100%; height:100%; border:0;"
+                  loading="lazy">
+                </iframe>
+              </div>
+              <p class="chart-footnote">
+                Live Dexscreener chart (embedded)
+              </p>
             </article>
           </article>
           <article class="time-card">
