@@ -5,7 +5,7 @@ const translations = {
     copyFailed: 'Could not copy automatically. Please copy manually.',
     heroTitle: 'FREE PALESTINE ($ZTN) is a form that embodies human solidarity.',
 
-    chartTitle: 'BTC Chart (Temporary)',
+    chartTitle: 'DEX Screener',
     chartNote: 'Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.',
     chartFootnote: 'Simulated feed. Replace data source later.',
     storyTitle: 'Project Story',
@@ -42,7 +42,7 @@ const translations = {
     copyFailed: 'Copie automatique impossible. Merci de copier manuellement.',
     heroTitle: 'FREE PALESTINE ($ZTN) est une forme qui incarne la solidarité humaine.',
 
-    chartTitle: 'Graphique BTC (temporaire)',
+    chartTitle: 'DEX Screener',
     chartNote: 'En attendant le graphique $ZTN, des données BTC simulées sont affichées.',
     chartFootnote: 'Flux simulé. Remplacez la source plus tard.',
     storyTitle: 'Histoire du projet',
@@ -78,7 +78,7 @@ const translations = {
     copyFailed: 'تعذر النسخ تلقائياً. يرجى النسخ يدوياً.',
     heroTitle: 'FREE PALESTINE ($ZTN) هو شكل يجسد التضامن الإنساني。',
 
-    chartTitle: 'مخطط BTC (مؤقت)',
+    chartTitle: 'DEX Screener',
     chartNote: 'إلى حين إضافة مخطط $ZTN، يتم عرض بيانات BTC تجريبية.',
     chartFootnote: 'تغذية محاكاة. استبدل مصدر البيانات لاحقاً.',
     storyTitle: 'قصة المشروع',
@@ -150,148 +150,6 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 const getActiveLang = () => document.documentElement.lang || 'en';
 
-const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
-
-const chartState = {
-  points: [],
-  min: 0,
-  max: 0,
-  dayKey: '',
-  chart: null,
-  updateTimer: null,
-  isUpdating: false
-};
-
-const getUtcDayKey = (date = new Date()) =>
-  `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}-${String(date.getUTCDate()).padStart(2, '0')}`;
-
-const seedDaySeries = (base = 86000) => {
-  const now = Date.now();
-  return Array.from({ length: 48 }, (_, idx) => ({
-    x: now - (47 - idx) * 30 * 60 * 1000,
-    y: base + Math.sin(idx * 0.4) * 540 + (Math.random() - 0.5) * 220
-  }));
-};
-
-const updateDayRange = () => {
-  const values = chartState.points.map((point) => point.y);
-  const minValue = Math.min(...values);
-  const maxValue = Math.max(...values);
-  const padding = Math.max((maxValue - minValue) * 0.08, 120);
-  chartState.min = Math.floor(minValue - padding);
-  chartState.max = Math.ceil(maxValue + padding);
-};
-
-const resetDailyState = () => {
-  const lastPrice = chartState.points.at(-1)?.y ?? 86000;
-  chartState.dayKey = getUtcDayKey();
-  chartState.points = seedDaySeries(lastPrice);
-  updateDayRange();
-};
-
-const syncChart = (chartPrice) => {
-  if (!chartState.chart || chartState.points.length === 0) return;
-  chartState.chart.data.datasets[0].data = chartState.points;
-  chartState.chart.options.scales.x.min = Date.now() - TWENTY_FOUR_HOURS_MS;
-  chartState.chart.options.scales.x.max = Date.now();
-  chartState.chart.options.scales.y.min = chartState.min;
-  chartState.chart.options.scales.y.max = chartState.max;
-  if (chartState.isUpdating) return;
-  chartState.isUpdating = true;
-  try {
-    chartState.chart.update('none');
-  } finally {
-    chartState.isUpdating = false;
-  }
-  if (chartPrice) {
-    chartPrice.textContent = `$${chartState.points.at(-1).y.toFixed(2)}`;
-  }
-};
-
-const setupBtcChart = (canvas, chartPrice) => {
-  if (!canvas || typeof Chart === 'undefined') return;
-  if (!chartState.dayKey || chartState.points.length === 0) resetDailyState();
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  if (chartState.chart) {
-    chartState.chart.destroy();
-    chartState.chart = null;
-  }
-  chartState.chart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      datasets: [
-        {
-          label: 'BTC/USDT',
-          data: chartState.points,
-          borderColor: '#addd7b',
-          backgroundColor: 'rgba(173,221,123,0.15)',
-          borderWidth: 2,
-          pointRadius: 0,
-          tension: 0.3,
-          fill: true
-        }
-      ]
-    },
-    options: {
-      animation: false,
-      responsive: true,
-      maintainAspectRatio: false,
-      aspectRatio: 2,
-      resizeDelay: 0,
-      parsing: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: { mode: 'index', intersect: false }
-      },
-      scales: {
-        x: {
-          type: 'linear',
-          min: Date.now() - TWENTY_FOUR_HOURS_MS,
-          max: Date.now(),
-          grid: { color: 'rgba(213,229,188,0.12)' },
-          ticks: {
-            color: '#c8d7b8',
-            maxRotation: 0,
-            autoSkipPadding: 12,
-            callback: (value) => {
-              const date = new Date(Number(value));
-              return `${String(date.getHours()).padStart(2, '0')}:00`;
-            }
-          }
-        },
-        y: {
-          beginAtZero: false,
-          min: chartState.min,
-          max: chartState.max,
-          ticks: {
-            color: '#c8d7b8',
-            callback: (value) => `$${Math.round(value).toLocaleString()}`
-          },
-          grid: { color: 'rgba(213,229,188,0.12)' }
-        }
-      }
-    }
-  });
-  syncChart(chartPrice);
-};
-
-const advanceChartPoint = (chartPrice) => {
-  const nextDayKey = getUtcDayKey();
-  if (nextDayKey !== chartState.dayKey) {
-    resetDailyState();
-    syncChart(chartPrice);
-    return;
-  }
-  const last = chartState.points.at(-1)?.y ?? 86000;
-  const drift = (Math.random() - 0.5) * 650;
-  const next = Math.max(1000, last + drift);
-  chartState.points.push({ x: Date.now(), y: next });
-  chartState.points = chartState.points.filter((point) => point.x >= Date.now() - TWENTY_FOUR_HOURS_MS);
-  updateDayRange();
-  syncChart(chartPrice);
-};
-
 const applyLanguage = (lang) => {
   const content = translations[lang] || translations.en;
 
@@ -348,8 +206,6 @@ const initApp = () => {
   const languageMenu = document.querySelector('#language-menu');
   const copyCAButton = document.querySelector('#copy-ca');
   const copyStatus = document.querySelector('#copy-status');
-  const chartCanvas = document.querySelector('#btcChart');
-  const chartPrice = document.querySelector('#chart-price');
   const leafLayer = document.querySelector('.leaf-layer');
 
   const showCopyStatus = (key) => {
@@ -418,12 +274,6 @@ const initApp = () => {
       }
     });
   }
-
-  setupBtcChart(chartCanvas, chartPrice);
-  if (chartState.updateTimer) {
-    window.clearInterval(chartState.updateTimer);
-  }
-  chartState.updateTimer = window.setInterval(() => advanceChartPoint(chartPrice), 60_000);
 
   if (leafLayer) {
     const createLeaf = () => {
