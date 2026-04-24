@@ -145,6 +145,9 @@ const translations = {
   }
 };
 
+const SUPABASE_URL = "https://zofvjiknqaclhkduqqio.supabase.co/rest/v1/table?select=*";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvZnZqaWtucWFjbGhrZHVxcWlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5OTA4NTUsImV4cCI6MjA5MjU2Njg1NX0.YXdYaiC0viBz6_UOiSguDq_y6OKk4JbOwT596gXUrjI";
+
 const getActiveLang = () => document.documentElement.lang || 'en';
 
 const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
@@ -306,6 +309,41 @@ const applyLanguage = (lang) => {
   localStorage.setItem('ztn-language', lang);
 };
 
+async function loadMessages() {
+  try {
+    const res = await fetch(SUPABASE_URL, {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: "Bearer " + SUPABASE_KEY
+      }
+    });
+
+    const data = await res.json();
+
+    const container = document.querySelector("#chat-list");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    data.reverse().forEach((msg) => {
+      const div = document.createElement("div");
+
+      div.style.padding = "10px";
+      div.style.margin = "6px 0";
+      div.style.background = "rgba(0,0,0,0.6)";
+      div.style.color = "#fff";
+      div.style.borderRadius = "10px";
+      div.style.fontSize = "14px";
+
+      div.textContent = msg.text || JSON.stringify(msg);
+
+      container.appendChild(div);
+    });
+  } catch (err) {
+    console.error("Supabase error:", err);
+  }
+}
+
 const initApp = () => {
   const languageOptions = document.querySelectorAll('.lang-option');
   const languageToggle = document.querySelector('#language-toggle');
@@ -446,6 +484,9 @@ const initApp = () => {
     window.setTimeout(scheduleLeaf, 840 + Math.random() * 560);
   };
   window.setTimeout(scheduleLeaf, 900);
+  
+  loadMessages();
+  setInterval(loadMessages, 3000);
 };
 
 if (document.readyState === 'loading') {
