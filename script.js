@@ -145,6 +145,9 @@ const translations = {
   }
 };
 
+const SUPABASE_URL = "https://zofvjiknqaclhkduqqio.supabase.co/rest/v1/table?select=*";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvZnZqaWtucWFjbGhrZHVxcWlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5OTA4NTUsImV4cCI6MjA5MjU2Njg1NX0.YXdYaiC0viBz6_UOiSguDq_y6OKk4JbOwT596gXUrjI";
+
 const getActiveLang = () => document.documentElement.lang || 'en';
 
 const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
