@@ -18,7 +18,8 @@ const translations = {
     model2: 'Proof updates via official channels and website logs.',
     model3: 'Community-driven prioritization for aid categories.',
     roadmapTitle: 'Roadmap',
-    phase1Title: 'Phase 1 — Foundation',
+    roadmapCaption: 'FREE PALESTINE ($ZTN) is rooted in fair ground (Justice), and liquidity rewards (Solidarity) bear fruit as donations (Impact) for Palestine.',
+    phase1Title: 'Justice',
     phase1Body: 'Finalize branding, multilingual site, and transparency framework.',
     phase2Title: 'Solidarity',
     phase2Body: '“Be water, my friend.” - Bruce Lee',
@@ -28,7 +29,7 @@ const translations = {
     donationColNumber: 'Donation No.',
     donationColDestination: 'Recipient',
     donationColAmount: 'Amount',
-    donationColX: 'X Link',
+    donationColX: 'X',
     donationPending: 'Coming soon',
     tokenomicsTitle: 'Tokenomics (Draft)',
     tokenomicsBody: 'Final values will be published before launch with full transparency.',
@@ -40,7 +41,7 @@ const translations = {
     safe2: 'Never trust unofficial DMs for wallet connection.',
     safe3: 'This website is informational and not investment advice.',
     linksTitle: 'Official Links',
-    footer: '© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.'
+    footer: '© 2026 FREE PALESTINE ($ZTN)'
   },
   fr: {
     copyCA: "Copier l'adresse CA",
@@ -60,7 +61,8 @@ const translations = {
     model2: 'Preuves et mises à jour via canaux officiels et journaux du site.',
     model3: 'Priorisation communautaire des catégories d’aide.',
     roadmapTitle: 'Feuille de route',
-    phase1Title: 'Phase 1 — Fondation',
+    roadmapCaption: 'FREE PALESTINE ($ZTN) s\'enracine dans un sol juste (Justice), et les récompenses de liquidité (Solidarity) se transforment en dons (Impact) pour la Palestine.',
+    phase1Title: 'Justice',
     phase1Body: 'Finaliser l’identité, le site multilingue et le cadre de transparence.',
     phase2Title: 'Solidarity',
     phase2Body: '“Be water, my friend.” - Bruce Lee',
@@ -70,7 +72,7 @@ const translations = {
     donationColNumber: 'N° de don',
     donationColDestination: 'Destinataire',
     donationColAmount: 'Montant',
-    donationColX: 'Lien X',
+    donationColX: 'X',
     donationPending: 'Bientôt disponible',
     tokenomicsTitle: 'Tokenomics (brouillon)',
     tokenomicsBody: 'Les valeurs finales seront publiées avant le lancement.',
@@ -82,7 +84,7 @@ const translations = {
     safe2: 'Ne faites jamais confiance aux DM non officiels.',
     safe3: 'Ce site est informatif et ne constitue pas un conseil en investissement.',
     linksTitle: 'Liens officiels',
-    footer: '© 2026 FREE PALESTINE ($ZTN) — zeitoun / olivier / paix.'
+    footer: '© 2026 FREE PALESTINE ($ZTN)'
   },
   ar: {
     copyCA: 'نسخ عنوان العقد',
@@ -101,7 +103,8 @@ const translations = {
     model2: 'إثباتات وتحديثات عبر القنوات الرسمية وسجل الموقع.',
     model3: 'تحديد أولويات المساعدة بقرار مجتمعي.',
     roadmapTitle: 'خارطة الطريق',
-    phase1Title: 'المرحلة 1 — التأسيس',
+    roadmapCaption: 'تتجذر FREE PALESTINE ($ZTN) في أرض عادلة (Justice)، وتتحول مكافآت السيولة (Solidarity) إلى تبرعات (Impact) لفلسطين.',
+    phase1Title: 'Justice',
     phase1Body: 'استكمال الهوية، الموقع متعدد اللغات، وإطار الشفافية.',
     phase2Title: 'Solidarity',
     phase2Body: '“Be water, my friend.” - Bruce Lee',
@@ -111,7 +114,7 @@ const translations = {
     donationColNumber: 'رقم التبرع',
     donationColDestination: 'جهة التبرع',
     donationColAmount: 'قيمة التبرع',
-    donationColX: 'رابط X',
+    donationColX: 'X',
     donationPending: 'قريباً',
     tokenomicsTitle: 'التوكنوميكس (مسودة)',
     tokenomicsBody: 'سيتم نشر القيم النهائية قبل الإطلاق بشفافية كاملة.',
@@ -123,7 +126,7 @@ const translations = {
     safe2: 'لا تثق بالرسائل الخاصة غير الرسمية لربط المحفظة.',
     safe3: 'هذا الموقع معلوماتي وليس نصيحة استثمارية.',
     linksTitle: 'الروابط الرسمية',
-    footer: '© 2026 FREE PALESTINE ($ZTN) — زيتون / شجرة الزيتون / سلام.'
+    footer: '© 2026 FREE PALESTINE ($ZTN)'
   },
   ja: {
     copyCA: 'CAアドレスをコピー',
@@ -143,6 +146,7 @@ const translations = {
     model2: '公式チャネルとサイトログで証跡を共有。',
     model3: '支援カテゴリの優先順位はコミュニティ主導。',
     roadmapTitle: '設計思想',
+    roadmapCaption: 'FREE PALESTINE（$ZTN）は公正な土壌（Justice）に根ざし、流動性報酬（Solidarity）はパレスチナへの寄付（Impact）へと結実します。',
     phase1Title: 'Justice',
     phase1Body: '',
     phase2Title: 'Solidarity',
@@ -153,7 +157,7 @@ const translations = {
     donationColNumber: '寄付番号',
     donationColDestination: '寄付先',
     donationColAmount: '寄付額',
-    donationColX: 'Xリンク',
+    donationColX: 'X',
     donationPending: '準備中',
     tokenomicsTitle: 'トークノミクス（草案）',
     tokenomicsBody: '最終値はローンチ前に透明性をもって公開します。',
@@ -165,7 +169,7 @@ const translations = {
     safe2: 'ウォレット接続を求める非公式DMは信用しない。',
     safe3: '本サイトは情報提供のみで、投資助言ではありません。',
     linksTitle: '公式リンク',
-    footer: '© 2026 FREE PALESTINE ($ZTN) — zeitoun / オリーブの木 / 平和。'
+    footer: '© 2026 FREE PALESTINE ($ZTN)'
   }
 };
 
