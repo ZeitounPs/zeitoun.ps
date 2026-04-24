@@ -319,18 +319,6 @@ const initApp = () => {
       leaf.addEventListener('animationend', () => leaf.remove());
     };
 
-    if (!document.querySelector('#leaf-keyframes')) {
-      const style = document.createElement('style');
-      style.id = 'leaf-keyframes';
-      style.textContent = `
-        @keyframes leafFloat {
-          0% { transform: translate3d(0, 0, 0) rotate(var(--leaf-base-rotate, 0deg)) scale(var(--leaf-scale, 1)); }
-          100% { transform: translate3d(var(--leaf-drift, 24vw), 110vh, 0) rotate(calc(var(--leaf-base-rotate, 0deg) + var(--leaf-rotate, 180deg))) scale(var(--leaf-scale, 1)); }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
     window.setInterval(createLeaf, 900);
   }
 
