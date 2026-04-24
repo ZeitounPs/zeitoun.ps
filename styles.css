@@ -26,7 +26,7 @@ body {
 body {
   min-height: 100vh;
   color: var(--text);
-  font-family: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+  font-family: Manrope, system-ui, -apple-system, Segoe UI, sans-serif;
   line-height: 1.7;
   overflow-x: hidden;
   background-color: #ffffff;
@@ -99,7 +99,7 @@ main,
 
 .wordmark-main,
 .wordmark-sub {
-  font-family: Teko, Inter, sans-serif;
+  font-family: "Cormorant Garamond", Manrope, serif;
   font-weight: 700;
   letter-spacing: 0.08em;
   line-height: 0.92;
@@ -194,7 +194,7 @@ main,
 .brand-caption {
   color: var(--muted);
   font-size: 0.9rem;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   max-width: min(90vw, 700px);
 }
 
@@ -232,7 +232,7 @@ main,
 .hero h1 {
   margin: 0;
   color: #111111;
-  font-family: Teko, Inter, sans-serif;
+  font-family: "Cormorant Garamond", Manrope, serif;
   font-size: clamp(1.8rem, 7vw, 3.3rem);
   letter-spacing: 0.025em;
   line-height: 1.06;
@@ -245,22 +245,38 @@ main,
 
 .section h2 {
   margin: 0 0 0.5rem;
-  font-family: Teko, Inter, sans-serif;
+  font-family: "Cormorant Garamond", Manrope, serif;
   font-size: clamp(1.33rem, 5vw, 2rem);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   color: #111111;
+  font-weight: 700;
 }
 
 .section h3 {
   margin: 0 0 0.3rem;
-  font-family: Teko, Inter, sans-serif;
+  font-family: "Cormorant Garamond", Manrope, serif;
   font-size: 1.16rem;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   color: #111111;
+  font-weight: 700;
 }
 
 .donation-title {
   margin-top: 1rem;
+}
+
+.time-card p[data-i18n="phase3Body"] {
+  margin-bottom: 1rem;
+}
+
+.donation-table a {
+  color: #8f0000;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.donation-table a:hover {
+  text-decoration: underline;
 }
 
 .donation-frame {
@@ -284,6 +300,7 @@ main,
   text-align: left;
   font-size: 0.9rem;
   color: #111111;
+  font-weight: 700;
 }
 
 .donation-table thead th {
@@ -392,13 +409,14 @@ main,
   gap: 0.6rem;
   margin-bottom: 0.4rem;
   color: #111111;
+  font-weight: 700;
 }
 
 #chart-price {
-  font-family: Teko, Inter, sans-serif;
+  font-family: "Cormorant Garamond", Manrope, serif;
   font-size: 1.45rem;
   color: #b30000;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
 }
 
 .chart-footnote {
@@ -435,7 +453,7 @@ canvas {
 .roadmap-caption {
   margin-top: 0.7rem;
   font-size: 0.98rem;
-  line-height: 1.5;
+  line-height: 1.82;
 }
 
 .floating-language {
@@ -560,7 +578,7 @@ canvas {
 
 
 html[dir='rtl'] body {
-  font-family: 'Noto Naskh Arabic', Inter, sans-serif;
+  font-family: 'Noto Naskh Arabic', Manrope, sans-serif;
 }
 
 @media (min-width: 740px) {
