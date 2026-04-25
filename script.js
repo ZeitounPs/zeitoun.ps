@@ -305,9 +305,9 @@ const initApp = () => {
 
   if (leafLayer) {
     const leafPalette = [
-      { light: '#edf3e2', mid: '#c6d4b0', dark: '#839b6a' },
-      { light: '#e7efda', mid: '#bdcda6', dark: '#7a9261' },
-      { light: '#e3ecd4', mid: '#b4c59c', dark: '#72895a' }
+      { light: '#eef4df', mid: '#c2d29b', dark: '#6f8650' },
+      { light: '#e8efd7', mid: '#b7c88f', dark: '#667e49' },
+      { light: '#e3ebd1', mid: '#adbf84', dark: '#5f7744' }
     ];
 
     const createLeaf = () => {
@@ -316,20 +316,20 @@ const initApp = () => {
       leaf.className = 'olive-leaf';
       leaf.style.left = `${Math.random() * 100}vw`;
       leaf.style.top = '-8vh';
-      leaf.style.opacity = `${0.45 + Math.random() * 0.3}`;
+      leaf.style.opacity = `${0.34 + Math.random() * 0.24}`;
       leaf.style.animation = `leafFloat ${11 + Math.random() * 7}s linear forwards`;
       leaf.style.setProperty('--leaf-light', tone.light);
       leaf.style.setProperty('--leaf-mid', tone.mid);
       leaf.style.setProperty('--leaf-dark', tone.dark);
       leaf.style.setProperty('--leaf-drift', `${(Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 60)}vw`);
       leaf.style.setProperty('--leaf-rotate', `${120 + Math.random() * 240}deg`);
-      leaf.style.setProperty('--leaf-scale', `${0.75 + Math.random() * 0.4}`);
+      leaf.style.setProperty('--leaf-scale', `${0.55 + Math.random() * 0.35}`);
       leaf.style.setProperty('--leaf-base-rotate', `${Math.random() * 360}deg`);
       leafLayer.appendChild(leaf);
       leaf.addEventListener('animationend', () => leaf.remove());
     };
 
-    window.setInterval(createLeaf, 650);
+    window.setInterval(createLeaf, 800);
   }
 
   loadMessages();
