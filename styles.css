@@ -266,6 +266,10 @@ main,
   font-weight: 700;
 }
 
+.time-card h3[data-i18n="chartTitle"] {
+  margin-top: 1rem;
+}
+
 .donation-title {
   margin-top: 1rem;
 }
