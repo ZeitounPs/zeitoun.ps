@@ -316,20 +316,20 @@ const initApp = () => {
       leaf.className = 'olive-leaf';
       leaf.style.left = `${Math.random() * 100}vw`;
       leaf.style.top = '-8vh';
-      leaf.style.opacity = `${0.2 + Math.random() * 0.28}`;
+      leaf.style.opacity = `${0.45 + Math.random() * 0.3}`;
       leaf.style.animation = `leafFloat ${11 + Math.random() * 7}s linear forwards`;
       leaf.style.setProperty('--leaf-light', tone.light);
       leaf.style.setProperty('--leaf-mid', tone.mid);
       leaf.style.setProperty('--leaf-dark', tone.dark);
       leaf.style.setProperty('--leaf-drift', `${(Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 60)}vw`);
       leaf.style.setProperty('--leaf-rotate', `${120 + Math.random() * 240}deg`);
-      leaf.style.setProperty('--leaf-scale', `${0.16 + Math.random() * 0.14}`);
+      leaf.style.setProperty('--leaf-scale', `${0.75 + Math.random() * 0.4}`);
       leaf.style.setProperty('--leaf-base-rotate', `${Math.random() * 360}deg`);
       leafLayer.appendChild(leaf);
       leaf.addEventListener('animationend', () => leaf.remove());
     };
 
-    window.setInterval(createLeaf, 900);
+    window.setInterval(createLeaf, 650);
   }
 
   loadMessages();
