@@ -67,10 +67,13 @@ body::after {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .content {
   position: relative;
+  z-index: 2;
 }
 
 .container {
@@ -582,8 +585,8 @@ canvas {
   --leaf-light: #edf3e2;
   --leaf-mid: #c1d0ac;
   --leaf-dark: #7d9565;
-  width: 2.8px;
-  height: 11px;
+  width: 9px;
+  height: 24px;
   background: linear-gradient(
     172deg,
     var(--leaf-light) 0%,
