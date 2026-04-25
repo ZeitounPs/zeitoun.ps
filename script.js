@@ -305,9 +305,9 @@ const initApp = () => {
 
   if (leafLayer) {
     const leafPalette = [
-      { light: '#eef4df', mid: '#c2d29b', dark: '#6f8650' },
-      { light: '#e8efd7', mid: '#b7c88f', dark: '#667e49' },
-      { light: '#e3ebd1', mid: '#adbf84', dark: '#5f7744' }
+      { light: '#f3ecbd', mid: '#d8c86f', dark: '#9b8d34' },
+      { light: '#efe7ad', mid: '#cfbd61', dark: '#907f2e' },
+      { light: '#e9e09d', mid: '#c4b254', dark: '#857427' }
     ];
 
     const createLeaf = () => {
