@@ -295,6 +295,17 @@ main,
   text-decoration: underline;
 }
 
+.donation-table td.link-cell {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.donation-table td.link-cell a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .donation-frame {
   margin-top: 0.45rem;
   border: 2px solid #b30000;
