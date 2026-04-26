@@ -146,7 +146,7 @@ const translations = {
     model2: '公式チャネルとサイトログで証跡を共有。',
     model3: '支援カテゴリの優先順位はコミュニティ主導。',
     roadmapTitle: '設計思想',
-    roadmapCaption: 'FREE PALESTINE（$ZTN）は公正な土壌（Justice）に根ざし、流動性報酬（Solidarity）はパレスチナへの寄付（Impact）へと結実します。',
+    roadmapCaption: 'FREE PALESTINE（$ZTN）は、公正な土壌（Justice）に根ざし、取引（Solidarity）から流れるCreator Feeの80%を、パレスチナへの寄付（Impact）へと結実させます。残り20%は、この地を耕し続けるために。',
     phase1Title: 'Justice',
     phase1Body: '',
     phase2Title: 'Solidarity',
