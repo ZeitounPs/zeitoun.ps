@@ -486,7 +486,7 @@ canvas {
 .roadmap-visual {
   margin: 0.9rem 0 1rem;
   padding: 0.45rem;
-  background: transparent;
+  background: var(--surface-overlay);
 }
 
 .roadmap-visual img {
@@ -513,7 +513,7 @@ canvas {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(245, 238, 221, 0.3);
+  background: var(--surface-overlay);
   border-radius: 4px;
   z-index: -1;
   pointer-events: none;
@@ -592,6 +592,7 @@ canvas {
   gap: 8px;
   padding: 10px;
   width: 100%;
+  min-height: 120px;
   max-height: min(40vh, 420px);
   overflow-y: auto;
   overflow-x: hidden;
@@ -599,6 +600,18 @@ canvas {
   border: 1px solid var(--line);
   border-radius: 16px;
   backdrop-filter: blur(8px);
+}
+
+
+.chat-empty {
+  display: grid;
+  place-items: center;
+  min-height: 96px;
+  border-radius: 12px;
+  border: 1px dashed rgba(179, 0, 0, 0.3);
+  color: #5a2626;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.45);
 }
 
 /* メッセージ本体 */
