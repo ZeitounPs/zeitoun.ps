@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Noto+Naskh+Arabic:wght@500;700&family=Teko:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500;600;700;800&family=Noto+Sans+JP:wght@500;700;900&family=Noto+Sans+Arabic:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -39,81 +39,67 @@
       </div>
 
       <main>
-      <section class="hero container">
-        <h1 data-i18n="heroTitle">FREE PALESTINE（$ZTN）は、人類の連帯を具現化する一形式です。</h1>
-      </section>
-
-
-      <section id="chart" class="section container">
-        <h2 data-i18n="chartTitle">BTC Chart (Temporary)</h2>
-        <p class="chart-note" data-i18n="chartNote">
-          Placeholder for future $ZTN chart integration. Dummy BTC chart data is shown for now.
-        </p>
-
-        <article class="chart-frame chart-container" aria-label="Temporary BTC chart">
-          <div class="chart-head">
-            <strong>BTC/USDT</strong>
-            <span id="chart-price" aria-live="polite">--</span>
-          </div>
-          <canvas id="btcChart" role="img" aria-label="BTC chart line"></canvas>
-          <p class="chart-footnote" data-i18n="chartFootnote">Simulated feed. Replace data source later.</p>
-        </article>
-      </section>
-
-
       <section id="roadmap" class="section container">
-        <h2 data-i18n="roadmapTitle">Roadmap</h2>
-
         <article class="chart-frame roadmap-visual" aria-label="Roadmap visual diagram">
           <img src="b.png" alt="Roadmap visual diagram" loading="lazy" />
+          <p class="roadmap-caption" data-i18n="roadmapCaption">FREE PALESTINE（$ZTN）は、公正な土壌（Justice）に根ざし、取引（Solidarity）から流れるCreator Feeの80%を、パレスチナへの寄付（Impact）に結実させます。残り20%は、この地を耕し続けるために。</p>
         </article>
 
         <div class="timeline">
           <article class="time-card">
-            <h3 data-i18n="phase1Title">Phase 1 — Foundation</h3>
-            <p data-i18n="phase1Body">Finalize branding, multilingual site, and transparency framework.</p>
+            <h2 data-i18n="phase1Title">Justice</h2>
+            <p>“The land belongs to those that till it.” - Frantz Fanon</p>
+            <h3 data-i18n="chartTitle">DEX Screener</h3>
+            <div style="width:100%; height:500px; border-radius:12px; overflow:hidden;">
+              <iframe
+                src="https://dexscreener.com/solana/AGdGTQa8iRnSx4fQJehWo4Xwbh1bzTazs55R6Jwupump?embed=1&theme=dark"
+                style="width:100%; height:100%; border:0;"
+                loading="lazy"
+                title="DEX Screener chart">
+              </iframe>
+            </div>
           </article>
           <article class="time-card">
-            <h3 data-i18n="phase2Title">Solidarity</h3>
+            <h2 data-i18n="phase2Title">Solidarity</h2>
             <p data-i18n="phase2Body">“Be water, my friend.” - Bruce Lee</p>
-            <section id="chat" class="section container">
-                <h2>Telegram Live</h2>
+            <section id="chat" class="section">
+                <h3>Telegram Text Live</h3>
                 <div id="chat-list" class="chat-box"></div>
             </section>
           </article>
           <article class="time-card">
-            <h3 data-i18n="phase3Title">Impact</h3>
+            <h2 data-i18n="phase3Title">Impact</h2>
             <p data-i18n="phase3Body">“Let it be a tale.” - Refaat Alareer</p>
+            <h3 class="donation-title" data-i18n="donationTitle">寄付実績（累計：）</h3>
+            <div class="donation-frame" aria-label="寄付実績一覧">
+              <table class="donation-table">
+                <thead>
+                  <tr>
+                    <th scope="col" data-i18n="donationColNumber">寄付番号</th>
+                    <th scope="col" data-i18n="donationColDestination">寄付先</th>
+                    <th scope="col" data-i18n="donationColAmount">寄付額</th>
+                    <th scope="col" data-i18n="donationColX">X</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>UA001</td>
+                    <td>UNRWA</td>
+                    <td>$10</td>
+                    <td class="link-cell"><a href="#" aria-label="X" title="X">🔗</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </article>
         </div>
 
       </section>
       
-      <section id="links" class="section container">
-        <h2 data-i18n="linksTitle">Official Links</h2>
-        <div class="social-icons">
-          <a href="https://x.com/ZeitounPs" class="icon-link" aria-label="X (Twitter)" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M18.244 2H21.5l-7.11 8.126L22.75 22h-6.54l-5.12-6.708L5.22 22H1.96l7.603-8.688L1.5 2h6.706l4.626 6.117L18.244 2Zm-1.146 18h1.813L7.232 3.894H5.286L17.098 20Z"
-              />
-            </svg>
-          </a>
-          <a href="https://t.me/ZeitounPs" class="icon-link" aria-label="Telegram" target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M9.036 15.89 8.66 21.2c.538 0 .77-.232 1.05-.51l2.518-2.408 5.217 3.822c.957.53 1.634.252 1.892-.88l3.43-16.07c.33-1.53-.553-2.127-1.485-1.78L1.116 11.146c-1.373.53-1.352 1.296-.233 1.64l5.17 1.612L18.06 6.82c.57-.378 1.09-.168.662.21L9.036 15.89Z"
-              />
-            </svg>
-          </a>
-        </div>
-      </section>
       </main>
 
       <footer class="site-footer container">
-        <p data-i18n="footer">© 2026 FREE PALESTINE ($ZTN) — zeitoun / olive tree / peace.</p>
+        <p data-i18n="footer">© 2026 FREE PALESTINE ($ZTN) </p>
       </footer>
 
       <div class="floating-language" aria-label="Language switcher">
@@ -129,7 +115,6 @@
       </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
