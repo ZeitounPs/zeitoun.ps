@@ -11,6 +11,7 @@
   --panel: rgba(255, 255, 255, 0.96);
 }
 
+
 * {
   box-sizing: border-box;
   font-family: "Noto Sans", "Noto Sans JP", "Noto Sans Arabic", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -329,9 +330,16 @@ main,
 }
 
 .section p,
-.section li {
+.section li,
+.section h2,
+.section h3,
+.brand-caption,
+#copy-status,
+.site-footer p,
+.roadmap-caption {
   color: #1a1a1a;
   margin: 0;
+  text-shadow: 0 0 1px rgba(255, 199, 199, 0.95), 0 0 2px rgba(255, 150, 150, 0.65);
 }
 
 .grid-2 {
