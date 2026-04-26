@@ -439,7 +439,7 @@ main,
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 0.82rem;
-  background: #ffffff;
+  background: transparent;
 }
 
 .chart-head {
@@ -480,7 +480,7 @@ canvas {
 .roadmap-visual {
   margin: 0.9rem 0 1rem;
   padding: 0.45rem;
-  background: #ffffff;
+  background: transparent;
 }
 
 .roadmap-visual img {
