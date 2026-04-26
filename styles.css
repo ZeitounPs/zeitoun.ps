@@ -9,6 +9,7 @@
   --olive-soft: #ffd7d7;
   --gold: #ff6b6b;
   --panel: rgba(255, 255, 255, 0.96);
+  --global-overlay: rgba(255, 248, 235, 0.82);
 }
 
 
@@ -70,6 +71,17 @@ body::after {
   pointer-events: none;
   overflow: hidden;
   z-index: 1;
+}
+
+
+.overlay-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 3;
+  background: var(--global-overlay);
 }
 
 .content {
