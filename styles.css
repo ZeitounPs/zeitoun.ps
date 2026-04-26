@@ -8,7 +8,7 @@
   --olive: #b30000;
   --olive-soft: #ffd7d7;
   --gold: #ff6b6b;
-  --surface-overlay: rgba(255, 255, 255, 0.78);
+  --surface-overlay: rgba(255, 255, 255, 0.72);
   --panel: var(--surface-overlay);
   --item-overlay: var(--surface-overlay);
 }
