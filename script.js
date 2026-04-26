@@ -170,7 +170,7 @@ const translations = {
 };
 
 const SUPABASE_URL = "https://zofvjiknqaclhkduqqio.supabase.co/rest/v1/table?select=*";
-const SUPABASE_KEY = "…（中略せず実ファイルではフル文字列）…";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvZnZqaWtucWFjbGhrZHVxcWlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5OTA4NTUsImV4cCI6MjA5MjU2Njg1NX0.YXdYaiC0viBz6_UOiSguDq_y6OKk4JbOwT596gXUrjI";
 
 const getActiveLang = () => document.documentElement.lang || 'en';
 
@@ -188,7 +188,18 @@ const applyLanguage = (lang) => {
   localStorage.setItem('ztn-language', lang);
 };
 
+const renderChatFallback = (container, message) => {
+  container.innerHTML = "";
+  const fallback = document.createElement("div");
+  fallback.className = "chat-empty";
+  fallback.textContent = message;
+  container.appendChild(fallback);
+};
+
 async function loadMessages() {
+  const container = document.querySelector("#chat-list");
+  if (!container) return;
+
   try {
     const res = await fetch(SUPABASE_URL, {
       headers: {
@@ -197,14 +208,21 @@ async function loadMessages() {
       }
     });
 
-    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(`Supabase request failed: ${res.status}`);
+    }
 
-    const container = document.querySelector("#chat-list");
-    if (!container) return;
+    const data = await res.json();
+    const messages = Array.isArray(data) ? data : [];
+
+    if (!messages.length) {
+      renderChatFallback(container, "No live messages yet.");
+      return;
+    }
 
     container.innerHTML = "";
 
-    data
+    messages
       .slice(-5)
       .reverse()
       .forEach((msg) => {
@@ -221,6 +239,7 @@ async function loadMessages() {
       });
   } catch (err) {
     console.error("Supabase error:", err);
+    renderChatFallback(container, "Live feed temporarily unavailable.");
   }
 }
 
