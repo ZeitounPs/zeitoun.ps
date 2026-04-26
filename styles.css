@@ -442,7 +442,7 @@ main,
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 0.82rem;
-  background: transparent;
+  background: var(--item-overlay);
 }
 
 .chart-head {
