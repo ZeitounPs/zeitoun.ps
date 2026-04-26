@@ -9,7 +9,7 @@
   --olive-soft: #ffd7d7;
   --gold: #ff6b6b;
   --panel: rgba(255, 255, 255, 0.96);
-  --global-overlay: rgba(255, 248, 235, 0.82);
+  --text-bg-overlay: rgba(255, 248, 235, 0.82);
 }
 
 
@@ -74,15 +74,6 @@ body::after {
 }
 
 
-.overlay-layer {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 3;
-  background: var(--global-overlay);
-}
 
 .content {
   position: relative;
@@ -363,6 +354,11 @@ main,
   color: #1a1a1a;
   margin: 0;
   text-shadow: 0 0 1px rgba(255, 199, 199, 0.95), 0 0 2px rgba(255, 150, 150, 0.65);
+  background: var(--text-bg-overlay);
+  border-radius: 4px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.08em 0.38em;
 }
 
 .grid-2 {
