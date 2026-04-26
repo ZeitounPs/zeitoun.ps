@@ -8,8 +8,9 @@
   --olive: #b30000;
   --olive-soft: #ffd7d7;
   --gold: #ff6b6b;
-  --panel: rgba(255, 255, 255, 0.96);
-  --item-overlay: rgba(255, 248, 235, 0.82);
+  --surface-overlay: rgba(255, 255, 255, 0.9);
+  --panel: var(--surface-overlay);
+  --item-overlay: var(--surface-overlay);
 }
 
 
@@ -313,21 +314,22 @@ main,
   margin-top: 0.45rem;
   border: 2px solid #b30000;
   border-radius: 10px;
-  padding: 0.7rem;
-  background: rgba(255, 255, 255, 0.88);
-  overflow-x: hidden;
+  padding: 0;
+  background: var(--surface-overlay);
+  overflow: hidden;
 }
 
 .donation-table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  background: transparent;
 }
 
 .donation-table th,
 .donation-table td {
   border: 1px solid #b30000;
-  padding: 0.5rem;
+  padding: 0.6rem;
   text-align: left;
   font-size: 0.9rem;
   color: #111111;
@@ -336,10 +338,11 @@ main,
   overflow-wrap: anywhere;
   word-break: break-word;
   hyphens: auto;
+  background: transparent;
 }
 
 .donation-table thead th {
-  background-color: #ffd7d7;
+  background-color: rgba(255, 215, 215, 0.55);
   text-align: center;
 }
 
