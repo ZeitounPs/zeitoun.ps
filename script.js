@@ -171,7 +171,32 @@ const translations = {
 
 const SUPABASE_URL = "https://zofvjiknqaclhkduqqio.supabase.co/rest/v1/table?select=*";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvZnZqaWtucWFjbGhrZHVxcWlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5OTA4NTUsImV4cCI6MjA5MjU2Njg1NX0.YXdYaiC0viBz6_UOiSguDq_y6OKk4JbOwT596gXUrjI";
-const FALLBACK_NEWS_ITEMS = [];
+const FALLBACK_NEWS_ITEMS = [
+  {
+    title: 'Palestine News',
+    link: 'https://www.aljazeera.com/tag/palestine/',
+    pubDate: 'Latest coverage',
+    image: ''
+  },
+  {
+    title: 'Israel-Palestine conflict updates',
+    link: 'https://www.aljazeera.com/tag/israel-palestine-conflict/',
+    pubDate: 'Latest coverage',
+    image: ''
+  },
+  {
+    title: 'Gaza updates',
+    link: 'https://www.aljazeera.com/tag/gaza/',
+    pubDate: 'Latest coverage',
+    image: ''
+  },
+  {
+    title: 'Middle East news',
+    link: 'https://www.aljazeera.com/middle-east/',
+    pubDate: 'Latest coverage',
+    image: ''
+  }
+];
 const NEWS_CACHE_KEY = 'ztn-latest-news-cache-v1';
 
 const getActiveLang = () => document.documentElement.lang || 'en';
@@ -402,7 +427,7 @@ async function loadLatestNews() {
       const cachedNews = loadCachedNews();
       const fallbackNews = cachedNews.length ? cachedNews : FALLBACK_NEWS_ITEMS;
       if (!fallbackNews.length) {
-        newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable. (news.json is empty)</p>';
+        newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is updating. Please check again shortly.</p>';
         return;
       }
 
@@ -421,7 +446,7 @@ async function loadLatestNews() {
     const fallbackNews = cachedNews.length ? cachedNews : FALLBACK_NEWS_ITEMS;
 
     if (!fallbackNews.length) {
-      newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable. (failed to fetch news.json)</p>';
+      newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is updating. Please check again shortly.</p>';
       return;
     }
 
