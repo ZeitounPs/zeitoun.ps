@@ -243,6 +243,70 @@ async function loadMessages() {
   }
 }
 
+function createNewsCard(item) {
+  const card = document.createElement('a');
+  card.className = 'news-card';
+  card.href = item.link;
+  card.target = '_blank';
+  card.rel = 'noopener noreferrer';
+  card.setAttribute('aria-label', item.title || 'News article');
+
+  const imageWrap = document.createElement('div');
+  imageWrap.className = 'news-image-wrap';
+
+  if (item.image) {
+    const image = document.createElement('img');
+    image.src = item.image;
+    image.alt = '';
+    image.loading = 'lazy';
+    imageWrap.appendChild(image);
+  }
+
+  const content = document.createElement('div');
+  content.className = 'news-card-content';
+
+  const date = document.createElement('p');
+  date.className = 'news-date';
+  date.textContent = item.pubDate || '';
+
+  const title = document.createElement('h3');
+  title.className = 'news-title';
+  title.textContent = item.title || '';
+
+  content.append(date, title);
+  card.append(imageWrap, content);
+  return card;
+}
+
+async function loadLatestNews() {
+  const newsGrid = document.querySelector('#news-grid');
+  if (!newsGrid) return;
+
+  newsGrid.innerHTML = '<p class=\"news-status\">Loading latest news...</p>';
+
+  try {
+    const response = await fetch('news.json', { cache: 'no-cache' });
+    if (!response.ok) {
+      throw new Error(`Failed to load news.json: ${response.status}`);
+    }
+
+    const payload = await response.json();
+    const newsItems = Array.isArray(payload) ? payload.slice(0, 4) : [];
+
+    if (!newsItems.length) {
+      throw new Error('No news items.');
+    }
+
+    newsGrid.innerHTML = '';
+    newsItems.forEach((item) => {
+      newsGrid.appendChild(createNewsCard(item));
+    });
+  } catch (error) {
+    console.error('News fetch error:', error);
+    newsGrid.innerHTML = '<p class=\"news-status\">News is currently unavailable.</p>';
+  }
+}
+
 const initApp = () => {
   const languageOptions = document.querySelectorAll('.lang-option');
   const languageToggle = document.querySelector('#language-toggle');
@@ -349,6 +413,7 @@ const initApp = () => {
 
   loadMessages();
   window.setInterval(loadMessages, 5000);
+  loadLatestNews();
 };
 
 document.addEventListener('DOMContentLoaded', initApp);
