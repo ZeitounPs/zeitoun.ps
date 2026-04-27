@@ -40,10 +40,17 @@
 
       <main>
       <section id="roadmap" class="section container">
-        <article class="chart-frame roadmap-visual" aria-label="Roadmap visual diagram">
-          <img src="b.png" alt="Roadmap visual diagram" loading="lazy" />
-          <p class="roadmap-caption" data-i18n="roadmapCaption">FREE PALESTINE（$ZTN）は、公正な土壌（Justice）に根ざし、取引（Solidarity）から流れるCreator Feeの80%を、パレスチナの寄付（Impact）へと結実させます。残り20%は、この地を耕し続けるために。</p>
-        </article>
+        <section id="latest-news" class="news-section chart-frame roadmap-visual" aria-labelledby="news-heading">
+          <div class="news-inner">
+            <h2 id="news-heading" class="news-heading">Latest Palestine News</h2>
+            <div id="news-grid" class="news-grid" aria-live="polite">
+              <p class="news-status">Loading latest news...</p>
+            </div>
+            <p class="news-source">
+              Source: Al Jazeera English. Article images, headlines, and publication dates are displayed as news-list thumbnails. Each item links to the original article on aljazeera.com.
+            </p>
+          </div>
+        </section>
 
         <div class="timeline">
           <article class="time-card">
@@ -92,18 +99,6 @@
           </article>
         </div>
 
-      </section>
-
-      <section id="latest-news" class="news-section" aria-labelledby="news-heading">
-        <div class="news-inner">
-          <h2 id="news-heading" class="news-heading">Latest Palestine News</h2>
-          <div id="news-grid" class="news-grid" aria-live="polite">
-            <p class="news-status">Loading latest news...</p>
-          </div>
-          <p class="news-source">
-            Source: Al Jazeera English. Article images, headlines, and publication dates are displayed as news-list thumbnails. Each item links to the original article on aljazeera.com.
-          </p>
-        </div>
       </section>
       
       </main>
