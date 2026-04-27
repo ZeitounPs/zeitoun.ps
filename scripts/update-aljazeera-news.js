@@ -19,6 +19,8 @@ const KEYWORDS = [
   'occupied territories'
 ];
 
+const USER_AGENT = 'zeitoun-news-updater/2.0';
+
 function decodeHtmlEntities(input) {
   return (input || '')
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
@@ -43,6 +45,7 @@ function getTagValue(block, tagName) {
 }
 
 function getAttributeValue(tag, name) {
+  if (!tag) return '';
   const re = new RegExp(`${name}=["']([^"']+)["']`, 'i');
   const match = tag.match(re);
   return match ? decodeHtmlEntities(match[1]) : '';
@@ -52,9 +55,7 @@ function getFirstTag(block, tagNames) {
   for (const tagName of tagNames) {
     const re = new RegExp(`<${tagName}\\b[^>]*>`, 'i');
     const match = block.match(re);
-    if (match) {
-      return match[0];
-    }
+    if (match) return match[0];
   }
   return '';
 }
@@ -63,44 +64,6 @@ function getImageFromHtml(html) {
   const decoded = decodeHtmlEntities(html || '');
   const img = decoded.match(/<img[^>]*src=["']([^"']+)["']/i);
   return img ? img[1].trim() : '';
-}
-
-function getPreferredImageFromItemBlock(item) {
-  // 1. item.enclosure.url
-  const enclosureTag = getFirstTag(item, ['enclosure']);
-  const enclosureUrl = getAttributeValue(enclosureTag, 'url');
-  if (enclosureUrl) {
-    return enclosureUrl;
-  }
-
-  // 2. item.mediaContent or item["media:content"]
-  const mediaContentTag = getFirstTag(item, ['mediaContent', 'media:content']);
-  const mediaContentUrl = getAttributeValue(mediaContentTag, 'url');
-  if (mediaContentUrl) {
-    return mediaContentUrl;
-  }
-
-  // 3. item.mediaThumbnail or item["media:thumbnail"]
-  const mediaThumbnailTag = getFirstTag(item, ['mediaThumbnail', 'media:thumbnail']);
-  const mediaThumbnailUrl = getAttributeValue(mediaThumbnailTag, 'url');
-  if (mediaThumbnailUrl) {
-    return mediaThumbnailUrl;
-  }
-
-  // 4. item.content or item.description inner <img src="...">
-  const contentHtml = getTagValue(item, 'content:encoded') || getTagValue(item, 'content');
-  const imageFromContent = getImageFromHtml(contentHtml);
-  if (imageFromContent) {
-    return imageFromContent;
-  }
-
-  const descriptionHtml = getTagValue(item, 'description');
-  const imageFromDescription = getImageFromHtml(descriptionHtml);
-  if (imageFromDescription) {
-    return imageFromDescription;
-  }
-
-  return '';
 }
 
 function normalizeImageUrl(input) {
@@ -123,29 +86,8 @@ function normalizeImageUrl(input) {
     if (url.protocol === 'http:') {
       url.protocol = 'https:';
     }
+
     return url.toString();
-  } catch {
-    return '';
-  }
-}
-
-async function getOgImageFromArticle(link) {
-  if (!link) return '';
-
-  try {
-    const response = await fetch(link, {
-      headers: {
-        'User-Agent': 'zeitoun-news-updater/1.0'
-      }
-    });
-    if (!response.ok) return '';
-
-    const html = await response.text();
-    const ogImageMeta = html.match(
-      /<meta[^>]+(?:property|name)=["']og:image["'][^>]+content=["']([^"']+)["'][^>]*>/i
-    );
-    if (!ogImageMeta) return '';
-    return normalizeImageUrl(ogImageMeta[1]);
   } catch {
     return '';
   }
@@ -166,9 +108,7 @@ function isRelatedToPalestine(entry) {
 
 function formatPubDate(dateString) {
   const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) {
-    return '';
-  }
+  if (Number.isNaN(date.getTime())) return '';
 
   return new Intl.DateTimeFormat('en-US', {
     month: 'short',
@@ -184,26 +124,101 @@ function parseRss(xml) {
   return items.map((item) => {
     const title = stripHtml(getTagValue(item, 'title'));
     const link = decodeHtmlEntities(getTagValue(item, 'link'));
-    const description = stripHtml(getTagValue(item, 'description'));
+    const descriptionRaw = getTagValue(item, 'description');
+    const description = stripHtml(descriptionRaw);
     const pubDateRaw = decodeHtmlEntities(getTagValue(item, 'pubDate'));
     const categories = [...item.matchAll(/<category[^>]*>([\s\S]*?)<\/category>/gi)].map((m) => stripHtml(m[1]));
+
+    const rssCandidates = [
+      { name: 'enclosure.url', value: getAttributeValue(getFirstTag(item, ['enclosure']), 'url') },
+      { name: 'media:content', value: getAttributeValue(getFirstTag(item, ['media:content', 'mediaContent']), 'url') },
+      { name: 'media:thumbnail', value: getAttributeValue(getFirstTag(item, ['media:thumbnail', 'mediaThumbnail']), 'url') },
+      { name: 'content img', value: getImageFromHtml(getTagValue(item, 'content:encoded') || getTagValue(item, 'content')) },
+      { name: 'description img', value: getImageFromHtml(descriptionRaw) }
+    ];
 
     return {
       title,
       link,
       description,
       pubDateRaw,
-      image: normalizeImageUrl(getPreferredImageFromItemBlock(item)),
-      categories
+      categories,
+      rssCandidates
     };
   });
 }
 
+async function fetchArticleHtml(link) {
+  try {
+    const response = await fetch(link, {
+      headers: { 'User-Agent': USER_AGENT }
+    });
+
+    if (!response.ok) {
+      return { html: '', note: `article fetch failed: ${response.status}` };
+    }
+
+    return { html: await response.text(), note: 'article fetched' };
+  } catch (error) {
+    return { html: '', note: `article fetch error: ${error.message}` };
+  }
+}
+
+function getMetaContent(html, propertyOrName) {
+  if (!html) return '';
+  const re = new RegExp(
+    `<meta[^>]+(?:property|name)=["']${propertyOrName}["'][^>]+content=["']([^"']+)["'][^>]*>`,
+    'i'
+  );
+  const match = html.match(re);
+  return match ? decodeHtmlEntities(match[1]) : '';
+}
+
+function getFirstImageFromHtml(html) {
+  if (!html) return '';
+  const imgMatch = html.match(/<img[^>]*src=["']([^"']+)["']/i);
+  return imgMatch ? decodeHtmlEntities(imgMatch[1]) : '';
+}
+
+async function selectBestImage(entry) {
+  const attempts = [];
+
+  for (const candidate of entry.rssCandidates) {
+    const normalized = normalizeImageUrl(candidate.value);
+    attempts.push(`${candidate.name}: ${normalized || 'empty'}`);
+    if (normalized) {
+      return { image: normalized, attempts, selectedFrom: `RSS ${candidate.name}` };
+    }
+  }
+
+  const { html, note } = await fetchArticleHtml(entry.link);
+  attempts.push(note);
+
+  const ogImage = normalizeImageUrl(getMetaContent(html, 'og:image'));
+  attempts.push(`article og:image: ${ogImage || 'empty'}`);
+  if (ogImage) {
+    return { image: ogImage, attempts, selectedFrom: 'article og:image' };
+  }
+
+  const twitterImage = normalizeImageUrl(getMetaContent(html, 'twitter:image'));
+  attempts.push(`article twitter:image: ${twitterImage || 'empty'}`);
+  if (twitterImage) {
+    return { image: twitterImage, attempts, selectedFrom: 'article twitter:image' };
+  }
+
+  const firstImg = normalizeImageUrl(getFirstImageFromHtml(html));
+  attempts.push(`article first <img>: ${firstImg || 'empty'}`);
+
+  if (firstImg) {
+    return { image: firstImg, attempts, selectedFrom: 'article first <img>' };
+  }
+
+  return { image: '', attempts, selectedFrom: 'none' };
+}
+
 async function main() {
   const response = await fetch(RSS_URL, {
-    headers: {
-      'User-Agent': 'zeitoun-news-updater/1.0'
-    }
+    headers: { 'User-Agent': USER_AGENT }
   });
 
   if (!response.ok) {
@@ -211,29 +226,49 @@ async function main() {
   }
 
   const xml = await response.text();
-  const filtered = parseRss(xml)
+  const candidates = parseRss(xml)
     .filter((entry) => entry.title && entry.link && isRelatedToPalestine(entry))
     .sort((a, b) => new Date(b.pubDateRaw) - new Date(a.pubDateRaw))
     .slice(0, MAX_ITEMS);
 
-  const parsed = await Promise.all(
-    filtered.map(async (entry) => {
-      const image = entry.image || (await getOgImageFromArticle(entry.link));
-      return {
-        title: entry.title,
-        link: entry.link,
-        pubDate: formatPubDate(entry.pubDateRaw),
-        image: image || ''
-      };
-    })
-  );
-
-  if (!parsed.length) {
+  if (!candidates.length) {
     throw new Error('No Palestine-related items found in RSS feed.');
   }
 
-  await fs.writeFile(OUTPUT_FILE, `${JSON.stringify(parsed, null, 2)}\n`, 'utf8');
-  console.log(`Updated ${OUTPUT_FILE} with ${parsed.length} article(s).`);
+  const output = [];
+
+  for (const entry of candidates) {
+    const imageResult = await selectBestImage(entry);
+
+    const item = {
+      title: entry.title,
+      link: entry.link,
+      pubDate: formatPubDate(entry.pubDateRaw),
+      image: imageResult.image
+    };
+
+    output.push(item);
+
+    console.log('--- Al Jazeera news item ---');
+    console.log(`title: ${item.title}`);
+    console.log(`link: ${item.link}`);
+    console.log(`pubDate: ${item.pubDate}`);
+    console.log(`image: ${item.image || '(empty)'}`);
+    console.log(`image_source: ${imageResult.selectedFrom}`);
+
+    if (!item.image) {
+      console.warn(`WARNING: image missing for article: ${item.link}`);
+      console.warn(`Fallback trace: ${imageResult.attempts.join(' | ')}`);
+    }
+  }
+
+  const emptyImages = output.filter((item) => !item.image).length;
+  if (emptyImages === output.length) {
+    throw new Error('All fetched items have empty image values. Aborting update to keep existing news.json intact.');
+  }
+
+  await fs.writeFile(OUTPUT_FILE, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
+  console.log(`Updated ${OUTPUT_FILE} with ${output.length} article(s).`);
 }
 
 main().catch((error) => {

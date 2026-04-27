@@ -287,6 +287,7 @@ function createNewsCard(item) {
     image.loading = 'lazy';
     image.referrerPolicy = 'no-referrer';
     image.addEventListener('error', () => {
+      console.warn('Failed to load news image:', item.image);
       image.remove();
       const placeholder = document.createElement('div');
       placeholder.className = 'news-image-placeholder';
@@ -324,13 +325,14 @@ async function loadLatestNews() {
   newsGrid.innerHTML = '<p class=\"news-status\">Loading latest news...</p>';
 
   try {
-    const response = await fetch('news.json', { cache: 'no-cache' });
+    const response = await fetch(`/news.json?v=${Date.now()}`);
     if (!response.ok) {
       throw new Error(`Failed to load news.json: ${response.status}`);
     }
 
     const payload = await response.json();
     const newsItems = Array.isArray(payload) ? payload.slice(0, 4) : [];
+    console.log('Latest Palestine news payload:', newsItems);
 
     newsGrid.innerHTML = '';
     (newsItems.length ? newsItems : FALLBACK_NEWS_ITEMS).forEach((item) => {
