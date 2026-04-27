@@ -171,6 +171,32 @@ const translations = {
 
 const SUPABASE_URL = "https://zofvjiknqaclhkduqqio.supabase.co/rest/v1/table?select=*";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvZnZqaWtucWFjbGhrZHVxcWlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5OTA4NTUsImV4cCI6MjA5MjU2Njg1NX0.YXdYaiC0viBz6_UOiSguDq_y6OKk4JbOwT596gXUrjI";
+const FALLBACK_NEWS_ITEMS = [
+  {
+    title: 'Israel’s war on Gaza: Live news and latest updates',
+    link: 'https://www.aljazeera.com/tag/israel-palestine-conflict/',
+    pubDate: 'Updated continuously',
+    image: ''
+  },
+  {
+    title: 'Palestine and Gaza coverage',
+    link: 'https://www.aljazeera.com/where/palestine/',
+    pubDate: 'Latest coverage',
+    image: ''
+  },
+  {
+    title: 'Middle East news from Al Jazeera',
+    link: 'https://www.aljazeera.com/where/middle-east/',
+    pubDate: 'Latest coverage',
+    image: ''
+  },
+  {
+    title: 'Al Jazeera English homepage',
+    link: 'https://www.aljazeera.com/',
+    pubDate: 'Latest headlines',
+    image: ''
+  }
+];
 
 const getActiveLang = () => document.documentElement.lang || 'en';
 
@@ -293,17 +319,16 @@ async function loadLatestNews() {
     const payload = await response.json();
     const newsItems = Array.isArray(payload) ? payload.slice(0, 4) : [];
 
-    if (!newsItems.length) {
-      throw new Error('No news items.');
-    }
-
     newsGrid.innerHTML = '';
-    newsItems.forEach((item) => {
+    (newsItems.length ? newsItems : FALLBACK_NEWS_ITEMS).forEach((item) => {
       newsGrid.appendChild(createNewsCard(item));
     });
   } catch (error) {
     console.error('News fetch error:', error);
-    newsGrid.innerHTML = '<p class=\"news-status\">News is currently unavailable.</p>';
+    newsGrid.innerHTML = '';
+    FALLBACK_NEWS_ITEMS.forEach((item) => {
+      newsGrid.appendChild(createNewsCard(item));
+    });
   }
 }
 
