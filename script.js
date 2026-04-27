@@ -286,6 +286,11 @@ function createNewsCard(item) {
     image.alt = '';
     image.loading = 'lazy';
     imageWrap.appendChild(image);
+  } else {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'news-image-placeholder';
+    placeholder.textContent = 'No image available';
+    imageWrap.appendChild(placeholder);
   }
 
   const content = document.createElement('div');
