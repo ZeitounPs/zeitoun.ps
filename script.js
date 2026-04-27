@@ -142,7 +142,7 @@ const translations = {
     model1: '定期的に公開される寄付レコード。',
     model2: '公式チャネルとサイトログで証跡を共有。',
     model3: '支援カテゴリの優先順位はコミュニティ主導。',
-    roadmapCaption: 'FREE PALESTINE（$ZTN）は、公正な土壌（Justice）に根ざし、取引（Solidarity）から流れるCreator Feeの80%を、パレスチナへの寄付（Impact）に結実させます。残り20%は、この地を耕し続けるために。',
+    roadmapCaption: 'FREE PALESTINE（$ZTN）は、公正な土壌（Justice）に根ざし、取引（Solidarity）から流れるCreator Feeの80%を、パレスチナの寄付（Impact）へと結実させます。残り20%は、この地を耕し続けるために。',
     phase1Title: 'Justice',
     phase1Body: '',
     phase2Title: 'Solidarity',
@@ -188,7 +188,18 @@ const applyLanguage = (lang) => {
   localStorage.setItem('ztn-language', lang);
 };
 
+const renderChatFallback = (container, message) => {
+  container.innerHTML = "";
+  const fallback = document.createElement("div");
+  fallback.className = "chat-empty";
+  fallback.textContent = message;
+  container.appendChild(fallback);
+};
+
 async function loadMessages() {
+  const container = document.querySelector("#chat-list");
+  if (!container) return;
+
   try {
     const res = await fetch(SUPABASE_URL, {
       headers: {
@@ -197,14 +208,21 @@ async function loadMessages() {
       }
     });
 
-    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(`Supabase request failed: ${res.status}`);
+    }
 
-    const container = document.querySelector("#chat-list");
-    if (!container) return;
+    const data = await res.json();
+    const messages = Array.isArray(data) ? data : [];
+
+    if (!messages.length) {
+      renderChatFallback(container, "No live messages yet.");
+      return;
+    }
 
     container.innerHTML = "";
 
-    data
+    messages
       .slice(-5)
       .reverse()
       .forEach((msg) => {
@@ -221,6 +239,7 @@ async function loadMessages() {
       });
   } catch (err) {
     console.error("Supabase error:", err);
+    renderChatFallback(container, "Live feed temporarily unavailable.");
   }
 }
 

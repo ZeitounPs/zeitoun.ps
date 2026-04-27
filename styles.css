@@ -8,7 +8,9 @@
   --olive: #b30000;
   --olive-soft: #ffd7d7;
   --gold: #ff6b6b;
-  --panel: rgba(255, 255, 255, 0.96);
+  --surface-overlay: rgba(255, 255, 255, 0.72);
+  --panel: var(--surface-overlay);
+  --item-overlay: var(--surface-overlay);
 }
 
 
@@ -71,6 +73,8 @@ body::after {
   overflow: hidden;
   z-index: 1;
 }
+
+
 
 .content {
   position: relative;
@@ -280,10 +284,6 @@ main,
   margin-bottom: 1rem;
 }
 
-.time-card #chat.section {
-  margin-top: 1rem;
-}
-
 
 .donation-table a {
   color: #8f0000;
@@ -310,21 +310,22 @@ main,
   margin-top: 0.45rem;
   border: 2px solid #b30000;
   border-radius: 10px;
-  padding: 0.7rem;
-  background: rgba(255, 255, 255, 0.88);
-  overflow-x: hidden;
+  padding: 0;
+  background: var(--surface-overlay);
+  overflow: hidden;
 }
 
 .donation-table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  background: transparent;
 }
 
 .donation-table th,
 .donation-table td {
   border: 1px solid #b30000;
-  padding: 0.5rem;
+  padding: 0.6rem;
   text-align: left;
   font-size: 0.9rem;
   color: #111111;
@@ -333,10 +334,11 @@ main,
   overflow-wrap: anywhere;
   word-break: break-word;
   hyphens: auto;
+  background: transparent;
 }
 
 .donation-table thead th {
-  background-color: #ffd7d7;
+  background-color: rgba(255, 215, 215, 0.55);
   text-align: center;
 }
 
@@ -378,7 +380,7 @@ main,
 .time-card {
   border-radius: 14px;
   border: 1px solid var(--line);
-  background: #ffffff;
+  background: var(--item-overlay);
   padding: 0.9rem;
 }
 
@@ -439,7 +441,7 @@ main,
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 0.82rem;
-  background: #ffffff;
+  background: var(--item-overlay);
 }
 
 .chart-head {
@@ -480,7 +482,7 @@ canvas {
 .roadmap-visual {
   margin: 0.9rem 0 1rem;
   padding: 0.45rem;
-  background: #ffffff;
+  background: var(--surface-overlay);
 }
 
 .roadmap-visual img {
@@ -494,7 +496,15 @@ canvas {
   margin-top: 0.7rem;
   font-size: 0.98rem;
   line-height: 1.82;
+  position: relative;
+  z-index: 0;
+  color: #111111;
+  text-shadow:
+    0 0 0.35px rgba(247, 241, 223, 0.9),
+    0 0 0.8px rgba(247, 241, 223, 0.78),
+    0 1px 2px rgba(0, 0, 0, 0.2);
 }
+
 
 .floating-language {
   position: fixed;
@@ -567,15 +577,28 @@ canvas {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 10px;
+  padding: 0;
   width: 100%;
+  min-height: 120px;
   max-height: min(40vh, 420px);
   overflow-y: auto;
   overflow-x: hidden;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  backdrop-filter: blur(8px);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  backdrop-filter: none;
+}
+
+
+.chat-empty {
+  display: grid;
+  place-items: center;
+  min-height: 96px;
+  border-radius: 12px;
+  border: 1px dashed rgba(179, 0, 0, 0.3);
+  color: #5a2626;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.45);
 }
 
 /* メッセージ本体 */
