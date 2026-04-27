@@ -56,6 +56,25 @@ function getMediaThumbnail(block) {
   return imgFromDescription ? imgFromDescription[1].trim() : '';
 }
 
+function normalizeImageUrl(input) {
+  const raw = (input || '').trim();
+  if (!raw) return '';
+
+  try {
+    if (raw.startsWith('//')) {
+      return `https:${raw}`;
+    }
+
+    const url = new URL(raw);
+    if (url.protocol === 'http:') {
+      url.protocol = 'https:';
+    }
+    return url.toString();
+  } catch {
+    return '';
+  }
+}
+
 function isRelatedToPalestine(entry) {
   const haystack = [
     entry.title,
@@ -98,7 +117,7 @@ function parseRss(xml) {
       link,
       description,
       pubDateRaw,
-      image: getMediaThumbnail(item),
+      image: normalizeImageUrl(getMediaThumbnail(item)),
       categories
     };
   });

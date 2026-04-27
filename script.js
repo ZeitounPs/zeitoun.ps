@@ -285,6 +285,14 @@ function createNewsCard(item) {
     image.src = item.image;
     image.alt = '';
     image.loading = 'lazy';
+    image.referrerPolicy = 'no-referrer';
+    image.addEventListener('error', () => {
+      image.remove();
+      const placeholder = document.createElement('div');
+      placeholder.className = 'news-image-placeholder';
+      placeholder.textContent = 'No image available';
+      imageWrap.appendChild(placeholder);
+    });
     imageWrap.appendChild(image);
   } else {
     const placeholder = document.createElement('div');
