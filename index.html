@@ -40,16 +40,23 @@
 
       <main>
       <section id="roadmap" class="section container">
-        <section id="latest-news" class="news-section chart-frame roadmap-visual" aria-labelledby="news-heading">
-          <div class="news-inner">
-            <h2 id="news-heading" class="news-heading">Latest Palestine News</h2>
-            <div id="news-grid" class="news-grid" aria-live="polite">
-              <p class="news-status">Loading latest news...</p>
-            </div>
-            <p class="news-source">
-              Source: Al Jazeera English. Article images, headlines, and publication dates are displayed as news-list thumbnails. Each item links to the original article on aljazeera.com.
-            </p>
+        <section class="news-section" id="latest-palestine-news">
+          <h2>Latest Palestine News</h2>
+
+          <div class="news-widget-embed">
+            <!-- start feedwind code -->
+            <script
+              type="text/javascript"
+              src="https://feed.mikle.com/js/fw-loader.js"
+              preloader-text="%E3%83%AD%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0"
+              data-fw-param="178046/"
+            ></script>
+            <!-- end feedwind code -->
           </div>
+
+          <p class="news-source">
+            Source: Al Jazeera English. Article images, headlines, and publication dates are displayed as news-list thumbnails. Each item links to the original article on aljazeera.com.
+          </p>
         </section>
 
         <div class="timeline">
