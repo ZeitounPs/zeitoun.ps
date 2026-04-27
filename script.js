@@ -172,6 +172,7 @@ const translations = {
 const SUPABASE_URL = "https://zofvjiknqaclhkduqqio.supabase.co/rest/v1/table?select=*";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvZnZqaWtucWFjbGhrZHVxcWlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5OTA4NTUsImV4cCI6MjA5MjU2Njg1NX0.YXdYaiC0viBz6_UOiSguDq_y6OKk4JbOwT596gXUrjI";
 const FALLBACK_NEWS_ITEMS = [];
+const NEWS_CACHE_KEY = 'ztn-latest-news-cache-v1';
 
 const getActiveLang = () => document.documentElement.lang || 'en';
 
@@ -345,14 +346,8 @@ async function loadLatestNews() {
 
   newsGrid.innerHTML = '<p class=\"news-status\">Loading latest news...</p>';
 
-  try {
-    const response = await fetch(`/news.json?v=${Date.now()}`);
-    if (!response.ok) {
-      throw new Error(`Failed to load news.json: ${response.status}`);
-    }
-
-    const payload = await response.json();
-    const newsItems = Array.isArray(payload)
+  const mapNewsItems = (payload) =>
+    Array.isArray(payload)
       ? payload
           .filter((article) => article && isArticleUrl(article.link))
           .slice(0, 4)
@@ -363,11 +358,57 @@ async function loadLatestNews() {
             image: article.image || ''
           }))
       : [];
+
+  const loadCachedNews = () => {
+    try {
+      const raw = localStorage.getItem(NEWS_CACHE_KEY);
+      if (!raw) return [];
+      return mapNewsItems(JSON.parse(raw));
+    } catch {
+      return [];
+    }
+  };
+
+  const fetchNewsPayload = async () => {
+    const urlCandidates = [
+      `./news.json?v=${Date.now()}`,
+      `news.json?v=${Date.now()}`,
+      `/news.json?v=${Date.now()}`
+    ];
+
+    for (const url of urlCandidates) {
+      try {
+        const response = await fetch(url, { cache: 'no-store' });
+        if (!response.ok) continue;
+        return await response.json();
+      } catch (error) {
+        console.warn('News fetch candidate failed:', url, error);
+      }
+    }
+
+    throw new Error('All news.json fetch candidates failed');
+  };
+
+  try {
+    const payload = await fetchNewsPayload();
+    const newsItems = mapNewsItems(payload);
+    if (newsItems.length) {
+      localStorage.setItem(NEWS_CACHE_KEY, JSON.stringify(newsItems));
+    }
     console.log('Latest Palestine news payload:', newsItems);
 
     newsGrid.innerHTML = '';
     if (!newsItems.length) {
-      newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable. (news.json is empty)</p>';
+      const cachedNews = loadCachedNews();
+      const fallbackNews = cachedNews.length ? cachedNews : FALLBACK_NEWS_ITEMS;
+      if (!fallbackNews.length) {
+        newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable. (news.json is empty)</p>';
+        return;
+      }
+
+      fallbackNews.forEach((item) => {
+        newsGrid.appendChild(createNewsCard(item));
+      });
       return;
     }
 
@@ -376,7 +417,18 @@ async function loadLatestNews() {
     });
   } catch (error) {
     console.error('News fetch error:', error);
-    newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable. (failed to fetch news.json)</p>';
+    const cachedNews = loadCachedNews();
+    const fallbackNews = cachedNews.length ? cachedNews : FALLBACK_NEWS_ITEMS;
+
+    if (!fallbackNews.length) {
+      newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable. (failed to fetch news.json)</p>';
+      return;
+    }
+
+    newsGrid.innerHTML = '';
+    fallbackNews.forEach((item) => {
+      newsGrid.appendChild(createNewsCard(item));
+    });
   }
 }
 
