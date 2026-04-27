@@ -2,7 +2,7 @@ name: Update Al Jazeera Palestine News
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -11,23 +11,22 @@ permissions:
 jobs:
   update-news:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: Update news.json from Al Jazeera RSS
+      - name: Update news.json from RSS
         run: node scripts/update-aljazeera-news.js
 
-      - name: Commit and push when changed
+      - name: Commit and push only when changed
         run: |
-          if git diff --quiet news.json; then
-            echo "No changes in news.json"
+          if git diff --quiet -- news.json; then
+            echo "No news.json changes detected."
             exit 0
           fi
 
@@ -36,3 +35,33 @@ jobs:
           git add news.json
           git commit -m "Update Al Jazeera Palestine news"
           git push
+
+      - name: Upload news.json via FTP (optional)
+        if: ${{ secrets.FTP_HOST != '' && secrets.FTP_USER != '' && secrets.FTP_PASSWORD != '' && secrets.FTP_TARGET_DIR != '' }}
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_TARGET_DIR: ${{ secrets.FTP_TARGET_DIR }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+          lftp -e "set ssl:verify-certificate no; put -O ${FTP_TARGET_DIR} news.json; bye" -u "${FTP_USER}","${FTP_PASSWORD}" "${FTP_HOST}"
+
+      - name: Upload news.json via SFTP (optional)
+        if: ${{ secrets.SFTP_HOST != '' && secrets.SFTP_USER != '' && secrets.SFTP_SSH_KEY != '' && secrets.SFTP_TARGET_DIR != '' }}
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_SSH_KEY: ${{ secrets.SFTP_SSH_KEY }}
+          SFTP_TARGET_DIR: ${{ secrets.SFTP_TARGET_DIR }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SFTP_SSH_KEY" > ~/.ssh/sftp_key
+          chmod 600 ~/.ssh/sftp_key
+          PORT="${SFTP_PORT:-22}"
+          sftp -i ~/.ssh/sftp_key -P "$PORT" -o StrictHostKeyChecking=no "${SFTP_USER}@${SFTP_HOST}:${SFTP_TARGET_DIR}" <<'SFTP_CMDS'
+          put news.json
+          quit
+          SFTP_CMDS

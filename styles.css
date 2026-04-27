@@ -636,9 +636,7 @@ canvas {
 }
 
 .roadmap-visual.news-section {
-  max-width: 100%;
-  margin: 0.9rem 0 1rem;
-  padding: 0.45rem;
+  margin: 0.9rem auto 1rem;
 }
 
 .news-inner {
