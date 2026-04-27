@@ -367,7 +367,7 @@ async function loadLatestNews() {
 
     newsGrid.innerHTML = '';
     if (!newsItems.length) {
-      newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable.</p>';
+      newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable. (news.json is empty)</p>';
       return;
     }
 
@@ -376,7 +376,7 @@ async function loadLatestNews() {
     });
   } catch (error) {
     console.error('News fetch error:', error);
-    newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable.</p>';
+    newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable. (failed to fetch news.json)</p>';
   }
 }
 
