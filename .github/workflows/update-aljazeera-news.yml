@@ -11,8 +11,9 @@ permissions:
 jobs:
   update-news:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -20,16 +21,23 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Update news.json from RSS
+      - name: Update news.json from Al Jazeera RSS
         run: node scripts/update-aljazeera-news.js
 
-      - name: Commit and push only when changed
+      - name: Detect news.json changes
+        id: detect
         run: |
           if git diff --quiet -- news.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No news.json changes detected."
-            exit 0
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "news.json changed."
           fi
 
+      - name: Commit and push updated news.json
+        if: steps.detect.outputs.changed == 'true'
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add news.json
@@ -37,19 +45,20 @@ jobs:
           git push
 
       - name: Upload news.json via FTP (optional)
-        if: ${{ secrets.FTP_HOST != '' && secrets.FTP_USER != '' && secrets.FTP_PASSWORD != '' && secrets.FTP_TARGET_DIR != '' }}
+        if: steps.detect.outputs.changed == 'true' && secrets.FTP_HOST != '' && secrets.FTP_USER != '' && secrets.FTP_PASSWORD != '' && secrets.FTP_TARGET_DIR != ''
         env:
           FTP_HOST: ${{ secrets.FTP_HOST }}
           FTP_USER: ${{ secrets.FTP_USER }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_TARGET_DIR: ${{ secrets.FTP_TARGET_DIR }}
         run: |
-          sudo apt-get update
-          sudo apt-get install -y lftp
-          lftp -e "set ssl:verify-certificate no; put -O ${FTP_TARGET_DIR} news.json; bye" -u "${FTP_USER}","${FTP_PASSWORD}" "${FTP_HOST}"
+          curl --fail --show-error --ftp-create-dirs \
+            --user "$FTP_USER:$FTP_PASSWORD" \
+            --upload-file news.json \
+            "ftp://$FTP_HOST/$FTP_TARGET_DIR/news.json"
 
       - name: Upload news.json via SFTP (optional)
-        if: ${{ secrets.SFTP_HOST != '' && secrets.SFTP_USER != '' && secrets.SFTP_SSH_KEY != '' && secrets.SFTP_TARGET_DIR != '' }}
+        if: steps.detect.outputs.changed == 'true' && secrets.SFTP_HOST != '' && secrets.SFTP_USER != '' && secrets.SFTP_SSH_KEY != '' && secrets.SFTP_TARGET_DIR != ''
         env:
           SFTP_HOST: ${{ secrets.SFTP_HOST }}
           SFTP_USER: ${{ secrets.SFTP_USER }}
@@ -58,10 +67,7 @@ jobs:
           SFTP_TARGET_DIR: ${{ secrets.SFTP_TARGET_DIR }}
         run: |
           mkdir -p ~/.ssh
-          printf '%s\n' "$SFTP_SSH_KEY" > ~/.ssh/sftp_key
-          chmod 600 ~/.ssh/sftp_key
+          printf '%s\n' "$SFTP_SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           PORT="${SFTP_PORT:-22}"
-          sftp -i ~/.ssh/sftp_key -P "$PORT" -o StrictHostKeyChecking=no "${SFTP_USER}@${SFTP_HOST}:${SFTP_TARGET_DIR}" <<'SFTP_CMDS'
-          put news.json
-          quit
-          SFTP_CMDS
+          scp -P "$PORT" -o StrictHostKeyChecking=no news.json "$SFTP_USER@$SFTP_HOST:$SFTP_TARGET_DIR/news.json"

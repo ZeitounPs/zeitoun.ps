@@ -171,32 +171,7 @@ const translations = {
 
 const SUPABASE_URL = "https://zofvjiknqaclhkduqqio.supabase.co/rest/v1/table?select=*";
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpvZnZqaWtucWFjbGhrZHVxcWlvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5OTA4NTUsImV4cCI6MjA5MjU2Njg1NX0.YXdYaiC0viBz6_UOiSguDq_y6OKk4JbOwT596gXUrjI";
-const FALLBACK_NEWS_ITEMS = [
-  {
-    title: 'Israel’s war on Gaza: Live news and latest updates',
-    link: 'https://www.aljazeera.com/tag/israel-palestine-conflict/',
-    pubDate: 'Updated continuously',
-    image: ''
-  },
-  {
-    title: 'Palestine and Gaza coverage',
-    link: 'https://www.aljazeera.com/where/palestine/',
-    pubDate: 'Latest coverage',
-    image: ''
-  },
-  {
-    title: 'Middle East news from Al Jazeera',
-    link: 'https://www.aljazeera.com/where/middle-east/',
-    pubDate: 'Latest coverage',
-    image: ''
-  },
-  {
-    title: 'Al Jazeera English homepage',
-    link: 'https://www.aljazeera.com/',
-    pubDate: 'Latest headlines',
-    image: ''
-  }
-];
+const FALLBACK_NEWS_ITEMS = [];
 
 const getActiveLang = () => document.documentElement.lang || 'en';
 
@@ -318,6 +293,52 @@ function createNewsCard(item) {
   return card;
 }
 
+function isArticleUrl(url) {
+  try {
+    const u = new URL(url);
+    const hostname = u.hostname.replace(/^www\./, '');
+
+    if (hostname !== 'aljazeera.com') {
+      return false;
+    }
+
+    const path = u.pathname.replace(/\/+$/, '/');
+
+    if (
+      path === '/' ||
+      path === '/news/' ||
+      path === '/features/' ||
+      path === '/opinions/' ||
+      path === '/live/' ||
+      path === '/middle-east/'
+    ) {
+      return false;
+    }
+
+    if (
+      path.startsWith('/tag/') ||
+      path.startsWith('/where/') ||
+      path.startsWith('/program/') ||
+      path.startsWith('/middle-east/') ||
+      path.startsWith('/africa/') ||
+      path.startsWith('/asia/') ||
+      path.startsWith('/europe/') ||
+      path.startsWith('/us-canada/') ||
+      path.startsWith('/latin-america/')
+    ) {
+      return false;
+    }
+
+    return (
+      path.startsWith('/news/') ||
+      path.startsWith('/features/') ||
+      path.startsWith('/opinions/')
+    );
+  } catch {
+    return false;
+  }
+}
+
 async function loadLatestNews() {
   const newsGrid = document.querySelector('#news-grid');
   if (!newsGrid) return;
@@ -331,19 +352,31 @@ async function loadLatestNews() {
     }
 
     const payload = await response.json();
-    const newsItems = Array.isArray(payload) ? payload.slice(0, 4) : [];
+    const newsItems = Array.isArray(payload)
+      ? payload
+          .filter((article) => article && isArticleUrl(article.link))
+          .slice(0, 4)
+          .map((article) => ({
+            title: article.title || '',
+            link: article.link,
+            pubDate: article.pubDate || '',
+            image: article.image || ''
+          }))
+      : [];
     console.log('Latest Palestine news payload:', newsItems);
 
     newsGrid.innerHTML = '';
-    (newsItems.length ? newsItems : FALLBACK_NEWS_ITEMS).forEach((item) => {
+    if (!newsItems.length) {
+      newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable.</p>';
+      return;
+    }
+
+    newsItems.forEach((item) => {
       newsGrid.appendChild(createNewsCard(item));
     });
   } catch (error) {
     console.error('News fetch error:', error);
-    newsGrid.innerHTML = '';
-    FALLBACK_NEWS_ITEMS.forEach((item) => {
-      newsGrid.appendChild(createNewsCard(item));
-    });
+    newsGrid.innerHTML = '<p class="news-status">Latest Palestine news is temporarily unavailable.</p>';
   }
 }
 

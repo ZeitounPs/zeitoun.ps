@@ -18,6 +18,11 @@ const KEYWORDS = [
   'israel-gaza',
   'occupied territories'
 ];
+const EXCLUDED_TITLE_PATTERNS = [
+  /palestine and gaza coverage/i,
+  /middle east news from al jazeera/i,
+  /al jazeera english/i
+];
 
 const USER_AGENT = 'zeitoun-news-updater/2.0';
 
@@ -93,6 +98,71 @@ function normalizeImageUrl(input) {
   }
 }
 
+function normalizeArticleUrl(input) {
+  const raw = (input || '').trim();
+  if (!raw) return '';
+
+  try {
+    const url = raw.startsWith('http://') || raw.startsWith('https://')
+      ? new URL(raw)
+      : new URL(raw, AL_JAZEERA_BASE_URL);
+
+    if (url.protocol === 'http:') {
+      url.protocol = 'https:';
+    }
+
+    return url.toString();
+  } catch {
+    return '';
+  }
+}
+
+function isArticleUrl(url) {
+  try {
+    const u = new URL(url);
+    const hostname = u.hostname.replace(/^www\./, '');
+
+    if (hostname !== 'aljazeera.com') {
+      return false;
+    }
+
+    const path = u.pathname.replace(/\/+$/, '/');
+
+    if (
+      path === '/' ||
+      path === '/news/' ||
+      path === '/features/' ||
+      path === '/opinions/' ||
+      path === '/live/' ||
+      path === '/middle-east/'
+    ) {
+      return false;
+    }
+
+    if (
+      path.startsWith('/tag/') ||
+      path.startsWith('/where/') ||
+      path.startsWith('/program/') ||
+      path.startsWith('/middle-east/') ||
+      path.startsWith('/africa/') ||
+      path.startsWith('/asia/') ||
+      path.startsWith('/europe/') ||
+      path.startsWith('/us-canada/') ||
+      path.startsWith('/latin-america/')
+    ) {
+      return false;
+    }
+
+    return (
+      path.startsWith('/news/') ||
+      path.startsWith('/features/') ||
+      path.startsWith('/opinions/')
+    );
+  } catch {
+    return false;
+  }
+}
+
 function isRelatedToPalestine(entry) {
   const haystack = [
     entry.title,
@@ -104,6 +174,10 @@ function isRelatedToPalestine(entry) {
     .toLowerCase();
 
   return KEYWORDS.some((keyword) => haystack.includes(keyword));
+}
+
+function isExcludedTitle(title) {
+  return EXCLUDED_TITLE_PATTERNS.some((pattern) => pattern.test(title || ''));
 }
 
 function formatPubDate(dateString) {
@@ -123,7 +197,7 @@ function parseRss(xml) {
 
   return items.map((item) => {
     const title = stripHtml(getTagValue(item, 'title'));
-    const link = decodeHtmlEntities(getTagValue(item, 'link'));
+    const link = normalizeArticleUrl(decodeHtmlEntities(getTagValue(item, 'link')));
     const descriptionRaw = getTagValue(item, 'description');
     const description = stripHtml(descriptionRaw);
     const pubDateRaw = decodeHtmlEntities(getTagValue(item, 'pubDate'));
@@ -227,9 +301,14 @@ async function main() {
 
   const xml = await response.text();
   const candidates = parseRss(xml)
-    .filter((entry) => entry.title && entry.link && isRelatedToPalestine(entry))
-    .sort((a, b) => new Date(b.pubDateRaw) - new Date(a.pubDateRaw))
-    .slice(0, MAX_ITEMS);
+    .filter((entry) => (
+      entry.title &&
+      entry.link &&
+      !isExcludedTitle(entry.title) &&
+      isRelatedToPalestine(entry) &&
+      isArticleUrl(entry.link)
+    ))
+    .sort((a, b) => new Date(b.pubDateRaw) - new Date(a.pubDateRaw));
 
   if (!candidates.length) {
     throw new Error('No Palestine-related items found in RSS feed.');
@@ -238,6 +317,8 @@ async function main() {
   const output = [];
 
   for (const entry of candidates) {
+    if (output.length >= MAX_ITEMS) break;
+
     const imageResult = await selectBestImage(entry);
 
     const item = {
@@ -259,6 +340,16 @@ async function main() {
     if (!item.image) {
       console.warn(`WARNING: image missing for article: ${item.link}`);
       console.warn(`Fallback trace: ${imageResult.attempts.join(' | ')}`);
+    }
+  }
+
+  if (output.length < MAX_ITEMS) {
+    throw new Error(`Only ${output.length} valid article(s) found; need ${MAX_ITEMS}.`);
+  }
+
+  for (const article of output) {
+    if (!isArticleUrl(article.link)) {
+      throw new Error(`Invalid article link: ${article.link}`);
     }
   }
 
