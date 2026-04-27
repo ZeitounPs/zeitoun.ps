@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "title": "Palestine News",
+    "link": "https://www.aljazeera.com/tag/palestine/",
+    "pubDate": "Latest coverage",
+    "image": ""
+  },
+  {
+    "title": "Israel-Palestine conflict updates",
+    "link": "https://www.aljazeera.com/tag/israel-palestine-conflict/",
+    "pubDate": "Latest coverage",
+    "image": ""
+  },
+  {
+    "title": "Gaza updates",
+    "link": "https://www.aljazeera.com/tag/gaza/",
+    "pubDate": "Latest coverage",
+    "image": ""
+  },
+  {
+    "title": "Middle East news",
+    "link": "https://www.aljazeera.com/middle-east/",
+    "pubDate": "Latest coverage",
+    "image": ""
+  }
+]
