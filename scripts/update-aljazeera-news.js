@@ -4,6 +4,7 @@ const fs = require('fs/promises');
 const path = require('path');
 
 const RSS_URL = 'https://www.aljazeera.com/xml/rss/all.xml';
+const AL_JAZEERA_BASE_URL = 'https://www.aljazeera.com';
 const OUTPUT_FILE = path.resolve(__dirname, '..', 'news.json');
 const MAX_ITEMS = 4;
 
@@ -41,19 +42,65 @@ function getTagValue(block, tagName) {
   return match ? match[1].trim() : '';
 }
 
-function getMediaThumbnail(block) {
-  const mediaContent = block.match(/<media:content[^>]*url=["']([^"']+)["'][^>]*>/i);
-  if (mediaContent) return mediaContent[1].trim();
+function getAttributeValue(tag, name) {
+  const re = new RegExp(`${name}=["']([^"']+)["']`, 'i');
+  const match = tag.match(re);
+  return match ? decodeHtmlEntities(match[1]) : '';
+}
 
-  const mediaThumb = block.match(/<media:thumbnail[^>]*url=["']([^"']+)["'][^>]*>/i);
-  if (mediaThumb) return mediaThumb[1].trim();
+function getFirstTag(block, tagNames) {
+  for (const tagName of tagNames) {
+    const re = new RegExp(`<${tagName}\\b[^>]*>`, 'i');
+    const match = block.match(re);
+    if (match) {
+      return match[0];
+    }
+  }
+  return '';
+}
 
-  const enclosure = block.match(/<enclosure[^>]*url=["']([^"']+)["'][^>]*type=["']image\//i);
-  if (enclosure) return enclosure[1].trim();
+function getImageFromHtml(html) {
+  const decoded = decodeHtmlEntities(html || '');
+  const img = decoded.match(/<img[^>]*src=["']([^"']+)["']/i);
+  return img ? img[1].trim() : '';
+}
 
-  const description = getTagValue(block, 'description');
-  const imgFromDescription = description.match(/<img[^>]*src=["']([^"']+)["']/i);
-  return imgFromDescription ? imgFromDescription[1].trim() : '';
+function getPreferredImageFromItemBlock(item) {
+  // 1. item.enclosure.url
+  const enclosureTag = getFirstTag(item, ['enclosure']);
+  const enclosureUrl = getAttributeValue(enclosureTag, 'url');
+  if (enclosureUrl) {
+    return enclosureUrl;
+  }
+
+  // 2. item.mediaContent or item["media:content"]
+  const mediaContentTag = getFirstTag(item, ['mediaContent', 'media:content']);
+  const mediaContentUrl = getAttributeValue(mediaContentTag, 'url');
+  if (mediaContentUrl) {
+    return mediaContentUrl;
+  }
+
+  // 3. item.mediaThumbnail or item["media:thumbnail"]
+  const mediaThumbnailTag = getFirstTag(item, ['mediaThumbnail', 'media:thumbnail']);
+  const mediaThumbnailUrl = getAttributeValue(mediaThumbnailTag, 'url');
+  if (mediaThumbnailUrl) {
+    return mediaThumbnailUrl;
+  }
+
+  // 4. item.content or item.description inner <img src="...">
+  const contentHtml = getTagValue(item, 'content:encoded') || getTagValue(item, 'content');
+  const imageFromContent = getImageFromHtml(contentHtml);
+  if (imageFromContent) {
+    return imageFromContent;
+  }
+
+  const descriptionHtml = getTagValue(item, 'description');
+  const imageFromDescription = getImageFromHtml(descriptionHtml);
+  if (imageFromDescription) {
+    return imageFromDescription;
+  }
+
+  return '';
 }
 
 function normalizeImageUrl(input) {
@@ -65,11 +112,40 @@ function normalizeImageUrl(input) {
       return `https:${raw}`;
     }
 
-    const url = new URL(raw);
+    if (raw.startsWith('/')) {
+      return new URL(raw, AL_JAZEERA_BASE_URL).toString();
+    }
+
+    const url = raw.startsWith('http://') || raw.startsWith('https://')
+      ? new URL(raw)
+      : new URL(raw, AL_JAZEERA_BASE_URL);
+
     if (url.protocol === 'http:') {
       url.protocol = 'https:';
     }
     return url.toString();
+  } catch {
+    return '';
+  }
+}
+
+async function getOgImageFromArticle(link) {
+  if (!link) return '';
+
+  try {
+    const response = await fetch(link, {
+      headers: {
+        'User-Agent': 'zeitoun-news-updater/1.0'
+      }
+    });
+    if (!response.ok) return '';
+
+    const html = await response.text();
+    const ogImageMeta = html.match(
+      /<meta[^>]+(?:property|name)=["']og:image["'][^>]+content=["']([^"']+)["'][^>]*>/i
+    );
+    if (!ogImageMeta) return '';
+    return normalizeImageUrl(ogImageMeta[1]);
   } catch {
     return '';
   }
@@ -117,7 +193,7 @@ function parseRss(xml) {
       link,
       description,
       pubDateRaw,
-      image: normalizeImageUrl(getMediaThumbnail(item)),
+      image: normalizeImageUrl(getPreferredImageFromItemBlock(item)),
       categories
     };
   });
@@ -135,16 +211,22 @@ async function main() {
   }
 
   const xml = await response.text();
-  const parsed = parseRss(xml)
+  const filtered = parseRss(xml)
     .filter((entry) => entry.title && entry.link && isRelatedToPalestine(entry))
     .sort((a, b) => new Date(b.pubDateRaw) - new Date(a.pubDateRaw))
-    .slice(0, MAX_ITEMS)
-    .map((entry) => ({
-      title: entry.title,
-      link: entry.link,
-      pubDate: formatPubDate(entry.pubDateRaw),
-      image: entry.image || ''
-    }));
+    .slice(0, MAX_ITEMS);
+
+  const parsed = await Promise.all(
+    filtered.map(async (entry) => {
+      const image = entry.image || (await getOgImageFromArticle(entry.link));
+      return {
+        title: entry.title,
+        link: entry.link,
+        pubDate: formatPubDate(entry.pubDateRaw),
+        image: image || ''
+      };
+    })
+  );
 
   if (!parsed.length) {
     throw new Error('No Palestine-related items found in RSS feed.');
